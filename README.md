@@ -9,6 +9,16 @@
 - **페이지 태그** — 문서마다 태그를 추가·삭제하고 태그를 눌러 관련 문서를 필터링합니다.
 - **업무 관리** — 페이지 트리, 프로젝트, 업무 표·보드 및 개인 캘린더.
 
+## GitHub 저장소 주소
+
+기존 로컬 복제본에서 새 저장소 주소를 사용하려면 프로젝트 루트의 PowerShell에서 실행하세요.
+
+```powershell
+git remote set-url origin https://github.com/hyunheaven/my-workspace.git
+```
+
+새로 복제할 때는 [My Workspace 저장소](https://github.com/hyunheaven/my-workspace)의 **Code**에서 Clone URL을 복사하세요.
+
 ## Windows에서 시작
 
 ZIP을 새 폴더에 풀고 PowerShell에서 프로젝트 루트로 이동합니다.
