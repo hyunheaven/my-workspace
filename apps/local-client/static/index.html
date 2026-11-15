@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="color-scheme" content="light">
+ <title>My AI Workspace · Pages & Templates</title>
+ <link rel="stylesheet" href="/assets/app.css">
+ <link rel="stylesheet" href="/assets/themes.css">
+ <script src="/assets/app.js" defer></script>
+ <script src="/assets/pagecanvas.js" defer></script>
+ <script src="/assets/themes.js" defer></script>
+</head>
+<body>
+ <div id="layout">
+  <aside class="sidebar" aria-label="Workspace navigation">
+    <div class="brand" title="My AI Workspace"><span class="brand-mark">M</span><div><strong>My AI Workspace</strong><small>나의 작업 공간</small></div><span class="brand-chevron">⌄</span></div>
+    <div class="quick-navigation">
+      <button id="sidebar-quick-search" class="nav action-nav" type="button" title="템플릿 검색 (Ctrl+K)"><span class="nav-icon">⌕</span>검색 <kbd>Ctrl K</kbd></button>
+      <button id="nav-home" class="nav" type="button"><span class="nav-icon">⌂</span>홈</button>
+      <button id="nav-start" class="nav" type="button"><span class="nav-icon">☷</span>시작하기</button>
+    </div>
+    <div class="sidebar-group-title">내 콘텐츠</div>
+    <div class="nav-group">
+      <button id="nav-canvas" class="nav" type="button"><span class="nav-icon">▤</span>페이지 편집</button>
+      <button id="nav-documents" class="nav" type="button"><span class="nav-icon">▣</span>모든 문서 <span id="doc-count" class="nav-count">0</span></button>
+      <button id="nav-library" class="nav" type="button"><span class="nav-icon">▦</span>템플릿 라이브러리</button>
+      <button id="nav-database" class="nav" type="button"><span class="nav-icon">⊞</span>업무 데이터베이스</button>
+      <button id="nav-projects" class="nav" type="button"><span class="nav-icon">◇</span>프로젝트</button>
+      <button id="nav-calendar" class="nav" type="button"><span class="nav-icon">▦</span>캘린더</button>
+      <button id="nav-pages" class="nav" type="button"><span class="nav-icon">☷</span>페이지 구조 관리</button>
+    </div>
+    <div class="sidebar-pages"><div class="sidebar-pages-head"><span>개인 페이지</span><button id="sidebar-create-page" type="button" aria-label="새 페이지" title="새 페이지">＋</button></div><div id="sidebar-page-tree" aria-label="개인 페이지 목록"></div></div>
+    <div class="sidebar-footer"><div class="sidebar-local"><span class="scope-dot"></span><span>개인 PC · 로컬 저장</span></div><p>보안 검토 전 합성 데이터만 사용</p><span class="footer-version">Preview 0.14</span></div>
+  </aside>
+  <main class="main">
+   <header class="topbar"><div class="topbar-left"><button type="button" id="sidebar-collapse" class="topbar-icon" aria-label="사이드바 접기" title="사이드바 접기">☰</button><span class="topbar-divider"></span><span id="topbar-context">My AI Workspace</span><span class="topbar-separator">/</span><strong id="topbar-section">시작하기</strong></div><div class="topbar-right"><span class="security-pill">● Local Private</span><button type="button" class="topbar-icon" id="topbar-new-page" title="새 페이지" aria-label="새 페이지">＋</button></div></header>
+   <div class="content">
+    <nav id="workspace-page-tabs" class="workspace-page-tabs hidden" aria-label="열린 페이지 탭"></nav>
+    <section id="canvas-panel" class="panel hidden canvas-panel" aria-label="Page Canvas">
+      <div class="canvas-head">
+        <nav id="canvas-breadcrumb" aria-label="페이지 경로">내 페이지</nav>
+        <div id="canvas-head-actions" class="canvas-head-actions hidden">
+          <span id="canvas-dirty-flag" role="status" aria-live="polite"></span>
+          <button type="button" class="secondary-button hidden" id="canvas-template-edit">템플릿 항목 편집</button>
+          <button type="button" class="secondary-button" id="canvas-history">페이지 이력</button>
+          <button type="button" class="primary-button" id="canvas-save">페이지 저장</button>
+        </div>
+      </div>
+      <div id="canvas-empty" class="canvas-empty"><h2>나만의 페이지부터 시작하세요</h2><p>페이지 안에 제목·체크리스트·접기 블록을 자유롭게 추가할 수 있습니다.</p><button type="button" class="primary-button" id="canvas-create-start">시작하기 페이지 생성</button><button type="button" class="secondary-button" id="canvas-create-empty">빈 페이지 생성</button></div>
+      <div id="canvas-editing" class="hidden">
+        <input id="canvas-title" class="canvas-title" placeholder="제목 없음" maxlength="120" aria-label="페이지 제목" autocomplete="off">
+        <p id="canvas-meta" class="canvas-meta"></p>
+        <form id="page-tag-editor" class="page-tag-editor">
+          <div id="page-tags" class="page-tags" aria-label="페이지 태그"></div>
+          <input id="page-tag-input" aria-label="새 태그" placeholder="태그 추가" maxlength="32" autocomplete="off">
+          <button class="secondary-button" type="submit">추가</button>
+          <span id="page-tag-status" role="status"></span>
+        </form>
+        <div id="canvas-template-summary" class="canvas-template-summary hidden"></div>
+        <div id="canvas-blocks" class="canvas-blocks" aria-label="페이지 블록 편집"></div>
+        <p id="canvas-editor-hint" class="canvas-editor-hint">빈 문단에서 <kbd>/</kbd>로 블록 유형을 선택합니다. <kbd>Ctrl+S</kbd>로 즉시 저장합니다.</p>
+        <div class="canvas-bottom"><label>새 블록<select id="canvas-new-type"><option value="paragraph">텍스트</option><option value="heading_1">큰 제목</option><option value="heading_2">소제목</option><option value="bullet">글머리 기호</option><option value="todo">체크리스트</option><option value="toggle">토글</option><option value="quote">인용</option><option value="code">코드 텍스트</option><option value="divider">구분선</option><option value="table">표</option></select></label><button class="secondary-button" id="canvas-add-block" type="button">+ 블록 추가</button></div>
+      </div>
+      <dialog id="canvas-history-dialog" aria-labelledby="canvas-history-heading">
+        <div class="canvas-history-head"><h2 id="canvas-history-heading">페이지 이력</h2><button type="button" class="secondary-button" id="canvas-history-close">닫기</button></div>
+        <p id="canvas-history-status" role="status"></p>
+        <div class="canvas-history-grid">
+          <div>
+            <div id="canvas-history-revisions" aria-label="저장된 버전"></div>
+            <button type="button" id="canvas-history-more" class="secondary-button hidden">이전 버전 더 보기</button>
+          </div>
+          <div id="canvas-history-preview" aria-label="버전 미리보기" aria-live="polite"></div>
+        </div>
+      </dialog>
+    </section>
+    <section id="home-panel" class="panel hidden" aria-label="Home Dashboard">
+      <div class="section-heading"><h2>홈 · Dashboard</h2><span>Local Private Mode</span></div>
+      <p class="lead">나의 문서, 프로젝트, 업무와 일정을 한곳에서 확인합니다. 승인되지 않은 사내 서버에는 데이터가 전달되지 않습니다.</p>
+      <div class="dashboard-stats"><div><strong id="stat-docs">0</strong><small>내 문서</small></div><div><strong id="stat-projects">0</strong><small>프로젝트</small></div><div><strong id="stat-tasks">0</strong><small>진행 중 업무</small></div><div><strong id="stat-events">0</strong><small>다가오는 개인 일정</small></div></div>
+      <div class="section-heading"><h3>앞으로 2주간의 업무와 일정</h3><button type="button" id="home-open-calendar" class="secondary-button">Calendar 열기</button></div>
+      <div id="home-upcoming" class="stack-list"></div>
+    </section>
+    <section id="start-panel" class="panel" aria-label="Getting Started">
+      <div class="section-heading"><h2>시작하기 · Getting Started</h2><span>Local Private Mode</span></div>
+      <p class="lead">My AI Workspace는 페이지·템플릿·업무·일정을 나만의 작업 흐름으로 정리하는 로컬 전용 공간입니다. 아래에서 시작해보세요.</p>
+      <div class="getting-grid">
+        <div class="getting-card"><strong>1. 템플릿 찾기</strong><p>업무 / 학습 / 개인 범주를 고른 뒤 부서·직무별로 검색합니다.</p></div>
+        <div class="getting-card"><strong>2. 페이지 작성</strong><p>템플릿을 선택해 페이지를 만들고 제목과 본문을 바로 수정합니다.</p></div>
+        <div class="getting-card"><strong>3. 내 문서 확인</strong><p>저장된 문서를 다시 열어 수정합니다. 변경 충돌은 서버에서 확인합니다.</p></div>
+      </div>
+      <div class="notice">템플릿 라이브러리의 카드를 선택해 편집 가능한 개인 페이지를 만드세요. 페이지, 업무 및 일정은 로컬에 저장됩니다. 보안 검토 전 합성 데이터로 사용하세요.</div>
+      <div class="getting-grid">
+        <div class="getting-card"><strong>4. Page Tree</strong><p>템플릿 문서를 상위·하위 페이지로 분류합니다.</p></div>
+        <div class="getting-card"><strong>5. Task Database</strong><p>프로젝트 업무를 표와 상태 보드로 확인합니다.</p></div>
+        <div class="getting-card"><strong>6. Calendar</strong><p>일정과 업무 마감일을 월·주·일 단위로 확인합니다.</p></div>
+      </div>
+      <button class="primary-button" id="start-browse" type="button">템플릿 라이브러리 열기</button>
+    </section>
+    <section id="library-panel" class="panel hidden" aria-labelledby="library-title">
+      <div class="library-hero">
+        <div class="library-intro">
+          <p class="library-kicker"><span aria-hidden="true"></span> MY AI WORKSPACE</p>
+          <h2 id="library-title">템플릿 라이브러리</h2>
+          <p class="library-lead">일과 학습, 일상에 필요한 페이지를 골라<br class="library-desktop-break"> 내 워크스페이스에서 바로 편집하세요.</p>
+          <label class="searchlabel template-search" for="template-search">
+            <span class="library-sr-only">템플릿 검색</span>
+            <span class="library-search-icon" aria-hidden="true"></span>
+            <input id="template-search" type="search" maxlength="120" placeholder="이름, 주제 또는 태그 검색" autocomplete="off">
+          </label>
+        </div>
+        <div class="library-illustration" aria-hidden="true">
+          <div class="library-sheet library-sheet-back"><i></i><i></i><i></i></div>
+          <div class="library-sheet library-sheet-side"><i></i><i></i><i></i></div>
+          <div class="library-sheet library-sheet-front">
+            <span class="library-sheet-icon">▤</span>
+            <strong>Project Plan</strong>
+            <i></i><i></i>
+            <div class="library-sheet-table"><b></b><b></b><b></b><b></b><b></b><b></b></div>
+            <div class="library-sheet-check"><span></span><i></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="library-tabs" role="group" aria-label="템플릿 둘러보기">
+        <button type="button" class="library-tab selected" data-discovery="all" aria-pressed="true">전체</button>
+        <button type="button" class="library-tab" data-discovery="recommended" aria-pressed="false">추천</button>
+        <button type="button" class="library-tab" data-discovery="popular_category" aria-pressed="false">인기 주제</button>
+        <button type="button" class="library-tab" data-discovery="saved" aria-pressed="false">즐겨찾기 <span id="template-saved-count" aria-label="즐겨찾기 수"></span></button>
+      </div>
+      <div id="template-collections" class="library-collections" role="group" aria-label="템플릿 컬렉션"></div>
+      <div class="library-controls">
+        <div class="library-heading"><h3 id="library-results-title">전체 템플릿</h3><span id="result-count" role="status">0개 템플릿</span></div>
+        <details class="library-filters"><summary>상세 필터</summary>
+          <div class="filters">
+            <label>사용 범주<select id="section-filter"><option value="">전체</option><option value="업무">업무</option><option value="학습">학습</option><option value="개인">개인</option></select></label>
+            <label>부서<select id="department-filter"><option value="">전체 부서</option></select></label>
+            <label>직무군<select id="family-filter"><option value="">전체 직무군</option></select></label>
+            <label>직무<select id="role-filter"><option value="">전체 직무</option></select></label>
+          </div>
+        </details>
+      </div>
+      <div id="template-target" class="template-target hidden"><span><strong id="template-target-name"></strong> 아래에 페이지를 만듭니다.</span><button type="button" class="secondary-button" id="template-target-reset">최상위에 만들기</button></div>
+      <p id="template-create-status" role="status"></p>
+      <div id="template-grid" class="template-grid" aria-label="템플릿 카드"></div>
+      <div class="template-paging"><button type="button" id="template-more" class="secondary-button hidden">더 많은 템플릿 보기</button><span id="template-progress" aria-live="polite"></span></div>
+      <dialog id="template-preview-dialog" aria-labelledby="template-preview-title">
+        <div class="template-preview-header">
+          <div><p id="template-preview-meta"></p><h2 id="template-preview-title">템플릿 미리보기</h2></div>
+          <button type="button" class="icon-button" id="template-preview-close">닫기</button>
+        </div>
+        <p id="template-preview-description"></p>
+        <div id="template-preview-content" aria-busy="false"></div>
+        <div class="template-preview-footer"><button type="button" class="primary-button" id="template-preview-create">이 템플릿으로 페이지 만들기</button></div>
+      </dialog>
+    </section>
+    <section id="documents-panel" class="panel hidden"><div class="section-heading"><h2>내 문서</h2><span>로컬 DB에만 저장됩니다</span></div><div class="document-filters"><label class="searchlabel">문서 검색<input id="doc-search" placeholder="제목, 본문, 표 또는 태그" maxlength="120" autocomplete="off"></label><label class="searchlabel">태그<select id="doc-tag-filter"><option value="">모든 태그</option></select></label></div><div id="document-list"></div></section>
+    <section id="pages-panel" class="panel hidden" aria-label="Page Tree">
+      <div class="section-heading"><h2>Page Tree</h2><span>개인 문서 계층</span></div>
+      <p class="lead">템플릿으로 만든 문서를 계층 구조로 정리합니다. 모든 문서는 사내 PC에만 저장됩니다.</p>
+      <button class="primary-button" id="page-new-root" type="button">+ 최상위 문서 만들기</button>
+      <div class="split-panel"><div id="page-tree" class="page-tree" aria-live="polite"></div>
+        <div class="subpanel"><strong>페이지 위치 변경</strong><p class="muted">계층 순환이 발생하는 이동은 거부됩니다.</p><label>선택한 페이지<select id="page-move-source"></select></label><label>이동할 상위 페이지<select id="page-move-target"></select></label><button id="page-move-btn" class="secondary-button" type="button">상위 페이지 변경</button></div></div>
+    </section>
+    <section id="projects-panel" class="panel hidden" aria-label="Projects">
+      <div class="section-heading"><h2>Projects</h2><span>로컬 프로젝트</span></div>
+      <form id="project-form" class="form-row"><label>프로젝트명<input id="project-title" maxlength="120" required placeholder="프로젝트 이름"></label><label>상태<select id="project-status"><option value="planned">계획</option><option value="active">진행</option><option value="on_hold">보류</option><option value="completed">완료</option></select></label><label class="span2">설명<input id="project-description" maxlength="4000" placeholder="프로젝트 목표 (합성 데이터만)"></label><div><button id="project-save" class="primary-button" type="submit">프로젝트 저장</button><button id="project-reset" class="secondary-button" type="button">새 프로젝트</button></div></form>
+      <div id="project-list" class="stack-list"></div>
+    </section>
+    <section id="database-panel" class="panel hidden" aria-label="Task Database">
+      <div class="section-heading"><h2>Task Database</h2><span>Table / Board</span></div>
+      <div class="toolbar"><label>프로젝트 필터<select id="task-filter-project"><option value="">모든 프로젝트</option></select></label><label>표시 방식<select id="task-view"><option value="table">Table</option><option value="board">Board</option></select></label></div>
+      <form id="task-form" class="form-row"><label>업무명<input id="task-title" maxlength="120" required placeholder="업무 제목"></label><label>프로젝트<select id="task-project"><option value="">미지정</option></select></label><label>상태<select id="task-status"><option value="todo">할 일</option><option value="in_progress">진행 중</option><option value="blocked">차단</option><option value="done">완료</option><option value="archived">보관</option></select></label><label>우선순위<select id="task-priority"><option value="low">낮음</option><option value="medium">보통</option><option value="high">높음</option></select></label><label>마감일<input id="task-due" type="date"></label><label>연결 문서<select id="task-document"><option value="">연결 안 함</option></select></label><div><button class="primary-button" type="submit">업무 저장</button><button id="task-reset" class="secondary-button" type="button">새 업무</button></div></form>
+      <p class="catalog-note">표와 보드는 하나의 Task 데이터베이스를 서로 다른 형태로 보여줍니다. 범용 사용자 정의 데이터베이스는 후속 개발 항목입니다.</p><div id="task-list" aria-live="polite"></div>
+    </section>
+    <section id="calendar-panel" class="panel hidden" aria-label="Calendar">
+      <div class="section-heading"><h2>Calendar</h2><span>Personal · Local</span></div>
+      <div class="toolbar calendar-toolbar"><button id="cal-prev" class="secondary-button" type="button" aria-label="이전 기간">이전</button><button id="cal-today" class="secondary-button" type="button">오늘</button><button id="cal-next" class="secondary-button" type="button" aria-label="다음 기간">다음</button><strong id="cal-range-label"></strong><label>보기<select id="cal-view"><option value="month">월</option><option value="week">주</option><option value="day">일</option></select></label></div>
+      <div class="calendar-key"><span>● 개인 일정</span><span>■ Task 마감일</span><small>기본 시간대: Asia/Seoul</small></div>
+      <div id="calendar-grid" aria-live="polite"></div>
+      <form id="calendar-form" class="form-row"><h3 class="span2">개인 일정 만들기 / 수정하기</h3><label>일정 제목<input id="cal-title" maxlength="120" required></label><label>종일 일정<select id="cal-all-day"><option value="true">종일</option><option value="false">시간 지정</option></select></label><label>시작일<input id="cal-start-date" type="date" required></label><label>종료일(포함)<input id="cal-end-date" type="date" required></label><label class="cal-time">시작 시간<input id="cal-start-time" type="time" value="09:00"></label><label class="cal-time">종료 시간<input id="cal-end-time" type="time" value="10:00"></label><label>연결 문서<select id="cal-document"><option value="">연결 안 함</option></select></label><label>연결 업무<select id="cal-task"><option value="">연결 안 함</option></select></label><div><button class="primary-button" type="submit">일정 저장</button><button id="cal-reset" class="secondary-button" type="button">새 일정</button></div></form>
+      <div class="notice">팀 Calendar · 반복 일정 · 참석자 초대는 미구현입니다. 화상회의, 외부 Calendar 연동, 알림 메일과 파일 첨부는 지원하지 않습니다.</div>
+    </section>
+    <section id="editor-panel" class="panel editor-panel hidden" aria-label="이전 버전 템플릿 필드"><div class="editor-head"><div><div class="eyebrow" id="template-path">LOCAL PRIVATE</div><h2 id="editor-heading">이전 버전 템플릿 필드</h2><p id="editor-description"></p></div><button id="editor-close" class="icon-button" title="닫기" type="button">닫기</button></div>
+      <form id="editor-form" autocomplete="off"><label class="field">문서 제목 <span class="required">*</span><input id="doc-title" maxlength="120" required placeholder="문서 제목 입력"></label><div id="editor-fields"></div><div class="editor-actions"><button class="secondary-button" type="button" id="editor-cancel">취소</button><button class="primary-button" type="submit">로컬에 저장</button></div></form>
+    </section>
+   </div>
+   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  </main>
+ </div>
+</body>
+</html>

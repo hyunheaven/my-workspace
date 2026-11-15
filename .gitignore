@@ -1,0 +1,53 @@
+# Python / JavaScript build and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+node_modules/
+dist/
+build/
+coverage/
+*.log
+
+# Local workspace content and databases (never commit real documents)
+local-data/
+data/
+userdata/
+attachments/
+uploads/
+backups/
+exports/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.bak
+*.zip
+
+# Keys, environment, secrets and personal authentication
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+*.kdbx
+*.crt
+*.cer
+*.keystore
+id_rsa*
+id_ed25519*
+secrets/
+credentials/
+*.secret
+
+# Tooling
+.vscode/settings.json
+.idea/
+Thumbs.db
+Desktop.ini

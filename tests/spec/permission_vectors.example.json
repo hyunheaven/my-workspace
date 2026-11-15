@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ACL-01",
+    "principal": "team-a-viewer",
+    "resource": "team-b-page",
+    "action": "read",
+    "expect": "deny"
+  },
+  {
+    "id": "ACL-02",
+    "principal": "team-a-viewer",
+    "resource": "team-b-page",
+    "action": "search-snippet",
+    "expect": "deny"
+  },
+  {
+    "id": "ACL-03",
+    "principal": "team-a-viewer",
+    "resource": "team-a-page",
+    "action": "edit",
+    "expect": "deny"
+  },
+  {
+    "id": "ACL-04",
+    "principal": "team-a-editor",
+    "resource": "team-a-page",
+    "action": "edit",
+    "expect": "allow"
+  },
+  {
+    "id": "ACL-05",
+    "principal": "team-a-editor",
+    "resource": "team-a-page",
+    "action": "manage-acl",
+    "expect": "deny"
+  },
+  {
+    "id": "ACL-06",
+    "principal": "team-a-editor",
+    "resource": "team-a-denied-child",
+    "action": "read",
+    "expect": "deny"
+  },
+  {
+    "id": "ACL-07",
+    "principal": "revoked-member",
+    "resource": "team-a-page",
+    "action": "read",
+    "expect": "deny"
+  },
+  {
+    "id": "ACL-08",
+    "principal": "team-a-viewer",
+    "resource": "team-a-page",
+    "action": "ws-write",
+    "expect": "deny"
+  },
+  {
+    "id": "ACL-09",
+    "principal": "team-a-viewer",
+    "resource": "team-a-page",
+    "action": "attachment-download",
+    "expect": "allow"
+  },
+  {
+    "id": "ACL-10",
+    "principal": "team-b-viewer",
+    "resource": "team-a-page",
+    "action": "attachment-download",
+    "expect": "deny"
+  }
+]
