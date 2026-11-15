@@ -10,7 +10,7 @@ def test_brand_and_catalog_and_local_security(tmp_path:Path):
     with TestClient(create_app(db_path=tmp_path/'test.db'),base_url=URL,client=('127.0.0.1',1234)) as c:
         assert c.get('/api/v1/health').json()['version']=='1.0.0'
         html=c.get('/').text
-        assert 'My AI Workspace' in html and 'id="sidebar-quick-search"' in html
+        assert 'My Workspace' in html and 'id="sidebar-quick-search"' in html
         assert 'data-discovery="recommended"' in html
         assert 'data-discovery="popular_category"' in html
         assert '<iframe' not in html.lower() and 'https://' not in html.lower()

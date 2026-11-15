@@ -1,4 +1,4 @@
-# My AI Workspace v1.0.0 Windows 11 실행 가이드
+# My Workspace v1.0.0 Windows 11 실행 가이드
 
 ## 새 환경에서 실행
 
@@ -13,7 +13,9 @@ $env:EAW_DATA_DIR = Join-Path $env:LOCALAPPDATA 'MyAIWorkspace-v100-test'
 .\.venv\Scripts\python.exe -m services.local_api.run
 ```
 
-Edge 또는 Chrome에서 [My AI Workspace](http://127.0.0.1:8765/)를 엽니다. 앱 실행 주소는 `127.0.0.1:8765`입니다. 서버 종료는 실행한 터미널에서 `Ctrl+C`를 누릅니다. 기본 DB 경로는 `%LOCALAPPDATA%\EnterpriseAIWorkspace\workspace.db`이며 `EAW_DATA_DIR`를 지정하면 해당 폴더의 `workspace.db`를 사용합니다.
+Edge 또는 Chrome에서 [My Workspace](http://127.0.0.1:8765/)를 엽니다. 앱 실행 주소는 `127.0.0.1:8765`입니다. 서버 종료는 실행한 터미널에서 `Ctrl+C`를 누릅니다. 기본 DB 경로는 `%LOCALAPPDATA%\EnterpriseAIWorkspace\workspace.db`이며 `EAW_DATA_DIR`를 지정하면 해당 폴더의 `workspace.db`를 사용합니다.
+
+My Workspace는 이전 버전과 같은 기본 DB 경로를 사용합니다. 기존에 EAW_DATA_DIR을 설정했다면 같은 값을 사용하세요.
 
 ## v0.15 데이터로 검증하기
 

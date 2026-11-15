@@ -32,7 +32,7 @@ async function selectView(view,{pageId,createdPage,parentId=null}={}){
   currentView=view;
   renderWorkspaceTabs();
   const viewNames={canvas:'내 페이지',home:'홈',start:'시작하기',library:'템플릿 라이브러리',documents:'모든 문서',pages:'페이지 구조 관리',database:'업무 데이터베이스',projects:'프로젝트',calendar:'캘린더'};
-  if(el('topbar-section'))el('topbar-section').textContent=viewNames[view]||'My AI Workspace';
+  if(el('topbar-section'))el('topbar-section').textContent=viewNames[view]||'My Workspace';
   for(const v of views){el('nav-'+v).classList.toggle('active',v===view);el(v+'-panel').classList.toggle('hidden',v!==view);}
   closeEditor();
   el('layout').classList.toggle('canvas-mode',view==='canvas');
