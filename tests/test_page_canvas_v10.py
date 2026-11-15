@@ -24,7 +24,7 @@ def test_page_creation_and_blocks_persist(client):
     assert client.get('/api/v1/pages/'+created['id']+'/content').json()['blocks']==blocks
     assert len(client.get('/api/v1/pages/tree').json()['items'])==1
     assert client.get('/api/v1/templates').json()['total']>=152
-    assert client.get('/api/v1/health').json()['version']=='0.15.0'
+    assert client.get('/api/v1/health').json()['version']=='1.0.0'
 
 def test_revision_validation_and_max_size(client):
     page=client.post('/api/v1/pages',headers=HEADERS,json={'title':'Safe'}).json()

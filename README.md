@@ -1,4 +1,4 @@
-# My AI Workspace v0.15
+# My AI Workspace v1.0.0
 
 초기 개발을 마무리한 Windows 11용 로컬 작업 공간입니다. 템플릿을 선택하면 바로 편집할 수 있는 새 페이지가 열립니다.
 
@@ -16,14 +16,14 @@ ZIP을 새 폴더에 풀고 PowerShell에서 프로젝트 루트로 이동합니
 ```powershell
 py -3 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r .\requirements-dev.txt
-$env:EAW_DATA_DIR = Join-Path $env:LOCALAPPDATA 'MyAIWorkspace-v015-test'
+$env:EAW_DATA_DIR = Join-Path $env:LOCALAPPDATA 'MyAIWorkspace-v100-test'
 .\.venv\Scripts\python.exe -m services.local_api.run
 ```
 
 [앱 열기](http://127.0.0.1:8765/)
 
 - [Windows 실행 및 기존 DB 복사본으로 검증](RUN_LOCAL.md)
-- [변경 사항, 참고 자료 및 검증 결과](docs/RELEASE_v015.md)
+- [변경 사항, 참고 자료 및 검증 결과](docs/RELEASE_v100.md)
 - [개발 계획](PROJECT_PLAN.md)
 
 회사 관리 PC에서는 승인된 패키지 설치 경로를 사용하세요. 사내 실사용 승인 전에는 합성 데이터로 검증합니다.

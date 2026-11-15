@@ -114,7 +114,7 @@ def main():
 
         page.route("**/*", only_loopback)
         with previous.local_server(path, port):
-            assert previous.api_json(url, "/api/v1/health")["version"] == "0.15.0"
+            assert previous.api_json(url, "/api/v1/health")["version"] == "1.0.0"
             catalog = previous.api_json(url, "/api/v1/templates")
             old = {template["id"] for template in json.loads(OLD_CATALOG.read_text(encoding="utf-8"))}
             new = [item for item in catalog["items"] if item["id"] not in old]
