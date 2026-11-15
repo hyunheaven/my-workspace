@@ -66,7 +66,7 @@ class DuplicatePage(PageRevisionOperation):
 class PagePropertiesUpdate(BaseModel):
     model_config = ConfigDict(extra='forbid', strict=True)
     expected_revision: int = Field(ge=0, le=2**63-1)
-    theme: Literal['inherit','warm','sage','indigo','clay','dark','ocean','lavender','rose','slate'] = 'inherit'
+    theme: Literal['inherit','warm','sage','indigo','clay','dark','ocean','lavender','rose','slate','contrast'] = 'inherit'
     background: Literal['plain','paper','mint','mist','grid','ruled','graph','margin','cream','rosepaper'] | None = None
     tab_color: Literal['none','sage','ocean','indigo','lavender','rose','clay','gold','slate'] = 'none'
     tags: list[str] = Field(default_factory=list, max_length=16)
@@ -268,7 +268,7 @@ def valid_values(template: dict[str,Any], title: str, values: dict[str,str]) -> 
 
 
 def create_app(db_path:Path | None = None) -> FastAPI:
-    app=FastAPI(title='My AI Workspace Local Core PoC',version='0.14.0',docs_url=None,redoc_url=None,openapi_url=None)
+    app=FastAPI(title='My AI Workspace Local Core PoC',version='0.15.0',docs_url=None,redoc_url=None,openapi_url=None)
     store=WorkspaceStore(db_path or default_db_path())
     catalog=json.loads(CATALOG_PATH.read_text(encoding='utf-8'))
     catalog.extend(json.loads(LIBRARY_CATALOG_PATH.read_text(encoding='utf-8')))

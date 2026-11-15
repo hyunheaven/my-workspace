@@ -58,13 +58,16 @@ def main():
             expect(page.locator('#canvas-empty')).to_be_visible()
             add_page(page, '실험 노트 · 합성 예시')
             edit_appearance(page, {
-                'color-theme':'slate', 'page-theme':'ocean', 'page-background':'ruled',
+                'color-theme':'contrast', 'page-theme':'contrast', 'page-background':'ruled',
                 'page-tab-color':'gold', 'menu-tab':'documents', 'menu-tab-color':'rose',
             })
+            expect(page.locator('html')).to_have_attribute('data-workspace-theme', 'contrast')
+            expect(page.locator('#canvas-title')).to_have_css('color', 'rgb(255, 255, 255)')
+            expect(page.locator('#canvas-save')).to_have_css('background-color', 'rgb(255, 223, 82)')
             add_tag(page, '소자 분석')
             add_tag(page, '실험 기록')
             expect(page.locator('#canvas-panel')).to_have_attribute('data-page-background', 'ruled')
-            expect(page.locator('#canvas-panel')).to_have_attribute('data-page-theme', 'ocean')
+            expect(page.locator('#canvas-panel')).to_have_attribute('data-page-theme', 'contrast')
             expect(page.locator('#nav-documents')).to_have_attribute('data-tab-color', 'rose')
             add_page(page, '검토 페이지 · 합성 예시')
             edit_appearance(page, {'page-theme':'lavender','page-background':'graph','page-tab-color':'indigo'})
@@ -95,7 +98,7 @@ def main():
             clean = browser.new_page(locale='ko-KR')
             clean.goto(url)
             expect(clean.locator('#canvas-title')).to_have_value('실험 노트 · 합성 예시')
-            expect(clean.locator('#canvas-panel')).to_have_attribute('data-page-theme','ocean')
+            expect(clean.locator('#canvas-panel')).to_have_attribute('data-page-theme','contrast')
             expect(clean.locator('#canvas-panel')).to_have_attribute('data-page-background','ruled')
             expect(clean.locator('#page-tags')).to_contain_text('#실험 기록')
             expect(tab_for(clean, '실험 노트 · 합성 예시').locator('..')).to_have_attribute('data-tab-color','gold')

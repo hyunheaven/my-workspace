@@ -29,7 +29,7 @@ class PagePropertiesTests(TestCase):
             self.assertEqual(page['properties']['revision'], 0)
             updated = client.patch(path + '/properties', headers=HEADERS, json={
                 'expected_revision': 0, 'tags': [' #Review ', 'ＲＥＶＩＥＷ', '공정 검토'],
-                'theme': 'dark', 'background': 'ruled', 'tab_color': 'gold',
+                'theme': 'contrast', 'background': 'ruled', 'tab_color': 'gold',
             })
             self.assertEqual(updated.status_code, 200, updated.text)
             self.assertEqual(updated.json()['tags'], ['Review', '공정 검토'])

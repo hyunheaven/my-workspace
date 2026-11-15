@@ -15,6 +15,7 @@
     ['lavender', '라벤더'],
     ['rose', '더스티 로즈'],
     ['slate', '슬레이트'],
+    ['contrast', '고대비'],
   ];
   const backgrounds = [
     ['plain', '기본'],

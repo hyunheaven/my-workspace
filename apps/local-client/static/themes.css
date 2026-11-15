@@ -384,3 +384,61 @@ html[data-workspace-theme] :is(.nav,.sidebar-page,.doc-row)[data-tab-color]:not(
 .page-tag-editor .secondary-button{padding:5px 8px;font-size:12px}
 #page-tag-status{font-size:12px;color:var(--ws-muted)}
 .document-filters{display:grid;grid-template-columns:minmax(120px,3fr) minmax(110px,1fr);gap:14px}
+
+:root[data-workspace-theme="contrast"], #canvas-panel[data-page-theme="contrast"] {
+  color-scheme: dark;
+  --ws-background: #000;
+  --ws-sidebar: #080808;
+  --ws-surface: #101010;
+  --ws-strong-surface: #252525;
+  --ws-text: #fff;
+  --ws-muted: #e6e6e6;
+  --ws-border: #bdbdbd;
+  --ws-accent: #ffdf52;
+  --ws-accent-hover: #ffec90;
+  --ws-accent-text: #000;
+  --ws-focus: #74e8ff;
+  --ws-error: #ffaaaa;
+  --ws-paper: #201804;
+  --ws-mint: #071b13;
+  --ws-mist: #07182b;
+  --ws-grid: #080b15;
+  --ws-grid-dot: #70809a;
+  --ws-line: #526980;
+  --ws-margin: #cb8a9a;
+  --ws-cream: #201701;
+  --ws-rosepaper: #260d17;
+}
+.workspace-theme-swatch[data-option="contrast"] {
+  color: #ffdf52;
+  background: linear-gradient(135deg, #000 50%, #ffdf52 50%);
+}
+:root[data-workspace-theme="contrast"] :where(.main, .sidebar, dialog),
+#canvas-panel[data-page-theme="contrast"] {
+  color: var(--ws-text);
+}
+:root[data-workspace-theme="contrast"] :is(.muted, .template-card-description, .template-card-keywords, .template-context),
+#canvas-panel[data-page-theme="contrast"] :is(.canvas-meta, .canvas-editor-hint, .canvas-bottom label) {
+  color: var(--ws-muted);
+}
+:root[data-workspace-theme="contrast"] :is(.nav.active, .sidebar-page.selected, .library-tab.selected) {
+  box-shadow: inset 3px 0 var(--ws-accent);
+}
+:root[data-workspace-theme="contrast"] :is(.workspace-tab-link[aria-current="page"], .library-tab.selected) {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+:root[data-workspace-theme="contrast"] #template-preview-create {
+  color: var(--ws-accent-text);
+}
+:root[data-workspace-theme="contrast"] :is(button,input,select,textarea,summary):focus-visible,
+#canvas-panel[data-page-theme="contrast"] :is(button,input,select,textarea,summary):focus-visible {
+  outline: 2px solid var(--ws-focus);
+  outline-offset: 2px;
+}
+#canvas-panel[data-page-theme="contrast"] .canvas-template-cover,
+:root[data-workspace-theme="contrast"] #canvas-panel[data-page-theme="inherit"] .canvas-template-cover {
+  background: var(--ws-surface);
+  color: var(--ws-text);
+  border-color: var(--ws-border);
+}
