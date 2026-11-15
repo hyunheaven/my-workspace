@@ -1,4 +1,4 @@
-# My AI Workspace v1.0.0
+# My Workspace v1.0.0
 
 초기 개발을 마무리한 Windows 11용 로컬 작업 공간입니다. 템플릿을 선택하면 바로 편집할 수 있는 새 페이지가 열립니다.
 
