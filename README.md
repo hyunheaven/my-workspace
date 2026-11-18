@@ -34,7 +34,7 @@ $env:EAW_DATA_DIR = Join-Path $env:LOCALAPPDATA 'MyWorkspace-v130-test'
 .\.venv\Scripts\python.exe -m services.local_api.run
 ```
 
-[앱 열기](http://127.0.0.1:8765/)
+[앱 열기](http://127.0.0.1:8766/)
 
 - [Windows 실행 및 기존 DB 복사본으로 검증](RUN_LOCAL.md)
 - [v1.3.0 변경 사항과 검증 범위](docs/RELEASE_v130.md)

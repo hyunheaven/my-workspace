@@ -14,7 +14,7 @@ $env:EAW_DATA_DIR = Join-Path $env:LOCALAPPDATA ('MyWorkspace-v130-test-' + [gui
 .\.venv\Scripts\python.exe -m services.local_api.run
 ```
 
-Edge 또는 Chrome에서 [My Workspace](http://127.0.0.1:8765/)를 엽니다. 앱 실행 주소는 `127.0.0.1:8765`입니다. 서버 종료는 실행한 터미널에서 `Ctrl+C`를 누릅니다. 기본 DB 경로는 `%LOCALAPPDATA%\EnterpriseAIWorkspace\workspace.db`이며 `EAW_DATA_DIR`를 지정하면 해당 폴더의 `workspace.db`를 사용합니다.
+Edge 또는 Chrome에서 [My Workspace](http://127.0.0.1:8766/)를 엽니다. 앱 실행 주소는 `127.0.0.1:8766`이며 `EAW_PORT` 환경변수로 변경할 수 있습니다. 서버 종료는 실행한 터미널에서 `Ctrl+C`를 누릅니다. 기본 DB 경로는 `%LOCALAPPDATA%\EnterpriseAIWorkspace\workspace.db`이며 `EAW_DATA_DIR`를 지정하면 해당 폴더의 `workspace.db`를 사용합니다.
 
 My Workspace는 이전 버전과 같은 기본 DB 경로를 사용합니다. 기존에 EAW_DATA_DIR을 설정했다면 같은 값을 사용하세요.
 
