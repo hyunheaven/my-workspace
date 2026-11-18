@@ -9327,6 +9327,2183 @@
       "generated_at": "2026-11-18T03:18:57Z",
       "model": "gpt-5-mini",
       "source_sha": "e260c5e9d0f359919406dbe7a7a5b1b70f74089e"
+    },
+    "tests/browser/workspace_v013.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/browser/workspace_v013.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 19,
+            "line_start": 18,
+            "name": "stripped_blocks",
+            "qualified_name": "workspace_v013.stripped_blocks",
+            "response": {
+              "parameters_summary": "data: the input to be processed \u2014 likely a structured value (e.g., string, list, or dict) that may contain one or more 'blocks' which the function will strip or normalize.",
+              "purpose": "Processes the given input and produces a version with any 'blocks' removed or stripped; in other words, it normalizes or filters out block-like components from the provided data.\n",
+              "returns_summary": "Returns the processed input with blocks removed or transformed to their stripped form."
+            },
+            "signature": "def stripped_blocks(data):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 24,
+            "line_start": 22,
+            "name": "gallery",
+            "qualified_name": "workspace_v013.gallery",
+            "response": {
+              "parameters_summary": "page: a browser page object (e.g., a Playwright or similar page) that the function uses to perform navigation, DOM interactions, and assertions; the exact API expected is not specified here.",
+              "purpose": "The gallery function performs operations on a browser page related to a gallery view or gallery-related test interactions. It is intended to drive or verify gallery behavior using the provided page object, such as navigating, interacting with UI elements, or asserting expected states.\n",
+              "returns_summary": null
+            },
+            "signature": "def gallery(page):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 30,
+            "line_start": 27,
+            "name": "tile",
+            "qualified_name": "workspace_v013.tile",
+            "response": {
+              "parameters_summary": "page is the browser page/session object the function will act on, and ident is the identifier (for example a string or selector) used to locate the specific tile on that page.",
+              "purpose": "Operate on a browser page to locate or interact with a specific 'tile' identified by the supplied identifier. The function likely finds and returns the tile element or performs an action scoped to that tile on the given page.\n",
+              "returns_summary": "Returns the located tile element or a handle representing that tile (or possibly a result of an interaction with that tile)."
+            },
+            "signature": "def tile(page, ident):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 41,
+            "line_start": 32,
+            "name": "choose_appearance",
+            "qualified_name": "workspace_v013.choose_appearance",
+            "response": {
+              "parameters_summary": "page is the browser/page context to act on; theme is the desired appearance value to apply; default is a fallback appearance to use if theme is not provided; current can be used to represent or check the existing appearance state.",
+              "purpose": "Selects or sets the appearance (theme) for a workspace in a browser test page, using the provided theme or falling back to supplied default/current values as needed. It operates on a page object to apply or verify the appearance state.\n",
+              "returns_summary": null
+            },
+            "signature": "def choose_appearance(page, *, theme=None, default=None, current=None):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 87,
+            "line_start": 43,
+            "name": "workspace_actions",
+            "qualified_name": "workspace_v013.workspace_actions",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Performs a sequence of browser-based workspace-related actions for a test case using the provided Playwright page and contextual identifiers. It drives interactions against the given URL and page_id, using the provided name, record, and evidence values as inputs to those actions.\n",
+              "returns_summary": "This function is intended for side effects in a test (interacting with the browser) and does not return a meaningful value (returns None)."
+            },
+            "signature": "def workspace_actions(page, url, page_id, name, record, evidence):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 240,
+            "line_start": 90,
+            "name": "main",
+            "qualified_name": "workspace_v013.main",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Acts as the top-level entry point for the test module tests/browser/workspace_v013.py; it defines a nested helper function only_loopback and contains the test or orchestration logic executed when the module's main routine is run.\n",
+              "returns_summary": null
+            },
+            "signature": "def main():"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 114,
+            "line_start": 110,
+            "name": "only_loopback",
+            "qualified_name": "workspace_v013.main.only_loopback",
+            "response": {
+              "parameters_summary": "route: the route object or identifier that the function will operate on; it represents the routing context or target for which loopback-specific behavior should be applied.",
+              "purpose": "Performs an operation related to loopback handling for the given route. The function is named only_loopback and is intended to apply logic that concerns loopback behavior for the provided route argument.\n",
+              "returns_summary": null
+            },
+            "signature": "def only_loopback(route):"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Provide utility routines for manipulating gallery content, including stripped_blocks and tile extraction functions.",
+            "Drive headless Chromium browser interactions and assertions for the v0.13 gallery using Playwright via the gallery and workspace_actions functions.",
+            "Allow selection of appearance modes in the gallery through the choose_appearance helper.",
+            "Offer a command-line entrypoint (main) to run the validation workflow and locate repository resources via ROOT and OLD_CATALOG constants."
+          ],
+          "notable_patterns": [
+            "Uses Playwright (sync API) for browser automation and assertions.",
+            "Interacts with local filesystem and temporary directories via TemporaryDirectory and Path-based constants.",
+            "References a previous test module (workspace_v012), suggesting reuse or comparison with earlier test behavior.",
+            "Imports sqlite3 indicating some interactions with SQLite databases during setup or validation."
+          ],
+          "summary": "This module defines a set of top-level functions used to run headless Chromium validation tests for the v0.13 gallery against an isolated local server. It provides utilities for manipulating and inspecting gallery content (for example stripping blocks and selecting individual tiles), functions to control appearance choices, and a workspace_actions entrypoint that exercises browser-driven interactions via Playwright. The module also defines constants pointing to the repository root and to an older catalog JSON file used by the tests.\n\nThe code integrates with Playwright for browser automation and uses temporary filesystem resources and SQLite where needed to prepare or validate state. A main function is present to allow running the validation routine from the command line, and the module imports a previous-version helper module (workspace_v012) to leverage or compare prior behavior during testing.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 1830,
+        "tokens_output": 2148
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:03Z",
+      "model": "gpt-5-mini",
+      "source_sha": "bfc677c762191fa3c54f13c4cf69bb3abc6dccbe"
+    },
+    "tests/browser/workspace_v014.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/browser/workspace_v014.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 23,
+            "line_start": 12,
+            "name": "edit_appearance",
+            "qualified_name": "workspace_v014.edit_appearance",
+            "response": {
+              "parameters_summary": "page is the browser automation page object representing the context to operate on; options is a mapping or structure that specifies which appearance settings to change and their desired values.",
+              "purpose": "Interact with a browser test page to change or configure the workspace appearance settings. The function automates UI steps on the given page using the provided options to apply appearance-related changes (for example theme, layout, or display preferences) in the test environment.\n",
+              "returns_summary": null
+            },
+            "signature": "def edit_appearance(page, options):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 29,
+            "line_start": 26,
+            "name": "add_tag",
+            "qualified_name": "workspace_v014.add_tag",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Interact with a browser page to add the provided tag to the current workspace or UI context represented by the page. It performs the necessary DOM interactions or form submissions to create/apply the tag within the test browser session.\n",
+              "returns_summary": "Performs the action in the browser and does not return a value (returns None)."
+            },
+            "signature": "def add_tag(page, tag):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 36,
+            "line_start": 32,
+            "name": "add_page",
+            "qualified_name": "workspace_v014.add_page",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Adds a new page to a workspace or test context using the provided page object and assigns it the given title. It performs the operation of creating or registering a page identified by the title within the testing/browser workspace module.\n",
+              "returns_summary": null
+            },
+            "signature": "def add_page(page, title):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 40,
+            "line_start": 39,
+            "name": "tab_for",
+            "qualified_name": "workspace_v014.tab_for",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Operate on a browser page to get or work with a workspace tab identified by the given title. It is intended to locate the tab corresponding to title within the provided page context.\n",
+              "returns_summary": "Returns the tab element or object that corresponds to the given title on the provided page (the exact return type is the tab representation used by the test framework)."
+            },
+            "signature": "def tab_for(page, title):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 111,
+            "line_start": 43,
+            "name": "main",
+            "qualified_name": "workspace_v014.main",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Acts as the entry point for the test module tests/browser/workspace_v014.py; when invoked it runs the module's main test logic or orchestration for the workspace_v014 browser tests.\n",
+              "returns_summary": null
+            },
+            "signature": "def main():"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "edit_appearance: Drive the browser to change or verify appearance-related settings for a page using Playwright interactions.",
+            "add_tag: Create or attach a tag to a page under test, facilitating validation of tag-related UI elements.",
+            "add_page: Create and register a test page served by the local test server for subsequent interactions and verification.",
+            "tab_for: Locate and return the browser UI tab element that corresponds to a given test page, enabling targeted assertions or screenshots.",
+            "main: Provide a command-line entrypoint that sets up the test environment, invokes the helper routines, and orchestrates the validation flow."
+          ],
+          "notable_patterns": [
+            "Uses Playwright synchronous API (expect, sync_playwright) to control a Chromium browser for UI testing.",
+            "Depends on shared test utilities imported from workspace_v012 (api_items, free_port, local_server, saved, screenshot) to manage test pages and capture results.",
+            "Employs TemporaryDirectory and urlencode to prepare temporary resources and construct request/query parameters.",
+            "Exposes a main function for command-line invocation and orchestration of the test scenario."
+          ],
+          "summary": "This module contains end-to-end validation routines that exercise Chromium-based browser behavior for per-page appearance, colored tabs, and tag handling. It uses Playwright's synchronous API to drive a browser instance and performs interactions that modify page appearance or metadata. The file relies on test utilities imported from workspace_v012 (api_items, free_port, local_server, saved, screenshot) and standard helpers such as TemporaryDirectory and urlencode to construct and serve test pages and capture results.\n\n  The module exposes a small set of top-level functions: helpers to add pages and tags, a function to locate a tab representing a page in the UI, an edit_appearance routine that manipulates or validates visual appearance, and a main entrypoint that wires these pieces together for running the scenario (likely via command-line arguments). These routines are intended for automated validation of UI behaviors related to per-page settings and colored tabs/tags in a Chromium environment.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 1446,
+        "tokens_output": 1575
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:20:56Z",
+      "model": "gpt-5-mini",
+      "source_sha": "3d04811d21d2dcbfc7134db41449d5fd3fb70f9a"
+    },
+    "tests/browser/workspace_v110.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/browser/workspace_v110.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 36,
+            "line_start": 20,
+            "name": "page_record",
+            "qualified_name": "workspace_v110.page_record",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Operates on a Page object for the provided URL to record or capture information about that page and produce a textual result. The function encapsulates the recording/capture workflow and returns a string that represents the outcome of that recording process.\n",
+              "returns_summary": null
+            },
+            "signature": "def page_record(page: Page, url: str) -> str:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 45,
+            "line_start": 39,
+            "name": "restore_after_restart",
+            "qualified_name": "workspace_v110.restore_after_restart",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Restore a browser workspace or test page to a known state after an application or test restart by using the provided Page object to navigate to the given URL and re-establish or verify the page identified by page_id. This is intended to be used in tests to recover and continue interactions with the same logical page after restarting the environment.\n",
+              "returns_summary": null
+            },
+            "signature": "def restore_after_restart(page: Page, url: str, page_id: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 95,
+            "line_start": 48,
+            "name": "shared_task_views",
+            "qualified_name": "workspace_v110.shared_task_views",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Uses a Playwright Page object to exercise or verify the shared task views for the workspace v110 test suite by navigating to and interacting with the given URL. It performs browser-driven checks and interactions related to shared task views in that workspace context.\n",
+              "returns_summary": null
+            },
+            "signature": "def shared_task_views(page: Page, url: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 148,
+            "line_start": 98,
+            "name": "link_move_and_restore",
+            "qualified_name": "workspace_v110.link_move_and_restore",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Performs an automated browser test that exercises linking, moving, and restoring behavior for a workspace page. The function uses a Playwright Page object to navigate to the given URL and operate on the page identified by page_id to verify link move and restore functionality.\n",
+              "returns_summary": null
+            },
+            "signature": "def link_move_and_restore(page: Page, url: str, page_id: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 177,
+            "line_start": 151,
+            "name": "main",
+            "qualified_name": "workspace_v110.main",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Entry point for the tests in the tests/browser/workspace_v110.py module; it runs the module's main logic for exercising or validating the workspace v1.10 browser functionality.\n",
+              "returns_summary": null
+            },
+            "signature": "def main() -> None:"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "page_record: drive a browser session to create and record a page with predefined title and text using Playwright interactions.",
+            "restore_after_restart: verify that recorded pages and state persist after restarting the application or local server.",
+            "shared_task_views: exercise shared task presentation and visibility, ensuring tasks and notes are rendered correctly for shared viewers.",
+            "link_move_and_restore: test moving page links and validate that links are correctly restored or maintained across restarts.",
+            "main: coordinate execution of the test scenarios, setting up temporary resources, local server, and Playwright runtime to run the regressions."
+          ],
+          "notable_patterns": [
+            "Uses Playwright's synchronous API (sync_playwright, Page, expect) for browser-driven tests.",
+            "Interacts with a local SQLite database and TemporaryDirectory for ephemeral test state.",
+            "Reuses test helper functions and fixtures from a separate workspace_v012 module to configure API endpoints and server state."
+          ],
+          "summary": "This module implements a set of browser-based regression tests that exercise template persistence, shared task views, and link handling across restarts of a local workspace. The file defines five top-level functions that drive Playwright browser interactions and local server setup, exercising scenarios such as recording page content, restoring state after an application restart, verifying shared task views, and moving and restoring page links. The tests make use of temporary directories, an SQLite database, and several helpers imported from a prior workspace test module to configure the server and API endpoints used during the browser interactions.\n\nThe constants at module scope provide reusable textual fixtures (page title, page text, task titles, and task notes) used by the test flows. The main function likely ties the individual scenario functions together so the module can be executed as a standalone test script using the Playwright sync API and local server utilities to validate end-to-end behaviors that should persist across restarts and be visible to shared viewers.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 1695,
+        "tokens_output": 1513
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:20:53Z",
+      "model": "gpt-5-mini",
+      "source_sha": "233fc4e8656fb2deeb66e6ae8fac2082af374819"
+    },
+    "tests/browser/workspace_v110_canvas.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/browser/workspace_v110_canvas.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 19,
+            "line_start": 14,
+            "name": "create_page",
+            "qualified_name": "workspace_v110_canvas.create_page",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Create a new canvas page in the test workspace using the provided URL and title. It sets up or registers a page resource identified by url and assigns it the given title within the workspace context.\n",
+              "returns_summary": "Returns the created page object (the workspace canvas page representation) so the caller can interact with or inspect the newly created page."
+            },
+            "signature": "def create_page(page, url, title):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 46,
+            "line_start": 22,
+            "name": "check_draft_recovery",
+            "qualified_name": "workspace_v110_canvas.check_draft_recovery",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Runs a browser-based test that verifies draft recovery behavior in the Canvas workspace at a given URL using the provided page object and content source. It exercises saving/recovering a draft and includes an inner helper (reject_save) to simulate or handle a rejected save attempt during the test.\n",
+              "returns_summary": null
+            },
+            "signature": "def check_draft_recovery(page, url, source):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 30,
+            "line_start": 26,
+            "name": "reject_save",
+            "qualified_name": "workspace_v110_canvas.check_draft_recovery.reject_save",
+            "response": {
+              "parameters_summary": "route is the intercepted network route object (e.g., a Playwright route) representing the save request to be handled and rejected by this function.",
+              "purpose": "Act as a test route handler that causes a save request to be rejected (used in draft recovery tests). It simulates a failing save operation so the test can verify how the application responds when a save is refused.\n",
+              "returns_summary": null
+            },
+            "signature": "def reject_save(route):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 70,
+            "line_start": 49,
+            "name": "check_conflicting_save",
+            "qualified_name": "workspace_v110_canvas.check_conflicting_save",
+            "response": {
+              "parameters_summary": "page is the browser automation Page object used to drive the UI; url is the target page address to open and test; source is the content or source identifier that the test attempts to save and that should produce a conflict.",
+              "purpose": "Checks the behavior of a conflicting save operation in the workspace canvas: it exercises saving content from a given source at a specified URL and verifies that the application correctly detects or handles save conflicts. The function drives a browser page to reproduce and assert the expected conflict-related UI or state changes.\n",
+              "returns_summary": null
+            },
+            "signature": "def check_conflicting_save(page, url, source):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 107,
+            "line_start": 73,
+            "name": "check_blocks",
+            "qualified_name": "workspace_v110_canvas.check_blocks",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Checks or validates block-related behavior on a workspace canvas for a browser test using the provided page and url, and operates with a source and a target. It likely performs assertions or manipulations involving blocks (with a nested helper function add) to confirm expected behavior between the source and target on the canvas.\n",
+              "returns_summary": null
+            },
+            "signature": "def check_blocks(page, url, source, target):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 76,
+            "line_start": 74,
+            "name": "add",
+            "qualified_name": "workspace_v110_canvas.check_blocks.add",
+            "response": {
+              "parameters_summary": "kind is the identifier for the type of block to add (for example a string or enum value that names the block kind).",
+              "purpose": "Add a block of the specified kind to the canvas/check blocks collection. The function creates or inserts a new block element identified by the provided kind value into the workspace.\n",
+              "returns_summary": null
+            },
+            "signature": "def add(kind):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 126,
+            "line_start": 110,
+            "name": "check_long_document",
+            "qualified_name": "workspace_v110_canvas.check_long_document",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Runs verification steps for a long document in the workspace_v110 canvas. Using the provided page controller it loads the given URL and exercises checks related to the specified target within that document.\n",
+              "returns_summary": null
+            },
+            "signature": "def check_long_document(page, url, target):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 166,
+            "line_start": 129,
+            "name": "main",
+            "qualified_name": "workspace_v110_canvas.main",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Acts as the entry point for running the test routines located in the tests/browser/workspace_v110_canvas.py module. It coordinates or invokes the sequence of browser-based checks related to the workspace v1.10 canvas functionality when executed.\n",
+              "returns_summary": null
+            },
+            "signature": "def main():"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "create_page: initialize and return a Playwright-driven browser page configured for the tests.",
+            "check_draft_recovery: verify that the editor recovers in-progress drafts after interruptions or reloads.",
+            "check_conflicting_save: exercise and assert correct behavior when concurrent or conflicting save operations occur.",
+            "check_blocks: validate block-level editor commands and their effects within the document.",
+            "check_long_document: test editor behavior, performance, and integrity when handling very long documents.",
+            "main: coordinate setup and execution of the defined checks, integrating local server and test fixtures."
+          ],
+          "notable_patterns": [
+            "Uses Playwright synchronous API for browser automation and assertions.",
+            "Imports and reuses helper utilities from a local workspace_v012 module for server, API, and saved-state management.",
+            "Employs temporary directories, SQLite, and UUIDs to create isolated, reproducible test environments.",
+            "Organizes tests as standalone functions that operate on a page instance rather than as class-based test cases."
+          ],
+          "summary": "This module contains a collection of test helper functions and check routines that drive Chromium-based browser interactions to verify editor behaviors such as draft recovery, IME composition, block command handling, and long-document handling. The file uses Playwright for synchronized browser automation and relies on local test infrastructure utilities imported from a companion module to start servers, provide API fixtures, and manage saved state. Individual functions encapsulate specific scenarios and assertions to be executed against a running page instance created by a create_page helper.\n\nThe tests interact with temporary working directories, SQLite, and unique identifiers to isolate runs, and they exercise editing and save-conflict conditions, block-level editor commands, and behavior when operating on lengthy documents. The module exposes a main entry point intended to wire these checks together when executed, and a set of standalone check_* functions that implement the concrete verification logic used by test runs.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 2130,
+        "tokens_output": 2161
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:01Z",
+      "model": "gpt-5-mini",
+      "source_sha": "0ee2a03f1d13f19544f118d0077104122e4fa6c1"
+    },
+    "tests/browser/workspace_v120.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/browser/workspace_v120.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 45,
+            "line_start": 34,
+            "name": "add_markdown",
+            "qualified_name": "workspace_v120.add_markdown",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Add a markdown item to the given Page using either a provided text string or the contents of a file. The function creates and attaches a markdown block to the specified Page and returns information about the created block.\n",
+              "returns_summary": null
+            },
+            "signature": "def add_markdown(page: Page, *, text: str | None = None, file: Path | None = None) -> dict:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 49,
+            "line_start": 48,
+            "name": "block_values",
+            "qualified_name": "workspace_v120.block_values",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Extracts and returns the values associated with a block from the given record dictionary as a sequence of tuples. Each tuple in the returned list represents a grouped set of values derived from the input record.\n",
+              "returns_summary": null
+            },
+            "signature": "def block_values(record: dict) -> list[tuple]:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 90,
+            "line_start": 52,
+            "name": "markdown_roundtrip",
+            "qualified_name": "workspace_v120.markdown_roundtrip",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Performs a markdown roundtrip operation using the provided browser Page, a target URL, and a filesystem folder; it carries out whatever steps are needed to exercise markdown handling and returns a result as a string.\n",
+              "returns_summary": null
+            },
+            "signature": "def markdown_roundtrip(page: Page, url: str, folder: Path) -> str:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 99,
+            "line_start": 93,
+            "name": "save_database_dialog",
+            "qualified_name": "workspace_v120.save_database_dialog",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Opens and drives a save-database dialog in a browser testing Page, submitting the database save request to the given endpoint using the specified HTTP method. It automates the UI interactions required to save a database and returns the result of that operation as a dictionary.\n",
+              "returns_summary": null
+            },
+            "signature": "def save_database_dialog(page: Page, endpoint: str, method: str = 'POST') -> dict:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 107,
+            "line_start": 102,
+            "name": "create_database",
+            "qualified_name": "workspace_v120.create_database",
+            "response": {
+              "parameters_summary": "page is a Playwright Page object used to drive browser interactions during the test; name is the desired name for the database to be created.",
+              "purpose": "Automates the creation of a database in a browser-driven test using the provided Page object and the supplied database name. It performs the necessary UI interactions to create the database and returns a string result related to the created database.\n",
+              "returns_summary": "Returns a string that identifies or represents the created database (for example, the created database's name or identifier)."
+            },
+            "signature": "def create_database(page: Page, name: str) -> str:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 116,
+            "line_start": 110,
+            "name": "property_dialog",
+            "qualified_name": "workspace_v120.property_dialog",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Locate and return the UI locator for a property dialog on the given Playwright page that corresponds to a property identified by the provided name and kind. The function encapsulates the selector logic so callers can interact with the dialog for that specific property.\n",
+              "returns_summary": null
+            },
+            "signature": "def property_dialog(page: Page, name: str, kind: str) -> Locator:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 121,
+            "line_start": 119,
+            "name": "create_property",
+            "qualified_name": "workspace_v120.create_property",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Interacts with a browser Page to create a new property on a specified database within the workspace. It uses the provided database identifier, property name, and property kind to drive the UI actions required to add that property in tests.\n",
+              "returns_summary": null
+            },
+            "signature": "def create_property(page: Page, database: str, name: str, kind: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 127,
+            "line_start": 124,
+            "name": "save_property",
+            "qualified_name": "workspace_v120.save_property",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Interacts with a Playwright Page to save or persist a property entry for a given database and property name in the test workspace. It automates the UI steps necessary to store the specified property into the indicated database within the test environment.\n",
+              "returns_summary": null
+            },
+            "signature": "def save_property(page: Page, database: str, name: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 151,
+            "line_start": 130,
+            "name": "create_schema",
+            "qualified_name": "workspace_v120.create_schema",
+            "response": {
+              "parameters_summary": "page is a Playwright Page object used to drive and inspect the web UI during the schema creation process.",
+              "purpose": "Use a browser automation Page to create a schema in the workspace test flow. The function performs the UI interactions necessary to create the schema and collects the resulting identifying information.\n",
+              "returns_summary": "Returns a tuple of two strings containing the primary pieces of information produced by the creation step (for example, the schema name and an associated identifier)."
+            },
+            "signature": "def create_schema(page: Page) -> tuple[str, str]:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 156,
+            "line_start": 154,
+            "name": "choose_database",
+            "qualified_name": "workspace_v120.choose_database",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Interacts with a Playwright Page to select or switch to a specific database entry in the workspace UI. It uses the provided database type/identifier and a name to locate and choose the correct database within the page.\n",
+              "returns_summary": null
+            },
+            "signature": "def choose_database(page: Page, database: str, name: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 166,
+            "line_start": 159,
+            "name": "record_dialog",
+            "qualified_name": "workspace_v120.record_dialog",
+            "response": {
+              "parameters_summary": "page is the Playwright Page to search in; record_id is an optional string used to target a specific record's dialog when multiple dialogs may exist.",
+              "purpose": "Locate and return the dialog element used for recording on a Playwright Page. If a record_id is provided, the locator is scoped to the dialog instance associated with that record identifier.\n",
+              "returns_summary": "Returns a Playwright Locator that points to the record dialog element on the page."
+            },
+            "signature": "def record_dialog(page: Page, record_id: str | None = None) -> Locator:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 179,
+            "line_start": 169,
+            "name": "create_view",
+            "qualified_name": "workspace_v120.create_view",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Automates the creation of a view in the test workspace UI by using the provided Page object to interact with the application and create a view with the given name and kind inside the specified database. It performs the browser steps necessary to add that view in the workspace_v120 test context.\n",
+              "returns_summary": null
+            },
+            "signature": "def create_view(page: Page, database: str, name: str, kind: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 210,
+            "line_start": 182,
+            "name": "fill_records_and_views",
+            "qualified_name": "workspace_v120.fill_records_and_views",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Interacts with a browser Page to populate or configure records and views for a specific catalog and database in the test workspace. It performs the necessary UI actions to create or fill the data structures required by tests and returns identifiers for the created record and view.\n",
+              "returns_summary": null
+            },
+            "signature": "def fill_records_and_views(page: Page, catalog: str, database: str) -> tuple[str, str]:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 238,
+            "line_start": 213,
+            "name": "linked_view_roundtrip",
+            "qualified_name": "workspace_v120.linked_view_roundtrip",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Uses a Playwright Page to exercise a linked-view roundtrip in the browser: it navigates to the given URL and interacts with or verifies a linked view identified by the provided page_id, catalog, target, database, and record parameters. The function is intended as a browser-based test helper that checks that a linked view can be opened, navigated, and returned from correctly.\n",
+              "returns_summary": null
+            },
+            "signature": "def linked_view_roundtrip(page: Page, url: str, page_id: str, catalog: str, target: str, database: str, record: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 264,
+            "line_start": 241,
+            "name": "csv_roundtrip",
+            "qualified_name": "workspace_v120.csv_roundtrip",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Runs a CSV import/export round-trip test in a browser workspace. The function drives a Page to a given URL, uses a filesystem folder and database name to import or export CSV data, and verifies that the round-trip operation completes successfully.\n",
+              "returns_summary": null
+            },
+            "signature": "def csv_roundtrip(page: Page, url: str, folder: Path, database: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 280,
+            "line_start": 267,
+            "name": "search_and_reopen",
+            "qualified_name": "workspace_v120.search_and_reopen",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Drive a browser page to perform a search for a specific record in a given database and then reopen that record's page. It uses the provided Page instance and URL along with identifiers (page_id, database, record) to locate and open the target item in the web UI.\n",
+              "returns_summary": null
+            },
+            "signature": "def search_and_reopen(page: Page, url: str, page_id: str, database: str, record: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 313,
+            "line_start": 283,
+            "name": "main",
+            "qualified_name": "workspace_v120.main",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Entry point for the test module tests/browser/workspace_v120.py; when called, main runs the test scenario(s) defined in that module related to the workspace v1.20 browser behaviors. It orchestrates the setup, execution, and teardown of those tests within this file.\n",
+              "returns_summary": null
+            },
+            "signature": "def main() -> None:"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Add and round-trip markdown content in the browser UI (add_markdown, markdown_roundtrip).",
+            "Create, configure, save, and choose custom databases and schemas, including dialogs for saving databases and properties (create_database, create_schema, save_database_dialog, choose_database, property_dialog, save_property).",
+            "Define properties and views and exercise linked record/view behavior across save/load operations (create_property, create_view, linked_view_roundtrip, record_dialog).",
+            "Import and export tabular data via CSV and validate round-trip integrity (csv_roundtrip, fill_records_and_views).",
+            "Provide higher-level orchestration and entry point for running the scenarios (main, search_and_reopen, block_values)."
+          ],
+          "notable_patterns": [
+            "Uses Playwright synchronous API (Locator, Page, sync_playwright, expect) for browser automation.",
+            "Combines browser-driven UI actions with local resources: sqlite3 databases, CSV handling, and TemporaryDirectory usage.",
+            "Organizes functionality into focused helper functions named for specific UI/dialog operations and round-trip verification scenarios.",
+            "Imports shared test utilities and fixtures from a previous workspace module (workspace_v012) to manage servers and saved states."
+          ],
+          "summary": "This module contains browser-based acceptance test helpers and end-to-end scenarios for workspace version 1.20, focused on local text transfers and custom database workflows. It provides a set of functions that automate interactions with a browser using the Playwright synchronous API to create and manipulate markdown content, create and persist databases and schemas, define properties and views, import and export CSV data, and verify that records, linked views, and markdown content survive save/load cycles. The module also defines a few project-scoped constants used by the tests (MARKDOWN, CATALOG, DATA, RECORD) and relies on standard libraries (csv, sqlite3, tempfile) and utilities imported from workspace_v012 to drive local servers and saved-state fixtures.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 4554,
+        "tokens_output": 3738
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:17Z",
+      "model": "gpt-5-mini",
+      "source_sha": "45017619fea7eb10220074412c183cbd7a278e46"
+    },
+    "tests/browser/workspace_v120_canvas.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/browser/workspace_v120_canvas.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 70,
+            "line_start": 13,
+            "name": "test_nested_editor",
+            "qualified_name": "workspace_v120_canvas.test_nested_editor",
+            "response": {
+              "parameters_summary": "page is the browser page fixture used to drive and inspect the web UI; url is the address to navigate to for setting up the test scenario.",
+              "purpose": "This is a browser test function that exercises behavior of a nested editor within the workspace canvas (version 1.20). It likely navigates to the given URL in the provided browser page fixture and verifies that nested editor functionality (rendering, interaction, or integration) behaves as expected.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_nested_editor(page, url):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 87,
+            "line_start": 73,
+            "name": "main",
+            "qualified_name": "workspace_v120_canvas.main",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Entry point for a test script located at tests/browser/workspace_v120_canvas.py. It runs the scripted browser-based workspace canvas test routine when executed as a standalone script.\n",
+              "returns_summary": null
+            },
+            "signature": "def main():"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "test_nested_editor: execute a Playwright-driven test scenario that targets nested block editing and structured clipboard interactions in Chromium.",
+            "main: provide a command-line entry point to prepare any required environment and invoke the test routine.",
+            "Reuse helper utilities from workspace_v012 for server, API, and saved-state handling and from workspace_v110_canvas to create browser pages for the test.",
+            "Leverage TemporaryDirectory and uuid4 for ephemeral, isolated test execution contexts."
+          ],
+          "notable_patterns": [
+            "uses synchronous Playwright API (playwright.sync_api)",
+            "reuses helper modules (workspace_v012, workspace_v110_canvas) for server and page creation",
+            "provides a test function plus a main entry point for standalone execution",
+            "uses standard library utilities for temporary resources and unique identifiers (TemporaryDirectory, uuid4)",
+            "accepts command-line configuration via argparse"
+          ],
+          "summary": "This module provides a Playwright-based test harness concerned with exercising nested block editing and structured clipboard behavior in Chromium. It imports synchronous Playwright APIs and helper utilities from workspace_v012 and workspace_v110_canvas to create browser pages, start local test servers, and interact with saved state. The module exposes two top-level functions: test_nested_editor, which contains the test logic, and main, which serves as a command-line entry point to run the test and perform necessary setup such as temporary directories and unique identifiers.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 849,
+        "tokens_output": 682
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:20:47Z",
+      "model": "gpt-5-mini",
+      "source_sha": "46d22634beddcdeabcf63e0871b09461c9825c4c"
+    },
+    "tests/browser/workspace_v130.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/browser/workspace_v130.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 24,
+            "line_start": 22,
+            "name": "open_linked_page",
+            "qualified_name": "workspace_v130.open_linked_page",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Open or navigate to a linked page in a browser test context using the provided Playwright Page object, targeting the given URL and associating the navigation with the supplied page identifier. The function performs the operation without returning a value.\n",
+              "returns_summary": null
+            },
+            "signature": "def open_linked_page(page: Page, url: str, page_id: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 48,
+            "line_start": 27,
+            "name": "setup",
+            "qualified_name": "workspace_v130.setup",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Prepare a browser-based test workspace using the provided Playwright Page and target URL; performs whatever initialization is needed for the tests in this module and returns four values needed by callers.\n",
+              "returns_summary": null
+            },
+            "signature": "def setup(page: Page, url: str) -> tuple[str, str, dict, dict]:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 63,
+            "line_start": 51,
+            "name": "restore_previous",
+            "qualified_name": "workspace_v130.restore_previous",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Restore a previous revision of a file in a browser-based test by interacting with the given Page object. It navigates or manipulates the UI at the given path to select the specified revision and verifies that the displayed preview matches preview_text before completing the restore action.\n",
+              "returns_summary": null
+            },
+            "signature": "def restore_previous(page: Page, path: str, revision: int, preview_text: str) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 92,
+            "line_start": 66,
+            "name": "record_history",
+            "qualified_name": "workspace_v130.record_history",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Record a historical snapshot or change for a web page into a test workspace or database context. It uses the provided Page object and URL along with identifiers and original data to store or update history entries associated with the given page_id and database.\n",
+              "returns_summary": null
+            },
+            "signature": "def record_history(page: Page, url: str, page_id: str, database: str, original: dict) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 126,
+            "line_start": 95,
+            "name": "view_history",
+            "qualified_name": "workspace_v130.view_history",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Automates a browser interaction to view the history of a specific workspace page: it uses the provided Playwright Page to navigate to the given URL and perform actions that inspect or display the revision/history for the page identified by page_id, using the provided database context and original state dictionary as needed.\n",
+              "returns_summary": null
+            },
+            "signature": "def view_history(page: Page, url: str, page_id: str, database: str, original: dict) -> None:"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 158,
+            "line_start": 129,
+            "name": "main",
+            "qualified_name": "workspace_v130.main",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Acts as the entry point for running the test routine in the tests/browser/workspace_v130.py module \u2014 it orchestrates setup and execution of the workspace-related browser tests for version 1.30. It likely initializes test environment, runs the test cases, and performs any necessary teardown or reporting.\n",
+              "returns_summary": null
+            },
+            "signature": "def main() -> None:"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Define constants naming the test database, records, views, and note used for history and restore scenarios.",
+            "Provide functions to open linked pages in the browser and to set up test state and fixtures for acceptance tests.",
+            "Record and restore edit history for database records and verify the restoration behavior via browser interactions.",
+            "Inspect and validate view history, including scenarios with filtered gallery views and their restoration outcomes.",
+            "Coordinate use of local test servers, temporary directories, and SQLite to persist and manage test data during browser-based tests."
+          ],
+          "notable_patterns": [
+            "Uses Playwright synchronous API for browser automation (Page, sync_playwright, expect).",
+            "Reuses test helper functions from other workspace modules (workspace_v012 and workspace_v120).",
+            "Combines filesystem and database fixtures with TemporaryDirectory and sqlite3 for test state management.",
+            "Defines string constants for reuse across multiple test scenarios to describe databases, records and views."
+          ],
+          "summary": "This module provides browser-based acceptance tests and helper routines for validating database record and view history restoration in a web application. It declares a set of constants that name the database, records, views, and notes involved in the tests and imports test utilities for creating databases, views and properties, interacting with local test servers, and manipulating the browser via Playwright's synchronous API. The available functions exercise workflows such as opening linked pages, setting up test state, recording and restoring history, and inspecting view history, and they rely on SQLite and temporary directories to manage test fixtures and persistence.\n\nThe file is structured around small, focused functions that orchestrate end-to-end browser interactions and server-backed state changes. Test helpers from earlier workspace modules (workspace_v012 and workspace_v120) are reused for common operations like creating databases, adding markdown, and saving dialogs; Playwright is used to navigate UI elements and assert expected behaviors. The module is intended to be run as part of an acceptance test suite verifying that edit and restore operations behave correctly across records and views.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 2051,
+        "tokens_output": 1420
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:20:56Z",
+      "model": "gpt-5-mini",
+      "source_sha": "938f08d830333fcdbceca0d6298ebb911fa07df7"
+    },
+    "tests/test_custom_databases.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/test_custom_databases.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 18,
+            "line_start": 16,
+            "name": "client_for",
+            "qualified_name": "test_custom_databases.client_for",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Create and return a test client configured for the provided filesystem path. The function is intended to produce a client instance that operates against resources or a database located at the given path, enabling tests to interact with that target.\n",
+              "returns_summary": "Returns a client instance tied to the supplied path for use in tests."
+            },
+            "signature": "def client_for(path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 24,
+            "line_start": 22,
+            "name": "database_client",
+            "qualified_name": "test_custom_databases.database_client",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "A pytest fixture that sets up and provides a database client for tests in tests/test_custom_databases.py. It uses the pytest-provided temporary path to isolate any on-disk storage for each test.\n",
+              "returns_summary": "Returns a database client instance configured to use the given temporary directory for its storage."
+            },
+            "signature": "def database_client(tmp_path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 29,
+            "line_start": 27,
+            "name": "checked",
+            "qualified_name": "test_custom_databases.checked",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Test helper that checks a response object against an expected HTTP status code. It is intended for use in tests to verify that the provided response has the expected status (defaulting to 200).\n",
+              "returns_summary": null
+            },
+            "signature": "def checked(response, status=200):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 33,
+            "line_start": 32,
+            "name": "create_database",
+            "qualified_name": "test_custom_databases.create_database",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Create a new database resource using the provided client with the given name for use in tests. It encapsulates the setup step of provisioning or registering a database identified by the name with the test client.\n",
+              "returns_summary": null
+            },
+            "signature": "def create_database(client, name):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 37,
+            "line_start": 36,
+            "name": "path_of",
+            "qualified_name": "test_custom_databases.path_of",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Determine and return the filesystem path associated with the given test database. Used in tests to obtain the on-disk location of a database object or identifier.\n",
+              "returns_summary": "Returns the path to the database as a string."
+            },
+            "signature": "def path_of(db):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 44,
+            "line_start": 40,
+            "name": "property_of",
+            "qualified_name": "test_custom_databases.property_of",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This function defines or checks a property for a custom database within the test suite. Given a client, a database object or identifier, a property name, its kind, and additional configuration, it sets up or validates that property in the context of tests.\n",
+              "returns_summary": null
+            },
+            "signature": "def property_of(client, db, name, kind, **config):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 50,
+            "line_start": 47,
+            "name": "record_of",
+            "qualified_name": "test_custom_databases.record_of",
+            "response": {
+              "parameters_summary": "client is the test client or API wrapper used to interact with the database; db identifies which custom database to use; title is the record title. values is an optional mapping of field names to values to populate the record, and notes is an optional string to attach as record notes.",
+              "purpose": "Create or retrieve a test record in a custom database using the provided client and database identifier, setting its title and optional field values and notes. This helper is intended for use in test cases to set up or inspect database records consistently.\n",
+              "returns_summary": "Returns the created or retrieved record object representing the database entry (used by tests to inspect or assert state)."
+            },
+            "signature": "def record_of(client, db, title, values=None, notes=''):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 57,
+            "line_start": 53,
+            "name": "revise_record",
+            "qualified_name": "test_custom_databases.revise_record",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Update or modify an existing record in a custom database test using the provided client. The function takes a database identifier and a record reference, applies the given values to revise that record, and exercises the code paths involved in record revision within tests.\n",
+              "returns_summary": null
+            },
+            "signature": "def revise_record(client, db, record, values):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 98,
+            "line_start": 60,
+            "name": "test_schema_and_views_are_durable",
+            "qualified_name": "test_custom_databases.test_schema_and_views_are_durable",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This is a test function that verifies that database schema definitions and materialized or regular views remain durable across the operations being tested. It likely sets up a temporary database, creates schemas and views, performs actions that could affect persistence, and then asserts that the schema and views are still present and unchanged.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_schema_and_views_are_durable(tmp_path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 133,
+            "line_start": 101,
+            "name": "test_relations_rollups_and_formula_follow_source_edits",
+            "qualified_name": "test_custom_databases.test_relations_rollups_and_formula_follow_source_edits",
+            "response": {
+              "parameters_summary": "database_client is a test fixture or helper that provides access to the test database and operations for creating, updating, and querying records used by the test.",
+              "purpose": "This test verifies that when source records in a custom database are edited, related properties (relations and rollups) and formula fields correctly follow and reflect those source edits. It exercises relations, rollups, and formula behavior to ensure updates propagate as expected.\n",
+              "returns_summary": "This test does not return a value; it asserts expected behavior and raises on failure."
+            },
+            "signature": "def test_relations_rollups_and_formula_follow_source_edits(database_client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 170,
+            "line_start": 136,
+            "name": "test_invalid_batch_rolls_back_and_stale_mutations_are_rejected",
+            "qualified_name": "test_custom_databases.test_invalid_batch_rolls_back_and_stale_mutations_are_rejected",
+            "response": {
+              "parameters_summary": "database_client is a test fixture providing a connection or client for interacting with the custom database under test; it is used to submit the batch and to observe resulting state/behavior.",
+              "purpose": "This test verifies that when an invalid batch operation is attempted against a custom database, the entire batch is rolled back and no partial changes are committed. It also checks that any stale or outdated mutations are rejected by the database client to ensure consistency.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_invalid_batch_rolls_back_and_stale_mutations_are_rejected(database_client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 198,
+            "line_start": 173,
+            "name": "test_record_history_paginates_and_restores_as_new_revision",
+            "qualified_name": "test_custom_databases.test_record_history_paginates_and_restores_as_new_revision",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that a database record's revision history can be paginated through and that restoring a previous revision creates a new revision rather than overwriting history. It ensures pagination of history entries works correctly and that performing a restore results in a new revision entry being added.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_record_history_paginates_and_restores_as_new_revision(database_client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 216,
+            "line_start": 201,
+            "name": "test_restore_rejects_a_historical_relation_to_a_deleted_record",
+            "qualified_name": "test_custom_databases.test_restore_rejects_a_historical_relation_to_a_deleted_record",
+            "response": {
+              "parameters_summary": "database_client: a test fixture or helper providing access to the database and operations needed to create, delete, and attempt restoration of records and relations.",
+              "purpose": "This test verifies that attempting to restore a historical relation that points to a record which has been deleted is rejected. It ensures the restore operation does not re-establish relations to records that no longer exist, validating correct handling of historical relations to deleted records.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_restore_rejects_a_historical_relation_to_a_deleted_record(database_client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 241,
+            "line_start": 219,
+            "name": "test_view_history_tracks_settings_and_preserves_the_view_identity",
+            "qualified_name": "test_custom_databases.test_view_history_tracks_settings_and_preserves_the_view_identity",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that a database view's history correctly records its settings and that the view's identity (likely its identifier or identity-related properties) is preserved across operations that affect or inspect its history. It exercises the view-history tracking behavior and asserts that configuration/settings are captured and that the view remains the same logical entity.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_view_history_tracks_settings_and_preserves_the_view_identity(database_client):"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Provide a TestClient-bound factory (client_for) and a pytest-compatible database_client fixture to create and manage test clients and databases for the local API.",
+            "Offer helper functions for constructing and inspecting test payloads and entities, including create_database, path_of, property_of, record_of, revise_record, and checked.",
+            "Define a suite of behavioral tests that verify durability, relation rollups, transactional rollback on invalid batches, record history pagination and restoration, rejection of relations to deleted records, and preservation of view identity across history changes."
+          ],
+          "notable_patterns": [
+            "Uses pytest for test definition and FastAPI TestClient to exercise API endpoints",
+            "Interacts with a local SQLite database via sqlite3 for persistence in tests",
+            "Centralizes API path and test headers in module-level constants for reuse"
+          ],
+          "summary": "This test module contains behavioral tests for local schemas, typed records, views, and relations against a local API. It defines helper factories and fixtures (such as client_for and database_client) and a set of test functions that exercise persistence and history behavior: durability of schemas and views, rollups and formula propagation through relations, transactional behavior on invalid batches, record history pagination and restoration, relation restoration rejection for deleted targets, and view history tracking.\n\nThe module relies on FastAPI's TestClient and pytest to drive HTTP interactions with a created application instance (create_app) and uses sqlite3 for local database interactions in the tests. A small set of module-level constants (BASE, ORIGIN, HEADERS) centralize API path and header values used across the tests and helpers.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 3418,
+        "tokens_output": 3058
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:14Z",
+      "model": "gpt-5-mini",
+      "source_sha": "25facb7bcb7e89d338ecad472ebc4b81e8ab0930"
+    },
+    "tests/test_integrated_workspace_v09.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/test_integrated_workspace_v09.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 15,
+            "line_start": 13,
+            "name": "client",
+            "qualified_name": "test_integrated_workspace_v09.client",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "A pytest fixture that provides a test client for the integrated workspace tests. It takes a temporary filesystem path and prepares a client instance usable by test functions.\n",
+              "returns_summary": "Yields or returns a configured test client instance that tests can use, created using the provided temporary Path."
+            },
+            "signature": "def client(tmp_path: Path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 18,
+            "line_start": 17,
+            "name": "post",
+            "qualified_name": "test_integrated_workspace_v09.post",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Send an HTTP POST request using the provided test client to the given path with the supplied payload and return the resulting response. This helper is used in integration tests to exercise endpoints under test.\n",
+              "returns_summary": null
+            },
+            "signature": "def post(client, path, payload):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 21,
+            "line_start": 20,
+            "name": "put",
+            "qualified_name": "test_integrated_workspace_v09.put",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Helper function used in tests to send an HTTP PUT request using the provided test client to the given path with the given payload. It encapsulates performing the PUT operation against the test server endpoint within the integrated workspace v0.9 test suite.\n",
+              "returns_summary": null
+            },
+            "signature": "def put(client, path, payload):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 26,
+            "line_start": 23,
+            "name": "doc",
+            "qualified_name": "test_integrated_workspace_v09.doc",
+            "response": {
+              "parameters_summary": "client is the test API/client object used to perform workspace operations; title is the desired document title; parent_id, if provided, is the identifier of the parent container under which the document should be created.",
+              "purpose": "Creates (or opens) a workspace document within the integrated test workspace using the provided client, assigning it the given title and optionally placing it under a specified parent. It is intended for use in tests to set up or reference a document resource.\n",
+              "returns_summary": "Returns the created or retrieved document representation (e.g., an API response or document object) so the test can interact with it."
+            },
+            "signature": "def doc(client, title, parent_id=None):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 37,
+            "line_start": 28,
+            "name": "test_existing_templates_and_getting_started_remain",
+            "qualified_name": "test_integrated_workspace_v09.test_existing_templates_and_getting_started_remain",
+            "response": {
+              "parameters_summary": "client is a test HTTP/client fixture used to make requests against the application under test (provides access to endpoints and application state during the test).",
+              "purpose": "This test verifies that existing templates and the \"Getting Started\" entry are still present in the integrated workspace (v0.9) when exercised via the provided test client. It exercises the application state through the client and asserts that those items remain available.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_existing_templates_and_getting_started_remain(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 48,
+            "line_start": 39,
+            "name": "test_page_tree_create_move_cycle_and_stale_revision",
+            "qualified_name": "test_integrated_workspace_v09.test_page_tree_create_move_cycle_and_stale_revision",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test exercises the page tree behavior in the integrated workspace v0.9: it creates pages, performs move operations (including attempts that would create cycles), and verifies how stale revisions are handled after those moves. It ensures that move operations are correctly applied or rejected to prevent cycles and that revision state is consistent when pages are relocated or updated.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_page_tree_create_move_cycle_and_stale_revision(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 65,
+            "line_start": 50,
+            "name": "test_project_task_database_revision_and_document_link",
+            "qualified_name": "test_integrated_workspace_v09.test_project_task_database_revision_and_document_link",
+            "response": {
+              "parameters_summary": "client is a test client fixture used to make requests against the application under test (e.g., an HTTP or application test client).",
+              "purpose": "This test exercises project task behavior in an integrated workspace by verifying database revision handling and document link functionality. It likely creates or modifies a project task via the provided client and asserts that the database revision is updated and that document links are created or maintained correctly.\n",
+              "returns_summary": "This test function does not return a value (it relies on assertions); therefore it returns None."
+            },
+            "signature": "def test_project_task_database_revision_and_document_link(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 79,
+            "line_start": 67,
+            "name": "test_calendar_event_crud_feed_and_task_projection",
+            "qualified_name": "test_integrated_workspace_v09.test_calendar_event_crud_feed_and_task_projection",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This is a test function that exercises create, read, update, and delete (CRUD) operations for calendar events and verifies their effects on the feed and task projection within the integrated workspace v0.9. It uses a provided test client to perform API interactions and assert that the event lifecycle updates the feed and task views as expected.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_calendar_event_crud_feed_and_task_projection(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 93,
+            "line_start": 81,
+            "name": "test_timezone_and_calendar_input_errors",
+            "qualified_name": "test_integrated_workspace_v09.test_timezone_and_calendar_input_errors",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test exercises the integrated workspace v0.9 behavior when presented with invalid timezone and calendar inputs, asserting that the system returns the appropriate input validation errors. It sends requests using the provided test client and verifies that error responses are produced for malformed or unsupported timezone/calendar values.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_timezone_and_calendar_input_errors(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 103,
+            "line_start": 95,
+            "name": "test_local_no_remote_side_effects",
+            "qualified_name": "test_integrated_workspace_v09.test_local_no_remote_side_effects",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that performing local operations using the provided client does not produce any unintended side effects on the remote system. It likely runs a sequence of local workspace actions and asserts that remote state remains unchanged.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_local_no_remote_side_effects(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 114,
+            "line_start": 105,
+            "name": "test_migrate_v08_database_without_losing_documents",
+            "qualified_name": "test_integrated_workspace_v09.test_migrate_v08_database_without_losing_documents",
+            "response": {
+              "parameters_summary": "tmp_path is a pytest-provided temporary directory (pathlib.Path) used as an isolated filesystem location for creating the legacy v0.8 database and performing the migration.",
+              "purpose": "This test verifies that migrating a workspace database from version 0.8 to the newer format preserves existing documents and does not lose data during the migration process. It exercises the migration logic end-to-end using a temporary filesystem location to simulate the older database state and confirms documents remain accessible after migration.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_migrate_v08_database_without_losing_documents(tmp_path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 170,
+            "line_start": 117,
+            "name": "test_task_views_keep_identity_and_new_properties_on_upgraded_copy",
+            "qualified_name": "test_integrated_workspace_v09.test_task_views_keep_identity_and_new_properties_on_upgraded_copy",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that when a workspace (or task views within it) is upgraded/copied to a newer version, the task views retain their identity (i.e., remain the same logical objects) and also keep any new properties introduced by the upgrade. It ensures that an upgraded copy preserves both identity and newly added properties for task views.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_task_views_keep_identity_and_new_properties_on_upgraded_copy(tmp_path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 185,
+            "line_start": 182,
+            "name": "test_invalid_task_properties_do_not_persist",
+            "qualified_name": "test_integrated_workspace_v09.test_invalid_task_properties_do_not_persist",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "A test that verifies invalid task property values are rejected and are not saved to the integrated workspace. It exercises the API via the provided client and uses different property_value inputs (via parametrize) to ensure invalid values do not persist on the task.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_invalid_task_properties_do_not_persist(client, property_value):"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Provide a TestClient fixture and simple HTTP helper fixtures (post, put) for exercising the local FastAPI application.",
+            "Define a doc fixture for creating and referencing documents within the LocalStore-backed test environment.",
+            "Assert correct behavior of existing templates and initial getting-started flows for the v0.9 API.",
+            "Validate page-tree operations including creation, move semantics, cycle detection, and handling of stale revisions.",
+            "Verify project/task database revision behavior, document linking, calendar event CRUD and projection to tasks, and timezone/input validation.",
+            "Ensure local operations produce no unintended remote side effects and that migration from v0.8 preserves documents and expected task view identity/behavior.",
+            "Check that invalid task properties are rejected and not persisted by the storage layer."
+          ],
+          "notable_patterns": [
+            "Uses pytest for test organization and fixtures",
+            "Exercises a FastAPI application via fastapi.testclient.TestClient",
+            "Interacts with a sqlite3-backed LocalStore for storage-level integration testing",
+            "Defines shared request headers and a local base URL as module-level constants"
+          ],
+          "summary": "This module contains synthetic-only local integration tests for version 0.9 of the local API. It defines pytest test functions that exercise the application created by services.local_api.app.create_app using FastAPI's TestClient and a LocalStore-backed sqlite3 environment. The tests cover a broad range of behaviors relevant to project templates, page tree operations, project/task database revisions, document linking, calendar event CRUD and feeds, timezone and input validation errors, migration from v0.8 databases, and task view upgrade semantics.\n\nThe module exposes helper fixtures and utilities (client, post, put, doc) alongside thirteen targeted test functions that validate API behavior and side-effects in isolation (ensuring no remote side effects). Two module-level constants (HEADERS and URL) provide default request headers and a base URL used by the tests.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 3224,
+        "tokens_output": 2806
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:27Z",
+      "model": "gpt-5-mini",
+      "source_sha": "f82ccc77853a1201770c72893cf1b02bb9f1ca3e"
+    },
+    "tests/test_myai_v011.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/test_myai_v011.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 30,
+            "line_start": 9,
+            "name": "test_brand_and_catalog_and_local_security",
+            "qualified_name": "test_myai_v011.test_brand_and_catalog_and_local_security",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Pytest test function that verifies interactions between branding, catalog functionality, and local security behavior for the myai v0.11 code path. It uses a temporary filesystem location to set up and exercise scenarios involving brand and catalog handling together with local security checks.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_brand_and_catalog_and_local_security(tmp_path: Path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 39,
+            "line_start": 32,
+            "name": "test_new_template_saves_and_existing_db_remains_readable",
+            "qualified_name": "test_myai_v011.test_new_template_saves_and_existing_db_remains_readable",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that saving a new template does not break or corrupt an existing database and that the existing database remains readable after the new template is written. It ensures compatibility between creating/updating template data and continued access to preexisting stored data.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_new_template_saves_and_existing_db_remains_readable(tmp_path: Path):"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Verify branding, catalog discovery, and local security behavior of the local API using test_brand_and_catalog_and_local_security.",
+            "Confirm that saving a new template works and that an existing database remains readable via test_new_template_saves_and_existing_db_remains_readable.",
+            "Provide common request configuration through the URL and HEADERS constants for tests that use a TestClient against the created app.",
+            "Exercise storage-related behavior by using services.local_api.storage.LocalStore within the tests."
+          ],
+          "notable_patterns": [
+            "Uses fastapi.testclient.TestClient to exercise the FastAPI application created by services.local_api.app.create_app",
+            "Defines shared HTTP test configuration as module-level constants (URL and HEADERS)",
+            "Interacts with a LocalStore implementation to validate persistence and backward-compatibility scenarios"
+          ],
+          "summary": "This test module contains checks related to v0.11 branding, discovery, and backward-compatibility for the local API service. It defines two test functions that exercise the application created by services.local_api.app.create_app and interact with a LocalStore instance to validate behavior around cataloging, security headers, and template persistence when a new template is saved against an existing database. The module also centralizes the HTTP base URL and request headers used by the tests as module-level constants.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 890,
+        "tokens_output": 703
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:02Z",
+      "model": "gpt-5-mini",
+      "source_sha": "a891b866fc3fbc7ae8e4022e2341479b79d5995f"
+    },
+    "tests/test_page_canvas_v10.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/test_page_canvas_v10.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 14,
+            "line_start": 13,
+            "name": "client",
+            "qualified_name": "test_page_canvas_v10.client",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This is a pytest fixture named 'client' defined in tests/test_page_canvas_v10.py. It provides a test client for use in tests and accepts a temporary filesystem path to set up any required test resources.\n",
+              "returns_summary": "Returns a test client object instantiated for use by the tests (exact type/value provided by the fixture implementation)."
+            },
+            "signature": "def client(tmp_path: Path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 28,
+            "line_start": 16,
+            "name": "test_page_creation_and_blocks_persist",
+            "qualified_name": "test_page_canvas_v10.test_page_creation_and_blocks_persist",
+            "response": {
+              "parameters_summary": "client is the test HTTP client fixture used to make requests against the application under test (e.g., to create pages and retrieve them).",
+              "purpose": "This test verifies that a page can be created via the application's API (or test client) and that any blocks added to that page persist as expected. It exercises page creation and then checks that the block contents or structure remain after creation, ensuring persistence behaviour is correct.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_page_creation_and_blocks_persist(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 43,
+            "line_start": 30,
+            "name": "test_revision_validation_and_max_size",
+            "qualified_name": "test_page_canvas_v10.test_revision_validation_and_max_size",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that revision objects are validated correctly and that any size limits on revisions (maximum allowed size) are enforced by the application. It exercises the endpoint(s) using the provided test client to ensure that oversized or otherwise invalid revision payloads are rejected and valid revisions are accepted.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_revision_validation_and_max_size(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 53,
+            "line_start": 45,
+            "name": "test_template_document_preserved_when_adding_blocks",
+            "qualified_name": "test_page_canvas_v10.test_template_document_preserved_when_adding_blocks",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that when new blocks are added to a page canvas, the original template document remains unchanged and is preserved. It exercises the code path that mutates a page by adding blocks and asserts that the template document content or structure is not modified as a result.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_template_document_preserved_when_adding_blocks(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 60,
+            "line_start": 55,
+            "name": "test_legacy_sqlite_is_migrated_without_data_loss",
+            "qualified_name": "test_page_canvas_v10.test_legacy_sqlite_is_migrated_without_data_loss",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that a legacy SQLite database used by the application is migrated to the current schema or storage format without losing any data. It exercises the migration path using a temporary filesystem location and asserts that all expected records and structure survive the migration process.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_legacy_sqlite_is_migrated_without_data_loss(tmp_path: Path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 67,
+            "line_start": 62,
+            "name": "test_local_security_still_applies",
+            "qualified_name": "test_page_canvas_v10.test_local_security_still_applies",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Verifies that the local security rules are still enforced when interacting with the page canvas v10 endpoints. The test uses the provided test client to make requests and assert that unauthorized or locally-restricted actions remain blocked as expected.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_local_security_still_applies(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 86,
+            "line_start": 70,
+            "name": "test_long_korean_canvas_round_trip_and_local_link_validation",
+            "qualified_name": "test_page_canvas_v10.test_long_korean_canvas_round_trip_and_local_link_validation",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that a Canvas page containing long Korean text can be serialized and deserialized (round-tripped) correctly and that local links within that canvas content are validated as expected. It exercises the page/canvas handling code via the provided test client to ensure text integrity and link validation behavior.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_long_korean_canvas_round_trip_and_local_link_validation(client):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 112,
+            "line_start": 89,
+            "name": "test_nested_blocks_are_preserved_and_invalid_depth_is_rejected",
+            "qualified_name": "test_page_canvas_v10.test_nested_blocks_are_preserved_and_invalid_depth_is_rejected",
+            "response": {
+              "parameters_summary": "client is a test HTTP client fixture used to make requests to the application endpoints under test.",
+              "purpose": "This test verifies that nested blocks in the page canvas API are preserved correctly and that requests which attempt to exceed the allowed nesting depth are rejected. It exercises the endpoint behavior by submitting payloads with valid nested structures and invalid (too-deep) structures and asserts the appropriate acceptance or error responses.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_nested_blocks_are_preserved_and_invalid_depth_is_rejected(client):"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Provide a TestClient fixture for the local FastAPI application to be used by the test cases.",
+            "Verify that page creation and synthetic blocks persist correctly across operations.",
+            "Validate revision handling and enforce maximum size constraints for page content.",
+            "Ensure that a template document is preserved when new blocks are added to a page.",
+            "Check that legacy SQLite storage is migrated to the local store without losing data and that local security rules and nested-block validations behave as expected."
+          ],
+          "notable_patterns": [
+            "Uses pytest for test functions and fixtures",
+            "Exercises a FastAPI TestClient created from services.local_api.app.create_app",
+            "Interacts with a LocalStore abstraction for storage-related tests",
+            "Defines shared request constants (URL and HEADERS) for tests",
+            "Uses uuid4 to generate unique identifiers within tests"
+          ],
+          "summary": "This test module contains a suite of pytest-based checks that exercise page block handling in a local FastAPI service. It defines a test client fixture and seven test functions that together verify persistence, revision validation and size limits, template integrity when blocks are added, migration from a legacy SQLite store without data loss, enforcement of local security rules, correct round-trip behavior for long Korean content and link validation, and preservation and validation of nested block depth. The tests interact with the service using a TestClient pointed at a local URL and common JSON headers.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 2153,
+        "tokens_output": 1920
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:07Z",
+      "model": "gpt-5-mini",
+      "source_sha": "7ed97ded8b9c9f7515f3f72115f056a32890514a"
+    },
+    "tests/test_workspace_navigation_v110.py": {
+      "description": {
+        "classes": [],
+        "extraction_quality": "full_ast",
+        "file_path": "tests/test_workspace_navigation_v110.py",
+        "functions": [
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 17,
+            "line_start": 13,
+            "name": "workspace",
+            "qualified_name": "test_workspace_navigation_v110.workspace",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "A pytest fixture that prepares and yields a temporary workspace for tests related to workspace navigation. It uses the provided temporary path to create and configure whatever files or directories the tests need to interact with.\n",
+              "returns_summary": "Returns the prepared temporary workspace (typically a pathlib.Path or an object representing the workspace) that test functions can use to perform filesystem/navigation assertions."
+            },
+            "signature": "def workspace(tmp_path):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 63,
+            "line_start": 20,
+            "name": "test_subtree_trash_hides_search_and_rejects_stale_write",
+            "qualified_name": "test_workspace_navigation_v110.test_subtree_trash_hides_search_and_rejects_stale_write",
+            "response": {
+              "parameters_summary": "workspace is a test fixture providing an isolated workspace instance used to create, search, and modify pages; it supplies the context for performing the trashing and subsequent operations.",
+              "purpose": "This test verifies that when a subtree within the workspace is moved to the trash, it is excluded from search results and any attempted writes based on stale state are rejected. It exercises navigation and mutation of a subtree (using the nested helpers blank, page_path, and change_trash) and asserts correct hiding and conflict behavior after trashing.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_subtree_trash_hides_search_and_rejects_stale_write(workspace):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 24,
+            "line_start": 21,
+            "name": "blank",
+            "qualified_name": "test_workspace_navigation_v110.test_subtree_trash_hides_search_and_rejects_stale_write.blank",
+            "response": {
+              "parameters_summary": "title is the display name or identifier for the blank item; parent_id, if provided, is the identifier of an existing parent under which the blank item will be placed.",
+              "purpose": "Create a blank test item identified by a title, optionally placing it under an existing parent. This helper is intended for use in workspace navigation tests to produce a minimal or placeholder node for further operations.\n",
+              "returns_summary": "Returns the created blank test item (for example an object or identifier representing the new node) so the caller can reference it in subsequent test actions."
+            },
+            "signature": "def blank(title, parent_id=None):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 27,
+            "line_start": 26,
+            "name": "page_path",
+            "qualified_name": "test_workspace_navigation_v110.test_subtree_trash_hides_search_and_rejects_stale_write.page_path",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Compute or retrieve the filesystem or URL-style path for the given page object. This helper is used in tests to obtain a canonical path representation for a page within the workspace navigation test suite.\n",
+              "returns_summary": "Returns the path of the provided page (likely as a string) representing its location in the workspace or site hierarchy."
+            },
+            "signature": "def page_path(page):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 31,
+            "line_start": 29,
+            "name": "change_trash",
+            "qualified_name": "test_workspace_navigation_v110.test_subtree_trash_hides_search_and_rejects_stale_write.change_trash",
+            "response": {
+              "parameters_summary": "page is the test page or browser context used to exercise the UI; action specifies the trash operation to perform (such as trash or restore); revision, if provided, indicates the revision to apply the action against or to assert when performing the change.",
+              "purpose": "Perform a change to the trash state of a workspace subtree within a test scenario. It drives a page interaction to apply the specified trash-related action (e.g., move to trash or restore) and optionally targets a specific revision when making that change.\n",
+              "returns_summary": null
+            },
+            "signature": "def change_trash(page, action, revision=None):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 94,
+            "line_start": 66,
+            "name": "test_template_tag_defaults_are_independent_and_tasks_share_search",
+            "qualified_name": "test_workspace_navigation_v110.test_template_tag_defaults_are_independent_and_tasks_share_search",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "This test verifies that template tag default values are independent between different templates and that task pages created from those templates share the same search behavior. It exercises creating template pages (via a nested helper create_template_page), applying defaults and creating tasks, and then checks that defaults do not leak between templates while tasks reflect the shared search context.\n",
+              "returns_summary": null
+            },
+            "signature": "def test_template_tag_defaults_are_independent_and_tasks_share_search(workspace):"
+          },
+          {
+            "class_name": null,
+            "is_abstract": false,
+            "is_async": false,
+            "is_classmethod": false,
+            "is_method": false,
+            "is_property": false,
+            "is_staticmethod": false,
+            "line_end": 74,
+            "line_start": 69,
+            "name": "create_template_page",
+            "qualified_name": "test_workspace_navigation_v110.test_template_tag_defaults_are_independent_and_tasks_share_search.create_template_page",
+            "response": {
+              "parameters_summary": null,
+              "purpose": "Creates a template page used in the workspace navigation v110 test suite. It sets up the necessary page object/state that tests about template tag defaults and task search behavior rely on.\n",
+              "returns_summary": null
+            },
+            "signature": "def create_template_page():"
+          }
+        ],
+        "language": "Python",
+        "overview": {
+          "key_responsibilities": [
+            "Provide a workspace fixture to set up a TestClient against the local API application for use in tests.",
+            "Test that trashing a subtree hides its pages from search results and that subsequent stale write attempts are rejected.",
+            "Verify that template tag default settings are independent across templates while tasks created from those templates share search behavior.",
+            "Supply a consistent request header (HEADERS) to identify the test client in API requests."
+          ],
+          "notable_patterns": [
+            "uses FastAPI TestClient for integration testing of the API",
+            "uses pytest for test definitions and fixtures",
+            "organizes tests around workspace operations: trash/restore, search visibility, and template/tag behavior"
+          ],
+          "summary": "This test module contains integration tests that verify workspace navigation behavior around trashing and restoring items and how those operations interact with search, page identifiers, and template tag defaults. It defines a workspace fixture used to create a testing client against a local API application and includes tests that exercise subtree trash behavior (ensuring trashed content is hidden from search and that stale writes are rejected) and template/tag interactions (ensuring default tag settings are independent while tasks share search visibility). The module also provides a constant HEADERS used for making requests as a particular local-template-editor client.\n"
+        },
+        "schema_version": "2.0.0",
+        "tokens_input": 1904,
+        "tokens_output": 1585
+      },
+      "extraction_quality": "full_ast",
+      "generated_at": "2026-11-18T03:21:12Z",
+      "model": "gpt-5-mini",
+      "source_sha": "788f00e586c47a1aab006993454734a61bd54004"
     }
   },
   "schema_version": "1.0.0"
