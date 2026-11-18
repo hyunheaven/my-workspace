@@ -1,82 +1,82 @@
-[Documentation Home](README.md)
+# 📚 my-workspace Documentation
 
----
+Welcome to the complete documentation for this repository. This documentation is automatically generated and maintained by Woden Docbot.
 
-# 📁 _docs
+![Files Documented: 54](https://img.shields.io/badge/Files_Documented-54-blue) ![Coverage: 100%](https://img.shields.io/badge/Coverage-100%-green) ![Last Updated: 2026-11-18](https://img.shields.io/badge/Last_Updated-2026--11--18-gray)
 
-> **Purpose:** Top-level repository root that consolidates project documentation, configuration, and primary subdirectories for tests, services, and application workspaces.
-> 
+## 🔗 Quick Links
 
-![Organization: Hierarchical](https://img.shields.io/badge/Organization-Hierarchical-blue)
+[📂 apps](./apps/README.md) | [📂 services](./services/README.md) | [📂 tests](./tests/README.md)
+[📋 Dependencies](./DEPENDENCIES.md)
 
-## 📑 Table of Contents
-
-
-- [Overview](#overview)
-- [Subdirectories](#subdirectories)
-- [Dependencies](#dependencies)
-- [Architecture Notes](#architecture-notes)
 
 ---
 
 ## Overview
 
-This repository root serves as the central coordination point for the project: it holds documentation and configuration files at the top level and organizes the primary code and test surfaces into dedicated subdirectories. Root-level files include several documentation and configuration artifacts (.gitattributes, .gitignore, AGENTS.md, PROJECT_PLAN.md, README.md, RUN_LOCAL.md, requirements-dev.txt) which provide project-level guidance, plans, agent descriptions, runtime instructions, and development dependencies (file contents and exact responsibilities are documented in those files themselves).
+my-workspace
 
-Below the root, three primary subdirectories structure the project work. The tests/ directory contains the repository test suite and aggregates pytest-based modules and browser-driven end-to-end suites that validate the local API and workspace behaviors. The services/ directory groups service-level components (including a local-only template editor API and local-first persistence layers) and is a Python package root. The apps/ directory is a container for front-end workspaces and client-facing app assets, organizing subprojects such as the local-client workspace. Together, the root files and these subdirectories form the repository's coordination layer: documentation/configuration at the top level, service implementations under services/, client UI projects under apps/, and correctness validation under tests/.
+**Languages and tools:** CSS, HTML, JavaScript, Python, SQL
+
+## 📑 Documentation Sections
+
+### [apps](./apps/README.md)
+Top-level container for application front-end workspaces and client-facing app assets, organizing sub-projects such as the local client workspace.
+
+The apps directory serves as a container for application-level front-end workspaces.
+
+![Files: 10](https://img.shields.io/badge/Files-10-blue)
+
+### [services](./services/README.md)
+Host service-level components for the application, including a local-only template editor API and supporting local-first persistence layers used by the app.
 
 
-### File Organization
+The services directory groups service implementations that provide application-facing APIs and persistence layers.
 
-Top-level documentation and configuration files sit at the repository root. Functional code is organized into feature-aligned subdirectories: services/ for back-end/service implementations, apps/ for front-end/workspace projects, and tests/ for all automated tests and end-to-end suites. This separation keeps runtime code, client assets, and verification artifacts distinct and discoverable.
+### [tests](./tests/README.md)
+Repository test suite containing local behavioral, integration, and page/workspace-focused tests that validate API, page handling, branding, and navigation behaviors.
 
-## 📂 Subdirectories
+The tests directory aggregates a set of pytest-based modules and browser-driven end-to-end suites that validate a local API and workspace behaviors.
 
-This directory contains the following subdirectories:
-
-### [📁 tests/](./tests//README.md)
-
-**Purpose:** Repository test suite containing local behavioral, integration, and page/workspace-focused tests that validate API, page handling, branding, and navigation behaviors.
-
-![Files: 5](https://img.shields.io/badge/Files-5-blue)
-
----
-
-### [📁 services/](./services//README.md)
-
-**Purpose:** Host service-level components for the application, including a local-only template editor API and supporting local-first persistence layers used by the app.
-
-![Files: 0](https://img.shields.io/badge/Files-0-blue)
-
----
-
-### [📁 apps/](./apps//README.md)
-
-**Purpose:** Top-level container for application front-end workspaces and client-facing app assets, organizing sub-projects such as the local client workspace.
-
-![Files: 0](https://img.shields.io/badge/Files-0-blue)
-
----
-## Dependencies
-
-### External Dependencies
-
-| Dependency | Usage |
-| --- | --- |
-| `requirements-dev.txt` | Lists development dependencies used when setting up the development environment; consult this file to install tooling and test dependencies. |
-
-## Architecture Notes
-
-- Services are grouped under services/ as a Python package root to encapsulate service-level components like a local template editor API and local-first persistence.
-- Tests are centralized in tests/ and combine pytest modules with browser-driven end-to-end suites to validate both API and workspace/page behaviors.
+![Files: 12](https://img.shields.io/badge/Files-12-blue)
 
 ---
 
-## Navigation
+## 📊 Documentation Statistics
 
-**↑ Parent Directory:** [Go up](../README.md)
-**🔗 Related:** [tests/](./tests//README.md) • [services/](./services//README.md) • [apps/](./apps//README.md)
+- **Files Documented**: 54
+- **Directories**: 8
+- **Coverage**: 100%
+- **Eligible Source Files**: 40
+- **Last Updated**: 2026-11-18
 
 ---
 
-*Generated by Woden Docbot*
+## 🧭 How to Navigate
+
+> ℹ️ **INFO**
+> Each directory has its own README.md with detailed information about that section. Use the breadcrumb navigation at the top of each page to navigate back to parent directories.
+
+### Navigation Features
+
+- **Breadcrumbs** - At the top of each page, showing your current location
+- **Directory READMEs** - Each folder has a comprehensive overview
+- **File Documentation** - Click through to individual file documentation
+- **Search** - Use GitHub's search or your IDE's search functionality
+
+---
+
+## 🤖 About Woden DocBot
+
+This documentation is automatically generated and kept up-to-date by Woden DocBot, an AI-powered documentation assistant. DocBot analyzes code on every pull request and updates documentation to reflect changes.
+
+### Features
+
+- **Automatic Updates** - Documentation updates on every PR
+- **Comprehensive Coverage** - Files, functions, classes, and directories
+- **Smart Navigation** - Breadcrumbs, related files, and parent links
+- **AI-Powered** - Uses Azure GPT models for intelligent documentation generation
+
+---
+
+*Generated by Woden DocBot for my-workspace*
