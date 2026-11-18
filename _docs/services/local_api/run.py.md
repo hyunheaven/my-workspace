@@ -1,4 +1,4 @@
-<!-- METADATA: {"source_path": "services/local_api/run.py", "source_sha": "247d2927ed5f6814cf249d30f5e106e99a015a18", "extraction_quality": "full_ast", "model": "gpt-5-mini", "generated_at": "2026-11-18T03:20:15Z", "doc_type": "file"} -->
+<!-- METADATA: {"source_path": "services/local_api/run.py", "source_sha": "46f7901f2afc16103498d476cb91419dd1b69bb0", "extraction_quality": "full_ast", "model": "gpt-5-mini", "generated_at": "2026-11-18T10:08:13Z", "doc_type": "file"} -->
 <details>
 <summary>Documentation Metadata (click to expand)</summary>
 
@@ -6,13 +6,14 @@
 {
   "doc_type": "file_overview",
   "file_path": "services/local_api/run.py",
-  "source_hash": "9452e22a430c2f74fc5f8a595360e3b355bdf1a4160caef7da83268c4f21587c",
-  "last_updated": "2026-11-18T03:17:05.138584+00:00",
-  "git_sha": "247d2927ed5f6814cf249d30f5e106e99a015a18",
-  "tokens_used": 920,
+  "source_hash": "e0e853db72b6cea74d50d262a74fa278f457c467e1d0f91fa872b1ef35643242",
+  "last_updated": "2026-11-18T10:08:13.586006+00:00",
+  "git_sha": "46f7901f2afc16103498d476cb91419dd1b69bb0",
+  "tokens_used": 1121,
   "complexity_score": 1,
   "estimated_review_time_minutes": 5,
   "external_dependencies": [
+    "os",
     "uvicorn"
   ]
 }
@@ -43,7 +44,9 @@
 
 ## Overview
 
-This module provides a small runtime entry point for running the local application on the loopback interface. It imports the application factory from the package and uvicorn, and exposes a single top-level function, main, which is responsible for invoking the application factory and launching the ASGI server.
+This module provides a small runtime entry point that launches the local application on the loopback interface. It imports the application factory from the local package and uses uvicorn to run the resulting ASGI application, making it suitable for starting the app for development or local testing on 127.0.0.1.
+
+The single exposed function, main, is responsible for instantiating the app via create_app and handing it to uvicorn to serve. The module is focused solely on starting the server process rather than configuring the application internals or defining request handlers.
 
 ## Dependencies
 
@@ -51,6 +54,7 @@ This module provides a small runtime entry point for running the local applicati
 
 | Module | Usage |
 | --- | --- |
+| `os` | import os |
 | `uvicorn` | import uvicorn |
 
 ### Internal Dependencies
@@ -65,15 +69,16 @@ This file is part of the **local_api** directory. View the [directory index](./R
 
 ## Architecture Notes
 
-- uses an application factory (create_app) to instantiate the app before running
-- delegates serving to uvicorn as the ASGI server
+- uses an application factory (create_app) to construct the ASGI app
+- delegates HTTP serving to an external ASGI server (uvicorn)
+- provides a module-level entry point function (main) to start the server
 
 ## Maintenance Notes
 
-- Import the ASGI server implementation (uvicorn) for running the app.
-- Import the application factory create_app from the local package.
-- Provide a main function that creates the application and starts the uvicorn server on the loopback interface.
-- Serve as the module-level entry point for launching the local app during development or local runs.
+- Import the application factory (create_app) from the local app package.
+- Invoke create_app to obtain an ASGI application instance.
+- Start an instance of the uvicorn server bound to the loopback interface to serve the app.
+- Expose a module-level main function that encapsulates the startup sequence for running the app locally.
 
 
 ---
@@ -93,9 +98,9 @@ def main():
 
 #### Description
 
-Starts and runs the local API service defined in services/local_api/run.py, initializing any needed components and entering the service's main execution loop.
+Acts as the module's entry point to start and run the functionality provided by services/local_api/run.py.
 
-This function acts as the entry point for launching the local API server process.
+It orchestrates initialization and execution of the local API service when the module is invoked as a program.
 
 #### Complexity
 
