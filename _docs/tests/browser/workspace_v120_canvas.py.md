@@ -1,0 +1,159 @@
+<!-- METADATA: {"source_path": "tests/browser/workspace_v120_canvas.py", "source_sha": "46d22634beddcdeabcf63e0871b09461c9825c4c", "extraction_quality": "full_ast", "model": "gpt-5-mini", "generated_at": "2026-11-18T03:21:27Z", "doc_type": "file"} -->
+<details>
+<summary>Documentation Metadata (click to expand)</summary>
+
+```json
+{
+  "doc_type": "file_overview",
+  "file_path": "tests/browser/workspace_v120_canvas.py",
+  "source_hash": "d0fdd5fc9bd3febfc6ecfb173e169ad0e42742d33896d6164cf14576347c1d87",
+  "last_updated": "2026-11-18T03:20:47.109006+00:00",
+  "git_sha": "46d22634beddcdeabcf63e0871b09461c9825c4c",
+  "tokens_used": 1531,
+  "complexity_score": 1,
+  "estimated_review_time_minutes": 5,
+  "external_dependencies": [
+    "argparse",
+    "pathlib",
+    "tempfile",
+    "uuid",
+    "playwright.sync_api",
+    "workspace_v012",
+    "workspace_v110_canvas"
+  ]
+}
+```
+
+</details>
+
+[Documentation Home](../../README.md) > [tests](../README.md) > [browser](./README.md) > **workspace_v120_canvas**
+
+---
+
+# workspace_v120_canvas.py
+
+> **File:** `tests/browser/workspace_v120_canvas.py`
+
+![Complexity: Low](https://img.shields.io/badge/Complexity-Low-green) ![Review Time: 5min](https://img.shields.io/badge/Review_Time-5min-blue)
+
+## 📑 Table of Contents
+
+
+- [Overview](#overview)
+- [Dependencies](#dependencies)
+- [Architecture Notes](#architecture-notes)
+- [Maintenance Notes](#maintenance-notes)
+- [Functions and Classes](#functions-and-classes)
+
+---
+
+## Overview
+
+This module provides a Playwright-based test harness concerned with exercising nested block editing and structured clipboard behavior in Chromium. It imports synchronous Playwright APIs and helper utilities from workspace_v012 and workspace_v110_canvas to create browser pages, start local test servers, and interact with saved state. The module exposes two top-level functions: test_nested_editor, which contains the test logic, and main, which serves as a command-line entry point to run the test and perform necessary setup such as temporary directories and unique identifiers.
+
+## Dependencies
+
+### External Dependencies
+
+| Module | Usage |
+| --- | --- |
+| `argparse` | import argparse |
+| `pathlib` | from pathlib import Path |
+| `tempfile` | from tempfile import TemporaryDirectory |
+| `uuid` | from uuid import uuid4 |
+| `playwright.sync_api` | from playwright.sync_api import expect, sync_playwright |
+| `workspace_v012` | from workspace_v012 import api_json, free_port, local_server, saved |
+| `workspace_v110_canvas` | from workspace_v110_canvas import create_page |
+
+## 📁 Directory
+
+This file is part of the **browser** directory. View the [directory index](./README.md) to see all files in this module.
+
+## Architecture Notes
+
+- uses synchronous Playwright API (playwright.sync_api)
+- reuses helper modules (workspace_v012, workspace_v110_canvas) for server and page creation
+- provides a test function plus a main entry point for standalone execution
+- uses standard library utilities for temporary resources and unique identifiers (TemporaryDirectory, uuid4)
+- accepts command-line configuration via argparse
+
+## Maintenance Notes
+
+- test_nested_editor: execute a Playwright-driven test scenario that targets nested block editing and structured clipboard interactions in Chromium.
+- main: provide a command-line entry point to prepare any required environment and invoke the test routine.
+- Reuse helper utilities from workspace_v012 for server, API, and saved-state handling and from workspace_v110_canvas to create browser pages for the test.
+- Leverage TemporaryDirectory and uuid4 for ephemeral, isolated test execution contexts.
+
+
+---
+
+## Functions and Classes
+
+
+### test_nested_editor
+
+![Type: Sync](https://img.shields.io/badge/Type-Sync-green)
+
+#### Signature
+
+```python
+def test_nested_editor(page, url):
+```
+
+#### Description
+
+This is a browser test function that exercises behavior of a nested editor within the workspace canvas (version 1.20).
+
+It likely navigates to the given URL in the provided browser page fixture and verifies that nested editor functionality (rendering, interaction, or integration) behaves as expected.
+
+
+page is the browser page fixture used to drive and inspect the web UI; url is the address to navigate to for setting up the test scenario.
+
+#### Parameters
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `page` | `Unknown` | ✅ | — |
+| `url` | `Unknown` | ✅ | — |
+
+#### Complexity
+
+Not analyzed
+
+---
+
+
+
+### main
+
+![Type: Sync](https://img.shields.io/badge/Type-Sync-green)
+
+#### Signature
+
+```python
+def main():
+```
+
+#### Description
+
+Entry point for a test script located at tests/browser/workspace_v120_canvas.py.
+
+It runs the scripted browser-based workspace canvas test routine when executed as a standalone script.
+
+#### Complexity
+
+Not analyzed
+
+---
+
+
+
+---
+
+## Navigation
+
+**↑ Parent Directory:** [Go up](./README.md)
+
+---
+
+*This documentation was automatically generated by AI ([Woden DocBot](https://github.com/marketplace/ai-document-creator)) and may contain errors. It is the responsibility of the user to validate the accuracy and completeness of this documentation.*
