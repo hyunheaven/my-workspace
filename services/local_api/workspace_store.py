@@ -12,6 +12,9 @@ from .storage import LocalStore
 
 UTC = timezone.utc
 UUID_PATTERN = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+TASK_PROPERTY_DEFAULTS: dict[str, Any] = {
+    'effort': None, 'labels': '[]', 'flagged': 0, 'reference_url': '', 'notes': '',
+}
 
 def now_utc() -> str:
     return datetime.now(UTC).isoformat()
@@ -71,6 +74,16 @@ class WorkspaceStore(LocalStore):
                 CREATE INDEX IF NOT EXISTS idx_page_blocks ON page_blocks(page_id,position);
             ''')
             document_columns = {row['name'] for row in db.execute('PRAGMA table_info(documents)')}
+            task_columns = {row['name'] for row in db.execute('PRAGMA table_info(tasks)')}
+            for name, definition in {
+                'effort': 'REAL',
+                'labels': "TEXT NOT NULL DEFAULT '[]'",
+                'flagged': 'INTEGER NOT NULL DEFAULT 0 CHECK(flagged IN (0,1))',
+                'reference_url': "TEXT NOT NULL DEFAULT ''",
+                'notes': "TEXT NOT NULL DEFAULT ''",
+            }.items():
+                if name not in task_columns:
+                    db.execute(f'ALTER TABLE tasks ADD COLUMN {name} {definition}')
             if 'parent_id' not in document_columns:
                 db.execute('ALTER TABLE documents ADD COLUMN parent_id TEXT REFERENCES documents(id)')
             db.execute('CREATE INDEX IF NOT EXISTS idx_docs_parent ON documents(parent_id)')
@@ -80,6 +93,13 @@ class WorkspaceStore(LocalStore):
                 db.execute("""ALTER TABLE page_blocks ADD COLUMN is_table INTEGER NOT NULL DEFAULT 0
                               CHECK(is_table IN (0,1) AND
                                     (is_table=0 OR (block_type='paragraph' AND checked=0)))""")
+            if 'extension_type' not in columns:
+                db.execute("""ALTER TABLE page_blocks ADD COLUMN extension_type TEXT
+                              CHECK(extension_type IS NULL OR (
+                                  extension_type IN ('ordered_list','page_link') AND
+                                  is_table=0 AND block_type='paragraph' AND checked=0))""")
+            if 'depth' not in columns:
+                db.execute('ALTER TABLE page_blocks ADD COLUMN depth INTEGER NOT NULL DEFAULT 0 CHECK(depth BETWEEN 0 AND 6)')
             db.execute('''CREATE TABLE IF NOT EXISTS page_template_requests (
                 request_id TEXT PRIMARY KEY NOT NULL,
                 page_id TEXT NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
@@ -111,11 +131,20 @@ class WorkspaceStore(LocalStore):
                 tags TEXT NOT NULL DEFAULT '[]',
                 revision INTEGER NOT NULL DEFAULT 1
             )''')
+            db.execute('''CREATE TABLE IF NOT EXISTS page_trash (
+                page_id TEXT PRIMARY KEY NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+                root_id TEXT NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+                trashed_at TEXT NOT NULL
+            )''')
+            db.execute('CREATE INDEX IF NOT EXISTS idx_page_trash_root ON page_trash(root_id)')
+            db.execute('''CREATE VIEW IF NOT EXISTS active_documents AS
+                          SELECT d.* FROM documents AS d WHERE NOT EXISTS
+                          (SELECT 1 FROM page_trash AS t WHERE t.page_id=d.id)''')
 
     def all_docs(self, query: str = '', *, for_tree: bool = False) -> list[dict[str,Any]]:
         sql = '''SELECT d.id,d.parent_id,d.template_id,d.template_version,d.title,d.revision,
                         d.scope,d.created_at,d.updated_at,p.tab_color
-                 FROM documents AS d LEFT JOIN page_properties AS p ON p.page_id=d.id'''
+                 FROM active_documents AS d LEFT JOIN page_properties AS p ON p.page_id=d.id'''
         args: tuple[Any,...]=()
         if query:
             sql += " WHERE title LIKE ? ESCAPE '\\'"
@@ -159,7 +188,7 @@ class WorkspaceStore(LocalStore):
             rows = db.execute(
                 '''SELECT d.id,d.parent_id,d.template_id,d.template_version,d.title,d.revision,
                           d.scope,d.created_at,d.updated_at,p.tab_color
-                   FROM documents AS d LEFT JOIN page_properties AS p ON p.page_id=d.id
+                   FROM active_documents AS d LEFT JOIN page_properties AS p ON p.page_id=d.id
                    WHERE (?='' OR page_tag_matches(p.tags,1)) AND
                     (?='' OR page_text_matches(d.title) OR page_fields_match(d.field_values)
                        OR page_tag_matches(p.tags,0) OR EXISTS (
@@ -170,6 +199,78 @@ class WorkspaceStore(LocalStore):
                 (tag_key, needle, min(limit, 100)),
             )
             return [dict(row) for row in rows]
+
+    def search_tasks(self, query: str) -> list[dict[str, Any]]:
+        needle = normalize('NFKC', query.strip()).casefold()
+        if not needle:
+            return []
+
+        def task_matches(title: str, notes: str, labels: str) -> bool:
+            return any(needle in normalize('NFKC', text).casefold()
+                       for text in (title, notes, *json.loads(labels)))
+
+        with self.conn() as db:
+            db.create_function('task_matches', 3, task_matches)
+            rows = db.execute('''SELECT id,title,status,due_on,updated_at FROM tasks
+                                 WHERE task_matches(title,notes,labels)
+                                 ORDER BY updated_at DESC,id LIMIT 100''')
+            return [dict(row) for row in rows]
+
+    def get_doc(self, doc_id: str) -> dict[str, Any] | None:
+        with self.conn() as db:
+            row = db.execute('SELECT * FROM active_documents WHERE id=?', (doc_id,)).fetchone()
+        if row is None:
+            return None
+        result = dict(row)
+        result['values'] = json.loads(result.pop('field_values'))
+        return result
+
+    def list_trash(self) -> list[dict[str, Any]]:
+        with self.conn() as db:
+            rows = db.execute('''SELECT roots.page_id AS id,d.title,d.parent_id,d.revision,
+                                        roots.trashed_at,COUNT(members.page_id) AS page_count
+                                 FROM page_trash AS roots
+                                 JOIN documents AS d ON d.id=roots.page_id
+                                 JOIN page_trash AS members ON members.root_id=roots.page_id
+                                 WHERE roots.page_id=roots.root_id
+                                 GROUP BY roots.page_id
+                                 ORDER BY roots.trashed_at DESC,roots.page_id''')
+            return [dict(row) for row in rows]
+
+    def trash_page(self, page_id: str, expected_revision: int) -> str:
+        with self.conn() as db:
+            db.execute('BEGIN IMMEDIATE')
+            root = db.execute('SELECT revision FROM active_documents WHERE id=?', (page_id,)).fetchone()
+            if root is None:
+                return 'not_found'
+            if root['revision'] != expected_revision:
+                return 'conflict'
+            db.execute('''WITH RECURSIVE subtree(id) AS (
+                              SELECT id FROM active_documents WHERE id=?
+                              UNION
+                              SELECT d.id FROM active_documents AS d JOIN subtree AS s ON d.parent_id=s.id
+                          )
+                          INSERT INTO page_trash(page_id,root_id,trashed_at)
+                          SELECT id,?,? FROM subtree''', (page_id, page_id, now_utc()))
+            db.execute('''UPDATE documents SET revision=revision+1
+                          WHERE id IN (SELECT page_id FROM page_trash WHERE root_id=?)''', (page_id,))
+            return 'updated'
+
+    def restore_trashed_page(self, page_id: str, expected_revision: int) -> str:
+        with self.conn() as db:
+            db.execute('BEGIN IMMEDIATE')
+            root = db.execute('''SELECT d.revision,d.parent_id FROM documents AS d
+                                 JOIN page_trash AS t ON t.page_id=d.id
+                                 WHERE t.root_id=d.id AND d.id=?''', (page_id,)).fetchone()
+            if root is None:
+                return 'not_found'
+            if root['revision'] != expected_revision:
+                return 'conflict'
+            if root['parent_id'] and not db.execute('SELECT 1 FROM active_documents WHERE id=?',
+                                                    (root['parent_id'],)).fetchone():
+                return 'parent_in_trash'
+            db.execute('DELETE FROM page_trash WHERE root_id=?', (page_id,))
+            return 'updated'
 
     @staticmethod
     def _read_properties(db: sqlite3.Connection, page_id: str) -> dict[str, Any]:
@@ -186,7 +287,7 @@ class WorkspaceStore(LocalStore):
     ) -> tuple[str, dict[str, Any] | None]:
         with self.conn() as db:
             db.execute('BEGIN IMMEDIATE')
-            if not db.execute('SELECT 1 FROM documents WHERE id=?', (page_id,)).fetchone():
+            if not db.execute('SELECT 1 FROM active_documents WHERE id=?', (page_id,)).fetchone():
                 return 'not_found', None
             current = self._read_properties(db, page_id)
             if current['revision'] != revision:
@@ -206,19 +307,28 @@ class WorkspaceStore(LocalStore):
     def page_tags(self) -> list[dict[str, Any]]:
         tags: dict[str, dict[str, Any]] = {}
         with self.conn() as db:
-            for row in db.execute('SELECT tags FROM page_properties ORDER BY rowid'):
+            for row in db.execute('''SELECT p.tags FROM page_properties AS p
+                                     JOIN active_documents AS d ON d.id=p.page_id ORDER BY p.rowid'''):
                 for label in json.loads(row['tags']):
                     key = normalize('NFKC', label).casefold()
                     entry = tags.setdefault(key, {'label': label, 'count': 0})
                     entry['count'] += 1
         return [tags[key] for key in sorted(tags)]
 
-    def create_doc(self, doc_id: str, template_id: str, version: int, title: str, values: dict[str,str], parent_id: str|None=None) -> dict[str,Any]:
+    def create_doc(
+        self, doc_id: str, template_id: str, version: int, title: str,
+        values: dict[str, str], parent_id: str | None = None, *,
+        blocks: list[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
         with self.conn() as db:
             db.execute('BEGIN IMMEDIATE')
-            if parent_id and not db.execute('SELECT 1 FROM documents WHERE id=?',(parent_id,)).fetchone():
+            if parent_id and not db.execute('SELECT 1 FROM active_documents WHERE id=?',(parent_id,)).fetchone():
                 return {'error':'parent_not_found'}
+            if blocks and self._has_foreign_block(db, doc_id, blocks):
+                return {'error': 'block_conflict'}
             self._insert_doc(db, doc_id, template_id, version, title, values, parent_id)
+            if blocks:
+                self._write_blocks(db, doc_id, blocks)
             created = self._read_canvas(db, doc_id)
             assert created is not None
             self._record_history(db, created)
@@ -242,7 +352,7 @@ class WorkspaceStore(LocalStore):
 
     def create_template_page(
         self, template_id: str, version: int, title: str, parent_id: str | None,
-        request_id: str, blocks: list[dict[str, Any]],
+        request_id: str, blocks: list[dict[str, Any]], tags: list[str],
     ) -> tuple[str, dict[str, Any] | None]:
         with self.conn() as db:
             db.execute('BEGIN IMMEDIATE')
@@ -253,12 +363,16 @@ class WorkspaceStore(LocalStore):
             if request:
                 if (request['template_id'], request['requested_parent_id']) != (template_id, parent_id):
                     return 'conflict', None
-                return 'replayed', self._read_canvas(db, request['page_id'])
-            if parent_id and not db.execute('SELECT 1 FROM documents WHERE id=?', (parent_id,)).fetchone():
+                page = self._read_canvas(db, request['page_id'])
+                return ('replayed', page) if page else ('not_found', None)
+            if parent_id and not db.execute('SELECT 1 FROM active_documents WHERE id=?', (parent_id,)).fetchone():
                 return 'parent_not_found', None
             page_id = str(uuid4())
             self._insert_doc(db, page_id, template_id, version, title, {}, parent_id)
             self._write_blocks(db, page_id, blocks)
+            if tags:
+                db.execute('INSERT INTO page_properties(page_id,tags) VALUES(?,?)',
+                           (page_id, json.dumps(tags, ensure_ascii=False)))
             db.execute(
                 'INSERT INTO page_template_requests(request_id,page_id,template_id,requested_parent_id) VALUES(?,?,?,?)',
                 (request_id, page_id, template_id, parent_id),
@@ -281,7 +395,8 @@ class WorkspaceStore(LocalStore):
             if request:
                 if (request['source_page_id'], request['source_revision']) != (page_id, expected_revision):
                     return 'conflict', None
-                return 'replayed', self._read_canvas(db, request['page_id'])
+                page = self._read_canvas(db, request['page_id'])
+                return ('replayed', page) if page else ('not_found', None)
 
             source = self._read_canvas(db, page_id)
             if source is None:
@@ -320,7 +435,7 @@ class WorkspaceStore(LocalStore):
             if old['revision']!=expected_revision: return 'conflict',None
             if parent_id:
                 if parent_id==doc_id: return 'cycle',None
-                if not db.execute('SELECT 1 FROM documents WHERE id=?',(parent_id,)).fetchone():
+                if not db.execute('SELECT 1 FROM active_documents WHERE id=?',(parent_id,)).fetchone():
                     return 'parent_not_found',None
                 pointer=parent_id
                 visited={doc_id}
@@ -387,35 +502,55 @@ class WorkspaceStore(LocalStore):
     def tasks(self,project_id:str|None=None):
         with self.conn() as db:
             if project_id:
-                rows=db.execute('SELECT * FROM tasks WHERE project_id=? ORDER BY due_on IS NULL,due_on,updated_at DESC LIMIT 500',(project_id,))
+                rows=db.execute('SELECT * FROM tasks WHERE project_id=? ORDER BY due_on IS NULL,due_on,updated_at DESC,id',(project_id,))
             else:
-                rows=db.execute('SELECT * FROM tasks ORDER BY due_on IS NULL,due_on,updated_at DESC LIMIT 500')
-            return [dict(x) for x in rows]
+                rows=db.execute('SELECT * FROM tasks ORDER BY due_on IS NULL,due_on,updated_at DESC,id')
+            return [self._decode_task(row) for row in rows]
 
     def task(self,ident:str):
         with self.conn() as db:
             row=db.execute('SELECT * FROM tasks WHERE id=?',(ident,)).fetchone()
-            return dict(row) if row else None
+            return self._decode_task(row) if row else None
+
+    @staticmethod
+    def _decode_task(row: sqlite3.Row) -> dict[str, Any]:
+        result = dict(row)
+        result['labels'] = json.loads(result['labels'])
+        result['flagged'] = bool(result['flagged'])
+        return result
+
+    @staticmethod
+    def _task_properties(data: dict[str, Any], current: sqlite3.Row | None = None) -> tuple[Any, ...]:
+        values = dict(TASK_PROPERTY_DEFAULTS if current is None else current)
+        values.update(data)
+        if 'labels' in data:
+            values['labels'] = json.dumps(data['labels'], ensure_ascii=False)
+        return tuple(values[key] for key in TASK_PROPERTY_DEFAULTS)
 
     def create_task(self,**data):
         ident=str(uuid4()); now=now_utc()
         with self.conn() as db:
             self._check_refs(db,data.get('project_id'),data.get('document_id'))
-            db.execute('''INSERT INTO tasks(id,project_id,document_id,title,status,priority,due_on,revision,created_at,updated_at)
-                          VALUES(?,?,?,?,?,?,?,1,?,?)''',(ident,data['project_id'],data['document_id'],data['title'],data['status'],data['priority'],data['due_on'],now,now))
-        return self.task(ident)
+            db.execute('''INSERT INTO tasks(id,project_id,document_id,title,status,priority,due_on,revision,created_at,updated_at,
+                                            effort,labels,flagged,reference_url,notes)
+                          VALUES(?,?,?,?,?,?,?,1,?,?,?,?,?,?,?)''',
+                       (ident,data['project_id'],data['document_id'],data['title'],data['status'],data['priority'],data['due_on'],
+                        now,now,*self._task_properties(data)))
+            return self._decode_task(db.execute('SELECT * FROM tasks WHERE id=?',(ident,)).fetchone())
 
     def update_task(self,ident:str,expected_revision:int,**data):
         with self.conn() as db:
             db.execute('BEGIN IMMEDIATE')
-            current=db.execute('SELECT revision FROM tasks WHERE id=?',(ident,)).fetchone()
+            current=db.execute('SELECT * FROM tasks WHERE id=?',(ident,)).fetchone()
             if not current:return 'not_found',None
             if current['revision']!=expected_revision:return 'conflict',None
             self._check_refs(db,data.get('project_id'),data.get('document_id'))
-            db.execute('''UPDATE tasks SET project_id=?,document_id=?,title=?,status=?,priority=?,due_on=?,revision=revision+1,updated_at=? WHERE id=?''',
-                       (data['project_id'],data['document_id'],data['title'],data['status'],data['priority'],data['due_on'],now_utc(),ident))
-            db.commit()
-        return 'updated',self.task(ident)
+            db.execute('''UPDATE tasks SET project_id=?,document_id=?,title=?,status=?,priority=?,due_on=?,
+                                            effort=?,labels=?,flagged=?,reference_url=?,notes=?,
+                                            revision=revision+1,updated_at=? WHERE id=?''',
+                       (data['project_id'],data['document_id'],data['title'],data['status'],data['priority'],data['due_on'],
+                        *self._task_properties(data, current),now_utc(),ident))
+            return 'updated',self._decode_task(db.execute('SELECT * FROM tasks WHERE id=?',(ident,)).fetchone())
 
     @staticmethod
     def _check_refs(db:sqlite3.Connection, project_id:str|None,document_id:str|None):
@@ -476,7 +611,7 @@ class WorkspaceStore(LocalStore):
                    OR EXISTS (
                        SELECT 1 FROM page_duplicate_requests WHERE page_id=documents.id AND from_template=1
                    )
-               ) AS from_template FROM documents WHERE id=?''',
+               ) AS from_template FROM active_documents AS documents WHERE id=?''',
             (page_id,),
         ).fetchone()
         if document is None:
@@ -486,10 +621,12 @@ class WorkspaceStore(LocalStore):
         page['from_template'] = bool(page['from_template'])
         page['properties'] = WorkspaceStore._read_properties(db, page_id)
         page['blocks'] = [
-            {'id': row['id'], 'type': 'table' if row['is_table'] else row['block_type'],
-             'content': row['content'], 'checked': bool(row['checked'])}
+            {'id': row['id'], 'type': 'table' if row['is_table'] else row['extension_type'] or row['block_type'],
+             'content': row['content'], 'checked': bool(row['checked']),
+             **({'depth': row['depth']} if row['depth'] else {})}
             for row in db.execute(
-                'SELECT id,block_type,content,checked,is_table FROM page_blocks WHERE page_id=? ORDER BY position',
+                '''SELECT id,block_type,content,checked,is_table,extension_type,depth
+                   FROM page_blocks WHERE page_id=? ORDER BY position''',
                 (page_id,),
             )
         ]
@@ -497,11 +634,15 @@ class WorkspaceStore(LocalStore):
 
     @staticmethod
     def _write_blocks(db: sqlite3.Connection, page_id: str, blocks: list[dict[str, Any]]) -> None:
+        extended_types = {'ordered_list','page_link'}
         db.executemany(
-            'INSERT INTO page_blocks(id,page_id,position,block_type,content,checked,is_table) VALUES(?,?,?,?,?,?,?)',
+            '''INSERT INTO page_blocks(id,page_id,position,block_type,content,checked,is_table,extension_type,depth)
+               VALUES(?,?,?,?,?,?,?,?,?)''',
             ((block['id'], page_id, index,
-              'paragraph' if block['type'] == 'table' else block['type'],
-              block['content'], int(block['checked']), int(block['type'] == 'table'))
+              'paragraph' if block['type'] == 'table' or block['type'] in extended_types else block['type'],
+              block['content'], int(block['checked']), int(block['type'] == 'table'),
+              block['type'] if block['type'] in extended_types else None,
+              block.get('depth', 0))
              for index, block in enumerate(blocks)),
         )
 
@@ -535,7 +676,7 @@ class WorkspaceStore(LocalStore):
     ) -> list[dict[str, Any]] | None:
         with self.conn() as db:
             db.execute('BEGIN')
-            page = db.execute('SELECT revision,title,updated_at FROM documents WHERE id=?', (page_id,)).fetchone()
+            page = db.execute('SELECT revision,title,updated_at FROM active_documents WHERE id=?', (page_id,)).fetchone()
             if page is None:
                 return None
             rows = db.execute(
@@ -551,6 +692,8 @@ class WorkspaceStore(LocalStore):
     def get_page_history(self, page_id: str, revision: int) -> dict[str, Any] | None:
         with self.conn() as db:
             db.execute('BEGIN')
+            if not db.execute('SELECT 1 FROM active_documents WHERE id=?', (page_id,)).fetchone():
+                return None
             stored = self._read_page_snapshot(db, page_id, revision)
             if stored is not None:
                 return stored

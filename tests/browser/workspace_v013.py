@@ -49,12 +49,13 @@ def workspace_actions(page, url, page_id, name, record, evidence):
     page.locator("#nav-documents").click()
     documents = page.locator("#document-list")
     page.locator("#doc-search").fill("not a workspace QA match")
-    expect(documents).to_contain_text("일치하는 문서가 없습니다")
+    expect(documents).to_contain_text("일치하는 문서나 업무가 없습니다")
     page.locator("#doc-search").fill("Editable local QA content")
     match = documents.locator(".doc-row")
     expect(match).to_have_count(1)
     expect(match).to_contain_text("v0.13 browser QA plan")
     match.click()
+    expect(page.locator("#canvas-editing")).to_be_visible()
     expect(page.locator("#canvas-title")).to_have_value("v0.13 browser QA plan")
     with page.expect_response(lambda response: response.url.endswith(f"/pages/{page_id}/duplicate")) as duplication:
         page.locator("#canvas-duplicate").evaluate("(button) => { button.click(); button.click(); }")
@@ -114,7 +115,7 @@ def main():
 
         page.route("**/*", only_loopback)
         with previous.local_server(path, port):
-            assert previous.api_json(url, "/api/v1/health")["version"] == "1.0.0"
+            assert previous.api_json(url, "/api/v1/health")["version"] == "1.3.0"
             catalog = previous.api_json(url, "/api/v1/templates")
             old = {template["id"] for template in json.loads(OLD_CATALOG.read_text(encoding="utf-8"))}
             new = [item for item in catalog["items"] if item["id"] not in old]

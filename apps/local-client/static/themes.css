@@ -134,7 +134,7 @@ html[data-workspace-theme] .scope-dot {
 }
 html[data-workspace-theme] :is(.secondary-button, .icon-button, .form-row, .getting-card, .doc-row,
 .project-row, .page-tree, .subpanel, .board-card, .calendar-cell, .canvas-slash-menu, .block-tool-options,
-.block-type, #canvas-history-dialog, .canvas-table td, .canvas-slash-glyph) {
+.block-type, #canvas-history-dialog, #page-trash-dialog, .canvas-table td, .canvas-slash-glyph) {
   color: var(--ws-text);
   background: var(--ws-background);
   border-color: var(--ws-border);

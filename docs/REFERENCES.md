@@ -15,4 +15,4 @@
 13. NIST AI RMF Generative AI Profile: https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
 14. GitHub Enterprise Cloud repository visibility: https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility
 
-Vendor docs are technical references, **not corporate software approvals or guarantees of intended feature availability under a given license tier**. Verify package versions/licenses and operational details against the approved internal environment before implementation.
+Verify package versions, license terms and feature availability against the vendor documentation.

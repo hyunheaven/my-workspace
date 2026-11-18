@@ -23,6 +23,6 @@ https://www.notion.com/help/intro-to-workspaces
 - 'Notion과 똑같은 화면'은 목표가 아니며, 동일한 문제를 해결하는 **독자적인 디자인**을 유지한다.
 - 외부 API·녹음·화상회의·첨부·외부 임베드·외부 네트워크 데이터 전송.
 
-## 사내 승인 전 검증
+## 로컬 검증
 - 현재 소스는 외부 공개 대상이 아니며 개인 PC에서 합성 데이터만 사용한다.
-- Windows 11 로컬 E2E, 패키지 SBOM·라이선스·보안 검사, company network / GitHub Enterprise 대상 확인 후 별도 승인이 필요.
+- Windows 11 로컬 E2E와 패키지 호환성, 라이선스를 확인합니다.

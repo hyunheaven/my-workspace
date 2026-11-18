@@ -10,7 +10,7 @@
 | Phase 4 — Enterprise Templates | P1-P2 | Catalog admin workflow, role-linked suggestion, shared templates, advanced views | approval logs, version migration, team permission tests |
 | Phase 5 — Approved AI | P2-P3 | Local/on-prem model adapter, RAG evaluation, automation approval | ACL retrieval, faithfulness, citation evaluation, no egress |
 
-Current executable code covers **Phase 1A only** and does not prove corporate readiness. All P0 central components remain planned/unimplemented.
+Current executable code covers **Phase 1A only**. All P0 central components remain planned/unimplemented.
 
 ## Phase 1A acceptance checklist
 - ≥15 original templates with department/job family/job role metadata

@@ -16,7 +16,7 @@
 2. **TMP-102:** Template usage analytics **local-only** and favorite/sort without network egress; opt-in.
 3. **TMP-103:** Page Tree + rich text Editor integration; data migration planning.
 4. **CAL-001/002:** Local calendar persistence and CRUD per existing v0.7 spec (not part of this release).
-5. **SHR-001:** Central SSO/ACL foundation after intranet infra authorization.
+5. **SHR-001:** Central SSO/ACL foundation after shared hosting design.
 6. **TMP-104:** Authorized enterprise template publishing workflow and versioned approvals.
 
 ## Acceptance

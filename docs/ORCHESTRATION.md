@@ -15,10 +15,10 @@ Human Product Owner approves scope and all privileged deployment/release. **Lead
 - QA → Owner: reproducible tests, remaining risks, rollback steps.
 
 ## Review independence
-An implementing agent does not verify itself. Every high-risk PR must receive Security + QA review and a designated human approval; a message from another AI role is a proposed review, not a company signoff.
+An implementing agent does not verify itself. Every high-risk PR must receive Security + QA review and a designated human approval; a message from another AI role is a proposed review, not maintainer approval.
 
 ## Tool governance
-Tools/connectors are not assumed to have corporate permission. Internal GitHub actions require authorized access to a company-managed repo and explicit user approval. No AI agent is allowed to push unpublished internal code to an external GitHub or use external model on confidential documents.
+Verify the repository, access and user intent before publishing with development tools. No AI agent is allowed to push unpublished internal code to an external GitHub or use external model on confidential documents.
 
 ## Collaboration
 Track GitHub Issue → branch → PR → tests and reviewer evidence; refer to `docs/BACKLOG.md`, `docs/ACCESS_CONTROL.md` and `AGENTS.md`. Code development starts only after technical and security prerequisites.

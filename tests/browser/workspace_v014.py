@@ -90,7 +90,7 @@ def main():
             expect(page.locator('#document-list')).to_contain_text('실험 노트 · 합성 예시')
             screenshot(page, args.screenshots, '03-tag-filter.png')
             page.locator('#doc-search').fill('일치하지 않는 본문 검색')
-            expect(page.locator('#document-list')).to_contain_text('일치하는 문서가 없습니다')
+            expect(page.locator('#document-list')).to_contain_text('일치하는 문서나 업무가 없습니다')
             page.locator('#workspace-page-tabs').get_by_role('button',name='검토 페이지 · 합성 예시 탭 닫기').click()
             expect(tab_for(page, '검토 페이지 · 합성 예시')).to_have_count(0)
             assert len(api_items(url, '/api/v1/pages/tree')) == 2

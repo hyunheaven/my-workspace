@@ -2,8 +2,8 @@
 
 | ID | Decision | Status | Rationale / revisit |
 |---|---|---|---|
-| DEC-001 | Hybrid Local-First + On-Premises Collaboration | CONFIRMED product direction | Local privacy and team knowledge together |
-| DEC-002 | Source on approved internal GitHub only | CONFIRMED boundary | repository policy/host [VERIFY] |
+| DEC-001 | Local workspace for a personal PC | Active | Shared deployment is a separate proposal |
+| DEC-002 | Source and synthetic tests in Git | Active | Keep app data outside Git |
 | DEC-003 | Personal SQLite, Shared PostgreSQL | PROPOSED tech | low-maintenance local + central concurrency |
 | DEC-004 | Explicit Publish central COPY | PROPOSED behavior | user control; no implicit sync |
 | DEC-005 | No shared offline cache P0 | PROPOSED security | revocation/remanence risk; revisit later |

@@ -1,6 +1,8 @@
 """Local-only template editor API; no central-server or AI endpoints in this PoC."""
 from __future__ import annotations
+from hashlib import sha256
 import json
+from os.path import normcase
 import re
 import ipaddress
 from pathlib import Path
@@ -16,13 +18,16 @@ from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .workspace_store import UUID_PATTERN, WorkspaceStore
+from .custom_databases import CustomDatabaseStore, mount_custom_databases
 from .storage import default_db_path
 from .page_templates import template_blocks
+from .page_database_views import mount_page_database_views
 
 CATALOG_PATH=Path(__file__).with_name('catalog.json')
 LIBRARY_CATALOG_PATH=Path(__file__).with_name('catalog_library.json')
 PUBLIC_DIR=Path(__file__).resolve().parents[2] / 'apps' / 'local-client' / 'static'
 MAX_BODY=64 * 1024
+MAX_CANVAS_BODY=256 * 1024
 
 PROJECT_STATUS=Literal['planned','active','on_hold','completed']
 TASK_STATUS=Literal['todo','in_progress','blocked','done','archived']
@@ -43,7 +48,8 @@ class UpdateDoc(BaseModel):
 
 
 # The page canvas is a separate safe editor, not HTML/Markdown execution.
-BlockType = Literal['paragraph','heading_1','heading_2','bullet','todo','toggle','quote','code','divider','table']
+BlockType = Literal['paragraph','heading_1','heading_2','bullet','todo','toggle','quote','code','divider','table',
+                    'ordered_list','page_link']
 
 class BlankPage(BaseModel):
     model_config=ConfigDict(extra='forbid')
@@ -100,11 +106,19 @@ class CanvasBlock(BaseModel):
     type: BlockType
     content: str=Field(default='',max_length=4000)
     checked: bool=False
+    depth: int=Field(default=0,ge=0,le=6,strict=True)
+
+    def stored(self) -> dict[str, Any]:
+        return self.model_dump(exclude={'depth'} if self.depth == 0 else None)
 
     @model_validator(mode='after')
     def validate_content(self):
         if not valid_block_text(self.content):
             raise ValueError('Invalid block characters')
+        if self.type in ('ordered_list','page_link') and self.checked:
+            raise ValueError('This block type cannot be checked')
+        if self.type == 'page_link' and self.content and not re.fullmatch(UUID_PATTERN,self.content):
+            raise ValueError('Page links require a local page ID')
         if self.type != 'table':
             return self
         if self.checked:
@@ -125,9 +139,8 @@ class CanvasBlock(BaseModel):
                 raise ValueError('Table cells require plain text of up to 256 characters')
         return self
 
-class CanvasUpdate(BaseModel):
+class CanvasContent(BaseModel):
     model_config=ConfigDict(extra='forbid')
-    expected_revision: int=Field(ge=1)
     title: str=Field(min_length=1,max_length=120)
     blocks: list[CanvasBlock]=Field(default_factory=list,max_length=120)
 
@@ -137,7 +150,18 @@ class CanvasUpdate(BaseModel):
             raise ValueError('Page content is too long')
         ids=[b.id for b in self.blocks]
         if len(set(ids))!=len(ids):raise ValueError('Duplicate block IDs')
+        previous=-1
+        for block in self.blocks:
+            if block.depth>previous+1:
+                raise ValueError('Invalid block depth sequence')
+            previous=block.depth
         return self
+
+class CanvasUpdate(CanvasContent):
+    expected_revision: int=Field(ge=1)
+
+class CanvasImport(CanvasContent):
+    parent_id: str | None=Field(default=None,pattern=UUID_PATTERN)
 
 class MovePage(BaseModel):
     model_config=ConfigDict(extra='forbid')
@@ -161,6 +185,11 @@ class TaskData(BaseModel):
     status: TASK_STATUS='todo'
     priority: PRIORITY='medium'
     due_on: str | None=None
+    effort: float | None=Field(default=None,ge=0,le=1_000_000,allow_inf_nan=False,strict=True)
+    labels: list[str]=Field(default_factory=list,max_length=20)
+    flagged: bool=Field(default=False,strict=True)
+    reference_url: str=Field(default='',max_length=2048)
+    notes: str=Field(default='',max_length=8000)
 
 class UpdateTask(TaskData):
     expected_revision: int=Field(ge=1)
@@ -193,6 +222,37 @@ def valid_date_optional(value: str | None) -> str | None:
         raise HTTPException(422,'Invalid YYYY-MM-DD date')
     if normalized != value: raise HTTPException(422,'Date must use YYYY-MM-DD')
     return normalized
+
+def validate_task(body: TaskData, *, updating: bool = False) -> dict[str, Any]:
+    data = body.model_dump(exclude={'expected_revision'})
+    data['title'] = clean_text(body.title, name='Task title')
+    data['due_on'] = valid_date_optional(body.due_on)
+    if data['due_on'] == date.max.isoformat():
+        raise HTTPException(422, 'Task date must allow a calendar end date')
+    if any((ord(c) < 32 and c not in '\r\n\t') or 0xD800 <= ord(c) <= 0xDFFF for c in body.notes):
+        raise HTTPException(422, 'Invalid Task notes characters')
+    labels = [clean_text(label, name='Task label') for label in body.labels]
+    if any(len(label) > 40 or ',' in label for label in labels):
+        raise HTTPException(422, 'Task labels must be at most 40 characters and contain no commas')
+    data['labels'] = list(dict.fromkeys(labels))
+    reference = body.reference_url.strip()
+    if reference:
+        try:
+            if any(c.isspace() or ord(c) < 32 or 0xD800 <= ord(c) <= 0xDFFF for c in reference):
+                raise ValueError('Invalid URL characters')
+            parts = urlsplit(reference)
+            if parts.scheme not in {'http', 'https'} or not parts.hostname or parts.username is not None:
+                raise ValueError('Expected an HTTP(S) address without credentials')
+            if parts.port == 0:
+                raise ValueError('Invalid port')
+        except ValueError:
+            raise HTTPException(422, 'Reference must be an HTTP(S) URL without credentials') from None
+    data['reference_url'] = reference
+    if updating:
+        for name in ('effort', 'labels', 'flagged', 'reference_url', 'notes'):
+            if name not in body.model_fields_set:
+                del data[name]
+    return data
 
 def validate_event(body:EventData) -> dict[str,Any]:
     title=clean_text(body.title,name='Event title')
@@ -268,8 +328,10 @@ def valid_values(template: dict[str,Any], title: str, values: dict[str,str]) -> 
 
 
 def create_app(db_path:Path | None = None) -> FastAPI:
-    app=FastAPI(title='My Workspace Local Core PoC',version='1.0.0',docs_url=None,redoc_url=None,openapi_url=None)
+    app=FastAPI(title='My Workspace Local Core PoC',version='1.3.0',docs_url=None,redoc_url=None,openapi_url=None)
     store=WorkspaceStore(db_path or default_db_path())
+    custom_store = CustomDatabaseStore(store)
+    draft_scope=sha256(normcase(str(store.path.resolve())).encode('utf-8')).hexdigest()
     catalog=json.loads(CATALOG_PATH.read_text(encoding='utf-8'))
     catalog.extend(json.loads(LIBRARY_CATALOG_PATH.read_text(encoding='utf-8')))
     templates={t['id']:t for t in catalog}
@@ -300,7 +362,12 @@ def create_app(db_path:Path | None = None) -> FastAPI:
             if request.headers.get('x-eaw-request')!='local-template-editor':
                 return JSONResponse({'detail':'Missing local request marker'},status_code=403)
             body=await request.body()
-            if len(body)>MAX_BODY:
+            path = request.url.path
+            is_canvas_write = request.method == 'PUT' and re.fullmatch(r'/api/v1/pages/[^/]+/content', path)
+            is_import = request.method == 'POST' and (
+                path == '/api/v1/pages/import' or re.fullmatch(r'/api/v1/databases/[^/]+/records/batch', path)
+            )
+            if len(body)>(MAX_CANVAS_BODY if is_canvas_write or is_import else MAX_BODY):
                 return JSONResponse({'detail':'Request too large'},status_code=413)
         response=await call_next(request)
         response.headers['Cache-Control']='no-store'
@@ -314,7 +381,8 @@ def create_app(db_path:Path | None = None) -> FastAPI:
         return response
 
     @app.get('/api/v1/health')
-    def health(): return {'status':'ok','mode':'local_private','version':app.version,'ai_enabled':False,'sharing_enabled':False}
+    def health(): return {'status':'ok','mode':'local_private','version':app.version,'ai_enabled':False,
+                          'sharing_enabled':False,'draft_scope':draft_scope}
 
     @app.get('/api/v1/templates')
     def get_templates(department:str='',job_family:str='',job_role:str='',section:str='',q:str='',collection:str=''):
@@ -350,6 +418,14 @@ def create_app(db_path:Path | None = None) -> FastAPI:
     @app.get('/api/v1/search/pages')
     def search_pages(q: str = Query(default='', max_length=120), tag: str = Query(default='', max_length=32)):
         return {'items': store.search_pages(q, tag=tag)}
+
+    @app.get('/api/v1/search')
+    def search_workspace(q: str = Query(default='', max_length=120), tag: str = Query(default='', max_length=32)):
+        return {
+            'pages': store.search_pages(q, tag=tag),
+            'tasks': [] if tag.strip() else store.search_tasks(q),
+            'databases': [] if tag.strip() else custom_store.search(q),
+        }
 
     @app.get('/api/v1/page-tags')
     def get_page_tags():
@@ -401,14 +477,32 @@ def create_app(db_path:Path | None = None) -> FastAPI:
         state, page = store.create_template_page(
             template['id'], template['version'], template['name'], body.parent_id,
             body.request_id, template_blocks(template),
+            PagePropertiesUpdate(expected_revision=0, tags=template.get('tags', [])).tags,
         )
         if state == 'parent_not_found':
             raise HTTPException(422, 'Parent page not found')
+        if state == 'not_found':
+            raise HTTPException(404, 'Page is in the trash')
         if state == 'conflict':
             raise HTTPException(409, 'Request ID belongs to another template or parent')
         if state == 'replayed':
             response.status_code = 200
         return page
+
+    @app.post('/api/v1/pages/import', status_code=201)
+    def import_local_page(body: CanvasImport):
+        page_id = str(uuid4())
+        blocks = [block.stored() for block in body.blocks]
+        if any(not re.fullmatch(UUID_PATTERN, block['id']) for block in blocks):
+            raise HTTPException(422, 'New block IDs must be canonical UUIDs')
+        result = store.create_doc(page_id, '__blank_page__', 1,
+                                  clean_text(body.title, name='Page title'), {}, body.parent_id,
+                                  blocks=blocks)
+        if result.get('error') == 'parent_not_found':
+            raise HTTPException(422, 'Parent page not found')
+        if result.get('error') == 'block_conflict':
+            raise HTTPException(409, 'A block ID belongs to another page')
+        return store.get_canvas(page_id)
 
     @app.get('/api/v1/pages/{page_id}/content')
     def get_page_canvas(page_id:str):
@@ -454,7 +548,7 @@ def create_app(db_path:Path | None = None) -> FastAPI:
     def save_page_canvas(page_id:str,body:CanvasUpdate):
         title=clean_text(body.title,name='Page title')
         state,data=store.update_canvas(page_id,body.expected_revision,title,
-                                     [b.model_dump() for b in body.blocks])
+                                     [b.stored() for b in body.blocks])
         if state=='not_found':raise HTTPException(404,'Page not found')
         if state=='conflict':raise HTTPException(409,'Page changed; reload and review your edits')
         if state=='block_conflict':raise HTTPException(409,'A block ID belongs to another page')
@@ -481,6 +575,30 @@ def create_app(db_path:Path | None = None) -> FastAPI:
     @app.get('/api/v1/pages/tree')
     def page_tree():
         return {'items':store.all_docs(for_tree=True),'scope':'local_private'}
+
+    @app.get('/api/v1/pages/trash')
+    def list_page_trash():
+        return {'items': store.list_trash()}
+
+    @app.post('/api/v1/pages/{page_id}/trash')
+    def trash_page(page_id: str, body: PageRevisionOperation):
+        state = store.trash_page(page_id, body.expected_revision)
+        if state == 'not_found':
+            raise HTTPException(404, '페이지를 찾을 수 없습니다.')
+        if state == 'conflict':
+            raise HTTPException(409, '변경된 페이지입니다. 다시 열어 확인해 주세요.')
+        return {'status': 'trashed'}
+
+    @app.post('/api/v1/pages/{page_id}/restore')
+    def restore_trashed_page(page_id: str, body: PageRevisionOperation):
+        state = store.restore_trashed_page(page_id, body.expected_revision)
+        if state == 'not_found':
+            raise HTTPException(404, '휴지통에서 페이지를 찾을 수 없습니다.')
+        if state == 'parent_in_trash':
+            raise HTTPException(409, '상위 페이지를 먼저 복원해 주세요.')
+        if state == 'conflict':
+            raise HTTPException(409, '휴지통 목록이 변경됐습니다. 다시 열어 확인해 주세요.')
+        return {'status': 'restored'}
 
     @app.put('/api/v1/pages/{page_id}/move')
     def move_page(page_id:str,body:MovePage):
@@ -511,8 +629,7 @@ def create_app(db_path:Path | None = None) -> FastAPI:
 
     @app.post('/api/v1/tasks',status_code=201)
     def create_task(body:TaskData):
-        data=body.model_dump();data['title']=clean_text(body.title,name='Task title')
-        data['due_on']=valid_date_optional(body.due_on)
+        data=validate_task(body)
         try:return store.create_task(**data)
         except ValueError as e:ref_error(e)
 
@@ -524,8 +641,7 @@ def create_app(db_path:Path | None = None) -> FastAPI:
 
     @app.put('/api/v1/tasks/{task_id}')
     def update_task(task_id:str,body:UpdateTask):
-        data=body.model_dump(exclude={'expected_revision'});data['title']=clean_text(body.title,name='Task title')
-        data['due_on']=valid_date_optional(body.due_on)
+        data=validate_task(body, updating=True)
         try:state,item=store.update_task(task_id,body.expected_revision,**data)
         except ValueError as e:ref_error(e)
         if state=='not_found':raise HTTPException(404,'Task not found')
@@ -566,9 +682,13 @@ def create_app(db_path:Path | None = None) -> FastAPI:
 
     @app.get('/assets/{filename}')
     def assets(filename:str):
-        if filename not in ('app.js','app.css','pagecanvas.js','themes.js','themes.css'):
+        if filename not in ('app.js','app.css','pagecanvas.js','themes.js','themes.css',
+                            'custom-databases.js','custom-databases.css','workspace-transfer.js',
+                            'page-database-views.js','workspace-tools.css'):
             raise HTTPException(404,'Not found')
         return FileResponse(PUBLIC_DIR/filename,media_type='text/javascript' if filename.endswith('.js') else 'text/css')
+    mount_page_database_views(app, store)
+    mount_custom_databases(app, custom_store)
     return app
 
 app=create_app()
