@@ -21,11 +21,11 @@ The earlier v0.9 UI organized each feature (Template Library, Page Tree, Task Da
 
 ## Future architecture and trade-offs
 - P1: Schema-driven document model, nested blocks, inline child-page blocks, metadata/relations and a unified searchable Page Index.
-- P2: Company-approved Tiptap/ProseMirror rich editor, keyboard shortcuts, safe formatting, undo/redo, autosave, block drag/drop and page history.
+- P2: Tiptap/ProseMirror rich editor, keyboard shortcuts, safe formatting, undo/redo, autosave, block drag/drop and page history.
 - P3: Inline linked Database Views (Table/Board/Calendar) with centralized query and permission enforcement.
-- P4: After security signoff only: on-premises Workspace/Teamspace, centralized PostgreSQL, SSO/RBAC/ACL, Yjs collaboration, approved AI.
+- P4: Optional shared Workspace/Teamspace, centralized PostgreSQL, SSO/RBAC/ACL, Yjs collaboration, approved AI.
 - Consequence: v0.10 gets closer to Notion interaction with minimal dependencies but is **not** Notion feature parity. The existing v0.9 task/project data remains separate until cross-view integration.
 
 ## Acceptance criteria and evidence
 - 80 templates unchanged; 24 pytest cases pass; synthetic browser create/modify/save/reopen flow passes; blocked media and external API routes remain blocked.
-- Windows 11 human E2E and corporate software/security review are pending.
+- Windows 11 manual E2E is pending.

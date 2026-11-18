@@ -1,4 +1,4 @@
-"""Launch only on loopback; do not expose on corporate LAN."""
+"""Run the local app on the loopback interface."""
 import uvicorn
 from .app import create_app
 

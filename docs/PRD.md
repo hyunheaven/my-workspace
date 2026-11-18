@@ -1,16 +1,16 @@
-> **v0.5 안내:** 아래 문서는 v0.4 Hybrid Target 설계 자료입니다. 실행형 PoC 및 보안 제한의 우선 적용 기준은 [`SECURE_FEATURE_POLICY.md`](SECURE_FEATURE_POLICY.md), [`TEMPLATE_LIBRARY_SPEC.md`](TEMPLATE_LIBRARY_SPEC.md), [`DEVELOPMENT_ROADMAP_v05.md`](DEVELOPMENT_ROADMAP_v05.md)입니다. 모든 첨부·미디어·외부 연동/Export 언급은 현 시점에서 비활성화되며 승인 전 구현하지 않습니다.
+> **이전 설계안** · 현재 앱은 [개인 PC용 로컬 작업 공간](../README.md)입니다. 이 문서의 공유 기능은 별도 서버를 전제로 한 설계안입니다.
 
 # Product Requirements Document — v0.4
 
 ## 1. Problem / success
-Personal notes, team project documents and technical knowledge are fragmented. Product should enable local-first authoring, deliberate publication, controlled organization-wide discovery and eventual collaboration without sending company content to external systems. This is a goal; no current deployment measurements exist.
+My Workspace organizes notes, tasks and schedules on a local PC. This earlier design also explores explicit publication and collaboration as optional, separately deployed features.
 
 ### Personas
 - **Personal author**: edits local/private notes offline; no central sync unless explicitly publishes.
 - **Team contributor**: creates/edits shared team pages with granted permissions; uses central search.
 - **Knowledge consumer**: read-only access to permitted pages and citations.
 - **Team admin/owner**: manages membership, ACL and audit within delegated scope.
-- **Security/IT operator**: enforces corporate SSO, system controls, backups, retention.
+- **Security/IT operator**: enforces SSO, system controls, backups, retention.
 
 ## 2. P0 workflows (required)
 **P0-U1 Personal**: launch local app → create page/tree/block document → autosave → restart and read offline → backup/restore verified. Local DB remains on device.
@@ -52,4 +52,4 @@ Personal notes, team project documents and technical knowledge are fragmented. P
 **Collab P1 release**: no data loss with two clients/reconnect; no stale write after revoked access.
 
 ## 6. Assumptions / open issues
-Deployment count, company SSO, endpoint policies, license allowlist, data classes, retention/backup ownership and concurrency are **[확인 필요]**. No actual corporate approval has been granted in this document.
+Deployment count, identity provider, endpoint policies, license allowlist, data classes, retention/backup ownership and concurrency are **[확인 필요]**.

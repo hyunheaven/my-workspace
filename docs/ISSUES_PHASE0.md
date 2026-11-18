@@ -1,10 +1,10 @@
 # Starter GitHub Issue Definitions — Phase 0 v0.4
 
-**No GitHub issues have been created; use the approved internal corporate repository and human review.**
+**These are earlier issue drafts for review.**
 
-## GOV-001 — Corporate security and environment constraints
-**Owner** Security/TPM; **Reviewer** corporate IT/security.
-**Scope** [VERIFY] GitHub host, allowed software/AI tools, endpoint packaging, approved intranet servers/SSO, licenses, artifact classification and permitted data storage.
+## GOV-001 — Repository and runtime requirements
+**Owner** Security/TPM; **Reviewer** maintainer.
+**Scope** [VERIFY] GitHub host, allowed software/AI tools, endpoint packaging, optional server hosting and SSO, licenses, artifact classification and permitted data storage.
 **AC** Record approvals or blockers with dates and responsible roles; never invent internal endpoints.
 **Gate** G0.
 
@@ -39,7 +39,7 @@
 **Gate** before G3.
 
 ## LIC-001 — Dependency, license, packages and code transfer
-**Owner** Release/Security; **Review** corporate IT/Legal.
+**Owner** Release/Security; **Review** maintainer.
 **Scope** Hocuspocus4/Tiptap OSS/Yjs and optional extensions, internal mirror, license matrix, SBOM and CI runner isolation.
 **AC** allowlist and official version requirements captured; unapproved components blocked.
 **Gate** G0/G1.

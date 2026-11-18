@@ -12,6 +12,6 @@ Reference was inspected for functional structure **only**. No original page cont
 | Inline Database Views | Tables, boards, calendars on pages | Separate app modules | Deferred |
 | Rich text | Inline formatting, slash commands | Form inputs | Textareas; minimal '/' shortcut for heading only |
 | Collaboration | Shared editing | Not implemented | Not implemented; requires approved central infra |
-| Multimedia | Broad support in Notion | Disabled by company policy | Still explicitly disabled |
+| Multimedia | Broad support in Notion | Disabled in the local app | Still explicitly disabled |
 
 Do not equate current Page Canvas with a complete Notion replica. Next decision should be about a **domain schema**, not cosmetic pixel copying.

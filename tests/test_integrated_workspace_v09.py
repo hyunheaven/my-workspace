@@ -112,3 +112,74 @@ def test_migrate_v08_database_without_losing_documents(tmp_path):
         assert doc['title']=='Old version doc' and doc['parent_id'] is None
         assert client.get('/api/v1/projects').json()['items']==[]
         assert len(client.get('/api/v1/pages/tree').json()['items'])==1
+
+
+def test_task_views_keep_identity_and_new_properties_on_upgraded_copy(tmp_path):
+    fixture = Path(__file__).parent / 'spec' / 'v011_synthetic.sql'
+    source_path = tmp_path / 'legacy.db'
+    copied_path = tmp_path / 'upgrade.db'
+    with sqlite3.connect(source_path) as source, sqlite3.connect(copied_path) as copied:
+        source.executescript(fixture.read_text(encoding='utf-8'))
+        source.backup(copied)
+
+    task_id = '4fb422ba-97af-4bdc-8891-1c8faadbbc06'
+    task_path = '/api/v1/tasks/' + task_id
+    properties = {
+        'effort': 0,
+        'labels': ['검토', '테스트'],
+        'flagged': True,
+        'reference_url': 'https://example.invalid/review',
+        'notes': '첫 검토\n확인할 사항',
+    }
+    with TestClient(create_app(db_path=copied_path), base_url=URL, client=('127.0.0.1', 9000)) as client:
+        original = client.get(task_path).json()
+        assert original['due_on'] == '2026-12-15'
+        assert original['labels'] == [] and original['notes'] == '' and original['effort'] is None
+        core_fields = ['title', 'project_id', 'document_id', 'status', 'priority', 'due_on']
+        core = {field: original[field] for field in core_fields}
+        response = put(client, task_path, {**core, **properties, 'expected_revision': 1})
+        assert response.status_code == 200, response.text
+        response = put(client, task_path, {**core, 'status': 'done', 'expected_revision': 2})
+        assert response.status_code == 200, response.text
+        assert put(client, task_path, {**core, 'due_on': '2026-12-17', 'expected_revision': 2}).status_code == 409
+        response = put(client, task_path, {**core, 'status': 'done', 'due_on': '2026-12-17', 'expected_revision': 3})
+        assert response.status_code == 200, response.text
+        for path, expected_count in [
+            ('/api/v1/calendar/feed?start=2026-12-15&end=2026-12-16', 0),
+            ('/api/v1/calendar/feed?start=2026-12-17&end=2026-12-18', 1),
+        ]:
+            entries = [item for item in client.get(path).json()['items'] if item['id'] == task_id]
+            assert len(entries) == expected_count
+            if entries:
+                assert entries[0]['status'] == 'done'
+        response = put(client, task_path, {**core, 'status': 'done', 'due_on': None, 'expected_revision': 4})
+        assert response.status_code == 200, response.text
+        assert client.get('/api/v1/calendar/feed?start=2026-12-17&end=2026-12-18').json()['items'] == []
+
+    with TestClient(create_app(db_path=copied_path), base_url=URL, client=('127.0.0.1', 9000)) as restarted:
+        task = next(item for item in restarted.get('/api/v1/tasks').json()['items'] if item['id'] == task_id)
+        assert task['status'] == 'done' and task['due_on'] is None and task['revision'] == 5
+        assert {key: task[key] for key in properties} == properties
+        assert task['document_id'] == original['document_id']
+        assert task['project_id'] == original['project_id']
+
+    with sqlite3.connect(source_path) as source, sqlite3.connect(copied_path) as copied:
+        assert source.execute('SELECT status, due_on, revision FROM tasks WHERE id=?', (task_id,)).fetchone() == ('todo', '2026-12-15', 1)
+        assert 'notes' not in {row[1] for row in source.execute('PRAGMA table_info(tasks)')}
+        assert copied.execute('PRAGMA integrity_check').fetchall() == [('ok',)]
+        assert copied.execute('PRAGMA foreign_key_check').fetchall() == []
+
+
+@pytest.mark.parametrize('property_value', [
+    {'effort': '1'},
+    {'flagged': 'true'},
+    {'labels': ['broken,label']},
+    {'reference_url': 'javascript:alert(1)'},
+    {'reference_url': 'https://user:secret@example.invalid'},
+    {'notes': 'invalid\x00note'},
+    {'due_on': '9999-12-31'},
+])
+def test_invalid_task_properties_do_not_persist(client, property_value):
+    response = post(client, '/api/v1/tasks', {'title': 'Synthetic invalid', **property_value})
+    assert response.status_code == 422, response.text
+    assert client.get('/api/v1/tasks').json()['items'] == []

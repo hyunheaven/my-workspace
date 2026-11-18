@@ -1,15 +1,15 @@
-> **v0.5 안내:** 아래 문서는 v0.4 Hybrid Target 설계 자료입니다. 실행형 PoC 및 보안 제한의 우선 적용 기준은 [`SECURE_FEATURE_POLICY.md`](SECURE_FEATURE_POLICY.md), [`TEMPLATE_LIBRARY_SPEC.md`](TEMPLATE_LIBRARY_SPEC.md), [`DEVELOPMENT_ROADMAP_v05.md`](DEVELOPMENT_ROADMAP_v05.md)입니다. 모든 첨부·미디어·외부 연동/Export 언급은 현 시점에서 비활성화되며 승인 전 구현하지 않습니다.
+> **이전 설계안** · 현재 앱은 [개인 PC용 로컬 작업 공간](../README.md)입니다. 이 문서의 공유 기능은 별도 서버를 전제로 한 설계안입니다.
 
 # Development Roadmap — v0.4 (phase-gated, no calendar promise)
 
 ## Phase 0 — Requirements, policy, risks, contracts
-**P0 needed:** corporate host/network/security/AI policy, PRD, threat model, ADR-0003, local/shared ownership, ID mapping, API, ACL decision table, Korean search baseline, OSS/license/SBOM. **Exit G0/G1:** recorded architecture and approval boundaries, synthetic negative test fixtures and backlog with owners.
+**P0 needed:** local runtime and optional service requirements, PRD, threat model, ADR-0003, local/shared ownership, ID mapping, API, ACL decision table, Korean search baseline, OSS/license/SBOM. **Exit G0/G1:** recorded architecture and approval boundaries, synthetic negative test fixtures and backlog with owners.
 
 ## Phase 1 — Common Platform + Local Workspace (P0)
 React/Vite/Tiptap shared packages, typed client contracts, local launcher, FastAPI loopback, SQLite revisioned pages/tree/autosave, local search, backup/restore, local vs shared UI context. **Exit G2:** works offline, no egress, no lost saves, migration/restore pass.
 
 ## Phase 2 — Central Knowledge MVP (P0)
-Approved central FastAPI/PostgreSQL/SSO, Teams/Workspaces, membership/ACL, Shared page CRUD+optimistic revisions, explicit Publish copy, central search/filter, audit and backup, intranet web. **Exit G3:** every cross-team negative authorization test passes; permission revoke/search consistency and restore proven.
+Approved central FastAPI/PostgreSQL/SSO, Teams/Workspaces, membership/ACL, Shared page CRUD+optimistic revisions, explicit Publish copy, central search/filter, audit and backup, shared web UI. **Exit G3:** every cross-team negative authorization test passes; permission revoke/search consistency and restore proven.
 
 ## Phase 3 — Real-time Collaboration (P1)
 Yjs/Hocuspocus, presence, read-only/active revocation, comment/mention service, document history and recovery; binary persistence and disruption tests. **Exit G4:** concurrent edits, server restart, network flap, cursor presence isolation, no cross-team leakage.

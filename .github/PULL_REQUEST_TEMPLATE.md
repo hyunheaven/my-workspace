@@ -18,4 +18,4 @@
 
 ## Independent reviewer / human approval
 
-**No real company data, secrets, tokens, personal documents or sensitive network details in this PR.**
+**Keep personal documents, credentials and other private data out of the PR.**

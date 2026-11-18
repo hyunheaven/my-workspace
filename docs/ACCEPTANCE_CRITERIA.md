@@ -2,7 +2,7 @@
 
 ## G0/G1 — Planning
 - [ ] Product charter and P0 scope approved by product owner.
-- [ ] Approved company GitHub, network/server/SSO/software/licensing policy recorded.
+- [ ] Repository scope, licensing and optional server requirements documented.
 - [ ] ADR-0003, data owners, Publish semantics, no shared offline mode signed off.
 - [ ] RBAC/ACL matrix + cross-team negative vectors reviewed.
 - [ ] Korean search PoC and data sizing plan agreed.

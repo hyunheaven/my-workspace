@@ -1,0 +1,164 @@
+<!-- METADATA: {"source_path": "tests/test_myai_v011.py", "source_sha": "a891b866fc3fbc7ae8e4022e2341479b79d5995f", "extraction_quality": "full_ast", "model": "gpt-5-mini", "generated_at": "2026-11-18T03:21:27Z", "doc_type": "file"} -->
+<details>
+<summary>Documentation Metadata (click to expand)</summary>
+
+```json
+{
+  "doc_type": "file_overview",
+  "file_path": "tests/test_myai_v011.py",
+  "source_hash": "c256d5d30b98a86fa1d8e3fbb5225aed934109cd90573415cf409e28d77b3427",
+  "last_updated": "2026-11-18T03:21:02.739534+00:00",
+  "git_sha": "a891b866fc3fbc7ae8e4022e2341479b79d5995f",
+  "tokens_used": 1593,
+  "complexity_score": 1,
+  "estimated_review_time_minutes": 5,
+  "external_dependencies": [
+    "pathlib",
+    "fastapi.testclient",
+    "services.local_api.app",
+    "services.local_api.storage"
+  ]
+}
+```
+
+</details>
+
+[Documentation Home](../README.md) > [tests](./README.md) > **test_myai_v011**
+
+---
+
+# test_myai_v011.py
+
+> **File:** `tests/test_myai_v011.py`
+
+![Complexity: Low](https://img.shields.io/badge/Complexity-Low-green) ![Review Time: 5min](https://img.shields.io/badge/Review_Time-5min-blue)
+
+## 📑 Table of Contents
+
+
+- [Overview](#overview)
+- [Dependencies](#dependencies)
+- [Architecture Notes](#architecture-notes)
+- [Maintenance Notes](#maintenance-notes)
+- [Functions and Classes](#functions-and-classes)
+
+---
+
+## Overview
+
+This test module contains checks related to v0.11 branding, discovery, and backward-compatibility for the local API service. It defines two test functions that exercise the application created by services.local_api.app.create_app and interact with a LocalStore instance to validate behavior around cataloging, security headers, and template persistence when a new template is saved against an existing database. The module also centralizes the HTTP base URL and request headers used by the tests as module-level constants.
+
+## Dependencies
+
+### External Dependencies
+
+| Module | Usage |
+| --- | --- |
+| `pathlib` | from pathlib import Path |
+| `fastapi.testclient` | from fastapi.testclient import TestClient |
+| `services.local_api.app` | from services.local_api.app import create_app |
+| `services.local_api.storage` | from services.local_api.storage import LocalStore |
+
+## 📁 Directory
+
+This file is part of the **tests** directory. View the [directory index](./README.md) to see all files in this module.
+
+## Architecture Notes
+
+- Uses fastapi.testclient.TestClient to exercise the FastAPI application created by services.local_api.app.create_app
+- Defines shared HTTP test configuration as module-level constants (URL and HEADERS)
+- Interacts with a LocalStore implementation to validate persistence and backward-compatibility scenarios
+
+## Maintenance Notes
+
+- Verify branding, catalog discovery, and local security behavior of the local API using test_brand_and_catalog_and_local_security.
+- Confirm that saving a new template works and that an existing database remains readable via test_new_template_saves_and_existing_db_remains_readable.
+- Provide common request configuration through the URL and HEADERS constants for tests that use a TestClient against the created app.
+- Exercise storage-related behavior by using services.local_api.storage.LocalStore within the tests.
+
+
+---
+
+## Constants
+
+| Name | Type | Value |
+| --- | --- | --- |
+| `URL` | — | `'http://127.0.0.1:8765'` |
+| `HEADERS` | — | `{'Content-Type': 'application/json', 'X-EAW-Request': 'local-template-editor'}` |
+
+
+
+---
+
+## Functions and Classes
+
+
+### test_brand_and_catalog_and_local_security
+
+![Type: Sync](https://img.shields.io/badge/Type-Sync-green)
+
+#### Signature
+
+```python
+def test_brand_and_catalog_and_local_security(tmp_path: Path):
+```
+
+#### Description
+
+Pytest test function that verifies interactions between branding, catalog functionality, and local security behavior for the myai v0.11 code path.
+
+It uses a temporary filesystem location to set up and exercise scenarios involving brand and catalog handling together with local security checks.
+
+#### Parameters
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `tmp_path` | `Path` | ✅ | — |
+
+#### Complexity
+
+Not analyzed
+
+---
+
+
+
+### test_new_template_saves_and_existing_db_remains_readable
+
+![Type: Sync](https://img.shields.io/badge/Type-Sync-green)
+
+#### Signature
+
+```python
+def test_new_template_saves_and_existing_db_remains_readable(tmp_path: Path):
+```
+
+#### Description
+
+This test verifies that saving a new template does not break or corrupt an existing database and that the existing database remains readable after the new template is written.
+
+It ensures compatibility between creating/updating template data and continued access to preexisting stored data.
+
+#### Parameters
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `tmp_path` | `Path` | ✅ | — |
+
+#### Complexity
+
+Not analyzed
+
+---
+
+
+
+---
+
+## Navigation
+
+**↑ Parent Directory:** [Go up](./README.md)
+
+---
+
+*This documentation was automatically generated by AI ([Woden DocBot](https://github.com/marketplace/ai-document-creator)) and may contain errors. It is the responsibility of the user to validate the accuracy and completeness of this documentation.*

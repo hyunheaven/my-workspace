@@ -8,7 +8,7 @@ HEADERS={'Content-Type':'application/json','X-EAW-Request':'local-template-edito
 
 def test_brand_and_catalog_and_local_security(tmp_path:Path):
     with TestClient(create_app(db_path=tmp_path/'test.db'),base_url=URL,client=('127.0.0.1',1234)) as c:
-        assert c.get('/api/v1/health').json()['version']=='1.0.0'
+        assert c.get('/api/v1/health').json()['version']=='1.3.0'
         html=c.get('/').text
         assert 'My Workspace' in html and 'id="sidebar-quick-search"' in html
         assert 'data-discovery="recommended"' in html

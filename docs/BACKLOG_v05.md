@@ -14,4 +14,4 @@
 | TMP-020 | P1 | Product/Security | Admin approval workflow for template publication | SHR-010 |
 | AI-020 | P2 | AI/Security | Approved on-prem AI template guidance, offline eval | GOV-002, SEC-010 |
 
-Phase 1A PoC covers TMP-002/003 and core LOC-010 partially, not an approved enterprise deployment.
+Phase 1A covered TMP-002/003 and part of LOC-010 in the earlier prototype.

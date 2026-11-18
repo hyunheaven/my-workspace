@@ -10,17 +10,17 @@ v0.15 개발판의 기능을 그대로 사용합니다. v1.0.0은 첫 정식 배
 
 ## GitHub 배포 준비
 
-배포는 Private 저장소에서 Windows용 ZIP을 배포하는 GitHub Release를 뜻합니다. 승인된 호스트와 저장소의 Clone URL을 사용합니다. 저장소에는 실행용 소스, 문서와 합성 테스트를 올립니다. ZIP은 Release 자산으로 따로 첨부합니다.
+Windows용 ZIP을 GitHub Release로 배포할 수 있습니다. 대상 저장소의 Clone URL과 공개 범위를 확인합니다. 저장소에는 실행용 소스, 문서와 합성 테스트를 올립니다. ZIP은 Release 자산으로 따로 첨부합니다.
 
 ### 빈 원격 저장소
 
-Git bundle과 Windows ZIP을 같은 위치에 내려받은 후, 그 위치에서 다음 명령을 실행합니다. Clone URL은 Private 저장소의 Code 화면에서 복사합니다.
+Git bundle과 Windows ZIP을 같은 위치에 내려받은 후, 그 위치에서 다음 명령을 실행합니다. Clone URL은 대상 저장소의 Code 화면에서 복사합니다.
 
 ```powershell
 git clone -b main .\My_AI_Workspace_v1.0.0.bundle .\My_AI_Workspace
 Set-Location .\My_AI_Workspace
 git log -2 --oneline
-git remote set-url origin (Read-Host '승인된 Private 저장소의 Clone URL')
+git remote set-url origin (Read-Host '대상 저장소의 Clone URL')
 git remote -v
 git ls-remote --refs origin
 ```
@@ -39,7 +39,7 @@ git push --atomic -u origin main refs/tags/v1.0.0
 
 ## 검증
 
-Windows 11 실기 및 회사 승인 환경 검증은 남아 있습니다. ZIP의 `docs/evidence-v015/`에는 동일 기능의 v0.15 개발판에서 촬영한 Linux 브라우저 검증 화면이 있습니다.
+Windows 11 실기 검증은 남아 있습니다. ZIP의 `docs/evidence-v015/`에는 동일 기능의 v0.15 개발판에서 촬영한 Linux 브라우저 검증 화면이 있습니다.
 
 - Linux Chromium에서 고대비 색상을 앱 전체 및 개별 페이지에 적용하고, 새 브라우저 세션에서 페이지 설정이 유지되는 것을 확인했습니다. 템플릿·페이지 편집 회귀 시나리오도 통과했습니다.
 - Python unittest 15건과 기존 fixture 어댑터 검사 26건을 통과했습니다.

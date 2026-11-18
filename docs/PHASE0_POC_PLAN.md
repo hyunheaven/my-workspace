@@ -1,6 +1,6 @@
 # Phase 0 Technical Proof-of-Concept Plan — v0.4
 
-The following are **synthetic-data PoCs**, not production deployment. All executables, downloads, runners and network configurations must follow corporate policy; work in an authorized sandbox or with public components only until approved.
+The following are **synthetic-data PoCs**, not production deployment. Run these examples in a separate test environment.
 
 ## POC-01: Local offline editor persistence
 - Goal: one React/Tiptap JSON page roundtrip via Local FastAPI/SQLite with crash/restore and zero unauthorized egress.
@@ -29,8 +29,8 @@ The following are **synthetic-data PoCs**, not production deployment. All execut
 - Exit: correctness/security/operation trade-off recorded; *does not* unblock deployment without P1 gate.
 
 ## POC-06: Software supply chain & packaging
-- Goal: license/SBOM for Tiptap OSS/paid extensions/Yjs/Hocuspocus/SQLite/PostgreSQL; company dependency mirror readiness.
-- Evidence: version manifest, license obligations, approved OS/runtime/Node/Python executables, scanned packages, internal GitHub runner model.
+- Goal: license/SBOM for Tiptap OSS/paid extensions/Yjs/Hocuspocus/SQLite/PostgreSQL; dependency availability.
+- Evidence: version manifest, license obligations, approved OS/runtime/Node/Python executables, scanned packages, CI runner configuration.
 - Exit: security+legal/IT signoff fields populated, or BLOCKED clearly documented.
 
 ## Evidence template per PoC

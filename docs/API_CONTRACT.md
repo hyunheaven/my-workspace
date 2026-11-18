@@ -1,8 +1,8 @@
-> **v0.5 안내:** 아래 문서는 v0.4 Hybrid Target 설계 자료입니다. 실행형 PoC 및 보안 제한의 우선 적용 기준은 [`SECURE_FEATURE_POLICY.md`](SECURE_FEATURE_POLICY.md), [`TEMPLATE_LIBRARY_SPEC.md`](TEMPLATE_LIBRARY_SPEC.md), [`DEVELOPMENT_ROADMAP_v05.md`](DEVELOPMENT_ROADMAP_v05.md)입니다. 모든 첨부·미디어·외부 연동/Export 언급은 현 시점에서 비활성화되며 승인 전 구현하지 않습니다.
+> **이전 설계안** · 현재 앱은 [개인 PC용 로컬 작업 공간](../README.md)입니다. 이 문서의 공유 기능은 별도 서버를 전제로 한 설계안입니다.
 
 # REST/WS API Contract — v0.4 preliminary
 
-API is **proposed**, not implemented. Base path shared: `/api/v1`. Local service uses separate loopback base URL with no shared identity assumptions; shared frontend uses corporate intranet HTTPS origin.
+API is **proposed**, not implemented. Base path shared: `/api/v1`. Local service uses separate loopback base URL with no shared identity assumptions; shared frontend uses shared deployment HTTPS origin.
 
 ## Central endpoints
 | Method/path | Action | Authorization | Idempotency/concurrency |
@@ -49,4 +49,4 @@ The `permissions` field is informational for UI; it never substitutes for server
 P0 shared edit uses full document revision + optimistic concurrency. P1 WS uses separate Yjs state and explicit migration/initialization rules; do not allow P0 PATCH to overwrite live Yjs collaborative content. Capability scopes and revocation depend on a central policy service.
 
 ## Privacy headers/protocol
-Central HTTPS only with session-cookie `Secure/HttpOnly/SameSite` as permitted, CSRF defense for mutations, CORS locked to approved intranet origins, validation and size limits. WS over WSS behind approved proxy with Origin check, auth & per-resource permission. Shared responses `Cache-Control: no-store` where required, and offline service workers must not cache shared bodies (verify browser behavior). No direct database access from browser.
+Central HTTPS only with session-cookie `Secure/HttpOnly/SameSite` as permitted, CSRF defense for mutations, CORS locked to configured HTTPS origins, validation and size limits. WS over WSS behind approved proxy with Origin check, auth & per-resource permission. Shared responses `Cache-Control: no-store` where required, and offline service workers must not cache shared bodies (verify browser behavior). No direct database access from browser.

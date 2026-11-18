@@ -4,7 +4,7 @@ Use ticket IDs with unique acceptance, test and human reviewer. Priority ≠ eff
 
 | ID | Phase | Priority | Owner + reviewer | Acceptance / negative evidence |
 |---|---|---|---|---|
-| GOV-001 | 0 | P0 | TPM/Security | company scope, internal GitHub, AI tool and server policy recorded |
+| GOV-001 | 0 | P0 | TPM/Security | repository scope and optional server requirements recorded |
 | ARCH-001 | 0 | P0 | Architect/Security | ADR-0003 and local/shared trust boundaries signed off |
 | ACL-001 | 0 | P0 | Security+Identity/QA | role matrix and deny-precedence test vectors approved |
 | DAT-001 | 0 | P0 | Data/Backend | SQLite/PostgreSQL schema, owner ID and immutable revision semantics reviewed |
@@ -14,7 +14,7 @@ Use ticket IDs with unique acceptance, test and human reviewer. Priority ≠ eff
 | LOC-001 | 1 | P0 | Backend/QA | loopback launcher and no unauthorized network listeners |
 | EDT-001 | 1 | P0 | Frontend/QA | Tiptap core editor JSON roundtrip and a11y |
 | LOC-002 | 1 | P0 | Data/QA | SQLite atomic autosave, crash recovery, backup restore |
-| IDN-001 | 2 | P0 | Identity/Security | corporate SSO integration and forbidden principal tests |
+| IDN-001 | 2 | P0 | Identity/Security | SSO integration and forbidden principal tests |
 | SHR-001 | 2 | P0 | Backend/Security | teamspace CRUD & least privilege resource ACL |
 | SHR-002 | 2 | P0 | Backend/QA | shared page CRUD, revision conflict and audit |
 | PUB-001 | 2 | P0 | Local+Backend/Security | publish preview, idempotent central copy; original untouched |

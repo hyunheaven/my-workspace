@@ -1,10 +1,10 @@
-# ADR-0003 — Hybrid Local-First + On-Premises Collaboration
+# ADR-0003 — Local Workspace and Optional Shared Deployment
 
 **Date**: 2026-11-15
 **Status**: Accepted product direction; detailed infrastructure is proposed and requires validation.
 
 ## Decision
-Run Personal Workspace independently on Windows PC, with Local FastAPI/SQLite/files and no network requirement. Support an approved Intranet Web interface and shared workspace through Central FastAPI/PostgreSQL/storage/SSO. The central server is authoritative for all shared content. Add Yjs/Hocuspocus for real-time co-editing only after secure shared CRUD is stable; AI after separate approved model gateway.
+Run Personal Workspace independently on Windows PC, with Local FastAPI/SQLite/files and no network requirement. Support an approved Shared Web interface and shared workspace through Central FastAPI/PostgreSQL/storage/SSO. The central server is authoritative for all shared content. Add Yjs/Hocuspocus for real-time co-editing only after secure shared CRUD is stable; AI after separate approved model gateway.
 
 ## Benefits
 - Offline personal productivity, centralized organization knowledge and auditable delegated access.
@@ -12,7 +12,7 @@ Run Personal Workspace independently on Windows PC, with Local FastAPI/SQLite/fi
 - Explicit boundary between private and shared, with managed Publish workflow.
 
 ## Costs / risks
-- Requires corporate infrastructure, SSO, backup and operational ownership.
+- A shared deployment requires hosting, SSO, backups and an operator.
 - RBAC/ACL/revocation across REST/WS/Search/AI add complexity.
 - P1 Yjs binary persistence, schema migration and collision/recovery require focused testing.
 - No shared offline cache in P0 limits offline collaboration but reduces permission/remanence risk.
