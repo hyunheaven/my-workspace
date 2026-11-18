@@ -4,13 +4,13 @@
 {
   "doc_type": "directory_index",
   "directory_path": "_docs/services/local_api",
-  "directory_hash": "83e4e9afde50ab5ea36bf4615bfaf0d9327bfca18f2fdd609c060cc288add056",
+  "directory_hash": "af3af30707db1fed3a49300f1a476e2a5c918cf131650cbb1a8132d5d7970b27",
   "file_count": 5,
   "file_hashes": {
     "app.py": "76d455c756f76325",
     "custom_databases.py": "a59958bd37b670d5",
     "page_database_views.py": "549fb3177e19c717",
-    "run.py": "a48b17c58f7df6c9",
+    "run.py": "de0bb0152ce18cae",
     "workspace_store.py": "ed770631d904b0a6"
   }
 }
@@ -24,7 +24,7 @@
 
 # 📁 local_api
 
-> **Purpose:** Provides a local-only API and local-first storage components for editing, persisting, and serving template and workspace data within the application.
+> **Purpose:** Provide a local-only template editor API and supporting local-first persistence layers for pages, databases, and workspace storage used by the application.
 > 
 
 ![Organization: Feature Based](https://img.shields.io/badge/Organization-Feature_Based-blue)
@@ -41,14 +41,14 @@
 
 ## Overview
 
-This directory implements a local-only template editor API and the supporting storage and persistence components required to run that editor against local stores. At the root level there are modules that provide the API surface (app.py using FastAPI and Pydantic models), a lightweight runtime entry point to run the application on loopback (run.py), a configurable local database abstraction for user-defined databases and revision history (custom_databases.py), a component for associating personal pages with locally stored views backed by SQLite (page_database_views.py), and a local-first workspace storage implementation for structured data (workspace_store.py). Together these modules enable editing, persisting, and serving template/project/page/canvas content locally.
+This directory contains the implementation of a local-only template editor API and several supporting local-first persistence components. At the root level, app.py implements the FastAPI-based local API and Pydantic models for documents, pages, canvas content, projects, tasks, and events; custom_databases.py implements a local, user-configurable database layer with properties, views, records and revision history; page_database_views.py contains the components needed to persistently associate personal pages with views stored in a local SQLite database; workspace_store.py implements a local-first workspace storage component for structured data; and run.py provides a small runtime entry point that launches the local application on the loopback interface. These files together provide the API surface, data models, storage backends, and a simple launcher for local development and single-machine usage.
 
-The pieces work together as a cohesive local API stack: app.py exposes the editor API and relies on the storage components implemented in custom_databases.py and workspace_store.py to persist data; page_database_views.py handles the persistent association of pages with database views using a local SQLite backend; run.py is the expected developer/runtime entry point to start the local service for development or local use. This directory therefore acts as the single place to find the local editor server, its storage layers, and the small runtime used to run it on the loopback interface.
+In addition to the documented root files, other artifacts are present in the directory (for example __init__.py, catalog.json, catalog_library.json, page_templates.py, storage.py). These are not described in detail here but are part of the package surface. Conceptually, the directory groups API logic, persistent storage adapters (including a SQLite-backed view association component), and a runtime launcher so that the local editor can operate without external services. The components are designed to work together: app.py exposes the editing and document models, the database modules provide persistence and revision history for customizable data, page_database_views.py binds pages to persisted views, and workspace_store.py provides a local-first structured data store. run.py is the simple entry point used to start the local application on loopback during development or local runs.
 
 
 ### File Organization
 
-Files are grouped by feature: API surface and models (app.py), runtime entrypoint (run.py), local database abstraction (custom_databases.py), page-view persistence (page_database_views.py), and workspace storage (workspace_store.py). This keeps HTTP/API logic, storage/backing-store logic, and runtime concerns separated for easier navigation and modification.
+Files are organized by feature area: API surface and models (app.py), database/persistence layers (custom_databases.py, page_database_views.py, workspace_store.py), and a small runtime entry (run.py). This keeps API, storage, and launch responsibilities separated so contributors can focus on one concern at a time.
 
 ## 📂 All Files
 
@@ -66,21 +66,21 @@ Files are grouped by feature: API surface and models (app.py), runtime entrypoin
 
 | Dependency | Usage |
 | --- | --- |
-| `FastAPI` | Used in app.py to implement the local-only API surface. |
-| `Pydantic` | Used in app.py to define models representing documents, pages, canvas content, projects, tasks and events. |
-| `SQLite` | Used by page_database_views.py as the local database backend for storing page-view associations. |
+| `FastAPI` | Used by app.py to implement the local-only API endpoints and request/response handling. |
+| `Pydantic` | Used by app.py for data models representing documents, pages, canvas content, projects, tasks and events. |
+| `SQLite (sqlite3)` | Used by page_database_views.py to persistently associate pages with views; provides the local DB backend. |
 
 ### Internal Dependencies
 
 | Dependency | Usage |
 | --- | --- |
-| `local modules in this directory` | app.py, run.py and other modules interact to provide API, runtime, and storage functionality. |
+| [Other modules in this directory (e.g., storage.py, page_templates.py)](../Other modules in this directory (e/g/, storage/py, page_templates/py).md) | Supplementary local storage and templates referenced by the API and persistence layers (files present in the directory but not documented in detail here). |
 
 ## Architecture Notes
 
-- The directory separates API surface (app.py) from persistence layers (custom_databases.py, workspace_store.py) and the small runtime (run.py) to keep concerns distinct.
-- Persistence includes local-first and revision-aware components: custom_databases.py manages configurable databases and revision history; page_database_views.py persists page-view associations to SQLite to maintain durable mappings.
-- Designed for local-only operation: the runtime entry point is intended for loopback/local development and the storage components emphasize local-first behavior.
+- The directory follows a local-first design: API, database layers, and workspace storage are implemented to operate without external services, enabling offline or single-machine usage.
+- Persistence responsibilities are separated: custom_databases.py handles configurable databases and revision history, page_database_views.py handles SQLite-backed page-to-view associations, and workspace_store.py provides structured workspace storage.
+- A minimal runtime entry (run.py) is included to keep the development run loop simple and focused on the loopback interface.
 
 ---
 
