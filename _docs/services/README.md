@@ -4,7 +4,7 @@
 
 # 📁 services
 
-> **Purpose:** Hosts service-level components for the application, including a local-only API and local-first storage modules used for editing, persisting, and serving template and workspace data.
+> **Purpose:** Host service-level components for the application, including a local-only template editor API and supporting local-first persistence layers used by the app.
 > 
 
 ![Organization: Hierarchical](https://img.shields.io/badge/Organization-Hierarchical-blue)
@@ -21,14 +21,14 @@
 
 ## Overview
 
-At the repository root level this directory contains package-level artifacts (for example an __init__.py) that mark the services package and may expose or aggregate service modules; the specific responsibilities of root-level files are not documented in the provided context. The root package acts as the container for service implementations and may provide imports or package initialization for the submodules it contains.
+The services directory groups service implementations that provide application-facing APIs and persistence layers. At the root there is a package initializer (__init__.py) that marks this directory as a Python package and ties the contained service modules into the larger application package namespace.
 
-The primary documented subdirectory is local_api, which implements a local-only template editor API and the supporting storage and persistence components required to run that editor against local stores. Within local_api there are modules that provide the API surface (including an app.py using FastAPI and Pydantic models), a lightweight runtime entry point, and local-first storage components to edit, persist, and serve template and workspace data. Together, the root package and the local_api subpackage provide the application with an isolated, local runtime for editing and persisting templates and workspace state, enabling the larger system to use local-first services for those responsibilities.
+The local_api subdirectory contains a local-only template editor API and several local-first persistence components. Specifically, app.py inside local_api implements the FastAPI-based local API and defines Pydantic models for documents, pages, canvas content, projects, tasks, and events; the subdirectory also includes supporting local-first persistence layers for pages, databases, and workspace storage used by the application. Together, the root package marker and the local_api implementation provide the local service surface and storage implementations that higher-level application code depends on to support editing templates and persisting workspace data locally.
 
 
 ### File Organization
 
-The directory is organized hierarchically: a package initializer and root-level modules (not fully documented) sit at the top, with functional service implementations placed in dedicated subdirectories such as local_api. This separation keeps local-only service implementation code scoped inside a focused subpackage.
+Files are organized with a root-level package initializer and focused subdirectories per service area. The local_api subdirectory contains the bulk of service implementation (API entry point and local-first persistence modules), keeping service code encapsulated and separated from other repository concerns.
 
 ## 📂 Subdirectories
 
@@ -36,7 +36,7 @@ This directory contains the following subdirectories:
 
 ### [📁 local_api](./local_api/README.md)
 
-**Purpose:** Provides a local-only API and local-first storage components for editing, persisting, and serving template and workspace data within the application.
+**Purpose:** Provide a local-only template editor API and supporting local-first persistence layers for pages, databases, and workspace storage used by the application.
 
 ![Files: 5](https://img.shields.io/badge/Files-5-blue)
 
@@ -47,13 +47,13 @@ This directory contains the following subdirectories:
 
 | Dependency | Usage |
 | --- | --- |
-| `FastAPI` | Used by the local_api app module to provide the API surface (mentioned in subdirectory description). |
-| `Pydantic` | Used by the local_api app module for data models and validation (mentioned in subdirectory description). |
+| `FastAPI` | Used by local_api/app.py to implement the local HTTP API (explicitly mentioned in the local_api description). |
+| `Pydantic` | Used by local_api/app.py to define models for documents, pages, canvas content, projects, tasks, and events (explicitly mentioned in the local_api description). |
 
 ## Architecture Notes
 
-- Implements a local-only API and local-first storage model: services/local_api isolates editing and persistence to local stores.
-- Package-level __init__.py indicates the directory is a Python package and may re-export or initialize submodules.
+- This directory implements a local-only API and local-first persistence: the service code and storage components are designed to operate without remote services.
+- Service implementation is encapsulated in a subdirectory (local_api) to keep API models and local persistence concerns isolated from other application layers.
 
 ---
 
